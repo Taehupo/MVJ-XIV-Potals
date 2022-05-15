@@ -21,7 +21,32 @@ public class CharacterManager : MonoBehaviour
     #endregion
 
 
+    #region Inherited Manipulators
+
+    void Awake()
+    {
+        // do not keep multiple instances
+        if (Instance != null)
+        {
+            Debug.LogError("CharacterManager.Awake() Error - Multiple CharacterManager : " + gameObject.name + " " + Instance.gameObject.name);
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
+        CreateSubComponents();
+    }
+
+    #endregion
+
+
     #region Private Manipulators
+
+    void CreateSubComponents()
+    {
+
+    }
 
     #endregion
 }
