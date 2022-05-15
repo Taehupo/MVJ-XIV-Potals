@@ -8,17 +8,18 @@ public class CharacterManager : MonoBehaviour
     #region Members
 
     public static CharacterManager Instance { get; private set; }
+
+	public MovementController MovementController { get; private set; }
+	public AttackController AttackController { get; private set; }
+	public ShapeController ShapeController { get; private set; }
+
 	public float CharacterSpeed { get => characterSpeed; set => characterSpeed = value; }
 
-	MovementController movementController;
-	AttackController AttackController;
 
 	[SerializeField]
 	float characterSpeed;
 
     public Rigidbody2D rb;
-
-	//private ShapeController ShapeController { get; private set; }
 
 	#endregion
 
@@ -26,7 +27,7 @@ public class CharacterManager : MonoBehaviour
 	#region Public Manipulators
 	public void Move(InputAction.CallbackContext context)
 	{
-		movementController.Move(context);
+		MovementController.Move(context);
 	}
 
 	public void Jump(InputAction.CallbackContext context)
@@ -59,15 +60,14 @@ public class CharacterManager : MonoBehaviour
         }
 
         Instance = this;
-        movementController = gameObject.AddComponent<MovementController>();
-        AttackController = gameObject.AddComponent<AttackController>();
 
-        CreateSubComponents();
+		rb = GetComponent<Rigidbody2D>();
+
+		CreateSubComponents();
     }
 
 	void Start()
 	{
-		rb = GetComponent<Rigidbody2D>();
 	}
 
 	#endregion
@@ -76,9 +76,11 @@ public class CharacterManager : MonoBehaviour
 	#region Private Manipulators
 
 	void CreateSubComponents()
-    {
-
-    }
+	{
+		MovementController = gameObject.AddComponent<MovementController>();
+		AttackController = gameObject.AddComponent<AttackController>();
+		ShapeController = gameObject.AddComponent<ShapeController>();
+	}
 
     #endregion
 }
