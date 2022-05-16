@@ -11,17 +11,19 @@ public interface IAttackController
 
 	#region Public Manipulators
 
-	public abstract void Attack();
+	public void Attack();
 
-	#endregion
-
-
-	#region Inherited Manipulators
-
-	#endregion
+    #endregion
 
 
-	#region Private Manipulators
+    #region Inherited Manipulators
 
-	#endregion
+    /*GameObject AttackHitbox { get; set; }*/
+
+    #endregion
+
+
+    #region Private Manipulators
+
+    #endregion
 }

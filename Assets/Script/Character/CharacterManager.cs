@@ -10,7 +10,7 @@ public class CharacterManager : MonoBehaviour
     public static CharacterManager Instance { get; private set; }
 
 	public MovementController MovementController { get; private set; }
-	public AttackController AttackController { get; private set; }
+	public IAttackController AttackController { get; private set; }
 	public ShapeController ShapeController { get; private set; }
 
 	public float CharacterSpeed { get => characterSpeed; set => characterSpeed = value; }
@@ -42,7 +42,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Attack(InputAction.CallbackContext context)
 	{
-		//TODO : Add an attack
+		AttackController.Attack();
 	}
 	#endregion
 
@@ -87,7 +87,7 @@ public class CharacterManager : MonoBehaviour
 	void CreateSubComponents()
 	{
 		MovementController = gameObject.AddComponent<MovementController>();
-		AttackController = gameObject.AddComponent<AttackController>();
+		AttackController = gameObject.AddComponent<HumanAttackController>();
 		ShapeController = gameObject.AddComponent<ShapeController>();
 	}
 
