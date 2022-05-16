@@ -561,8 +561,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 531925011}
         m_TargetAssemblyTypeName: CharacterManager, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: Jump
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -627,7 +627,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSpeed: 5
-  rb: {fileID: 0}
 --- !u!50 &531925012
 Rigidbody2D:
   serializedVersion: 4
