@@ -34,7 +34,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Jump(InputAction.CallbackContext context)
 	{
-		//TODO : Add A JUMP
+		CurrentMovementController.Jump(context);
 	}
 
 	public void Crouch(InputAction.CallbackContext context)
