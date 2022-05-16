@@ -9,9 +9,9 @@ public class CharacterManager : MonoBehaviour
 
     public static CharacterManager Instance { get; private set; }
 
-	public MovementController MovementController { get; private set; }
-	public AttackController AttackController { get; private set; }
 	public ShapeController ShapeController { get; private set; }
+	public MovementController CurrentMovementController { get; private set; }
+	public AttackController CurrentAttackController { get; private set; }
 
 	public float CharacterSpeed { get => characterSpeed; set => characterSpeed = value; }
 
@@ -20,6 +20,8 @@ public class CharacterManager : MonoBehaviour
 	float characterSpeed;
 
     public Rigidbody2D rb;
+	private Dictionary<ECharacterShape, MovementController> ShapeToMovementController = new();
+	private Dictionary<ECharacterShape, AttackController> ShapeToAttackController = new();
 
 	#endregion
 
@@ -27,7 +29,7 @@ public class CharacterManager : MonoBehaviour
 	#region Public Manipulators
 	public void Move(InputAction.CallbackContext context)
 	{
-		MovementController.Move(context);
+		CurrentMovementController.Move(context);
 	}
 
 	public void Jump(InputAction.CallbackContext context)
@@ -73,6 +75,10 @@ public class CharacterManager : MonoBehaviour
     {
 		// unregister callback
 		ShapeController.OnShapeChanged -= OnShapeChanged;
+
+		// clear dictionnary
+		ShapeToMovementController.Clear();
+		ShapeToAttackController.Clear();
 	}
 
     void Start()
@@ -86,15 +92,44 @@ public class CharacterManager : MonoBehaviour
 
 	void CreateSubComponents()
 	{
-		MovementController = gameObject.AddComponent<MovementController>();
-		AttackController = gameObject.AddComponent<AttackController>();
 		ShapeController = gameObject.AddComponent<ShapeController>();
+
+		CreateMovementControllers();
+		CreateAttackControllers();
+	}
+
+	void CreateMovementControllers()
+    {
+		MovementController movementController = gameObject.AddComponent<MovementController>();
+		ShapeToMovementController.Add(ECharacterShape.Human, movementController);
+		CurrentMovementController = movementController;
+
+		// add other shape related MovementController
+
+	}
+
+	void CreateAttackControllers()
+	{
+		AttackController attackController = gameObject.AddComponent<AttackController>();
+		ShapeToAttackController.Add(ECharacterShape.Human, attackController);
+		CurrentAttackController = attackController;
+
+		// add other shape related AttackController
 	}
 
 	void OnShapeChanged(ECharacterShape shape)
-    {
+	{
+		if (shape == ECharacterShape.count)
+			return;
 
-    }
+		if(ShapeToMovementController[shape] != null)
+			CurrentMovementController = ShapeToMovementController[shape];
+
+		if(ShapeToAttackController[shape] != null)
+			CurrentAttackController = ShapeToAttackController[shape];
+
+		// Swap Other Controller based on shape here
+	}
 
 	#endregion
 }
