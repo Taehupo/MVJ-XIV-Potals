@@ -8,6 +8,7 @@ public class MovementController : MonoBehaviour
 	#region Members
 
 	bool isMoving;
+	bool isJumping;
 
 	float speed;
 
@@ -31,6 +32,20 @@ public class MovementController : MonoBehaviour
 		}
 		Debug.Log(context.ReadValue<Vector2>());
 		moveForce = context.ReadValue<Vector2>();
+	}
+
+	public void Jump(InputAction.CallbackContext context)
+	{
+		Debug.Log("Reading jump : " + context.phase + "\n");
+		if (context.phase == InputActionPhase.Started)
+		{
+			isJumping = true;
+		}
+		if (context.phase == InputActionPhase.Canceled)
+		{
+			isJumping = false;
+		}
+		Debug.Log(context);
 	}
 
     #endregion
@@ -59,6 +74,11 @@ public class MovementController : MonoBehaviour
 		else
 		{
 			CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
+		}
+
+		if (isJumping)
+		{
+			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, 5);
 		}
 	}
 
