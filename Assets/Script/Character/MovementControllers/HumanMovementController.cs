@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MovementController : MonoBehaviour
+public class HumanMovementController : MovementController
 {
 	#region Members
 
-	bool isMoving;
-	bool isJumping;
-
-	float speed;
-
 	Vector2 moveForce;
+	float speed;
 
 	#endregion
 
 
 	#region Public Manipulators
 
-	public void Move(InputAction.CallbackContext context)
+	public override void Move(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading Move : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
@@ -34,7 +30,7 @@ public class MovementController : MonoBehaviour
 		moveForce = context.ReadValue<Vector2>();
 	}
 
-	public void Jump(InputAction.CallbackContext context)
+	public override void Jump(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading jump : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
@@ -45,24 +41,19 @@ public class MovementController : MonoBehaviour
 		{
 			isJumping = false;
 		}
-		Debug.Log(context);
 	}
 
-    #endregion
+	#endregion
 
 
-    #region Inherited Manipulators
+	#region Inherited Manipulators
 
-	// Start is called before the first frame update
-	void Start()
+	protected override void Awake()
 	{
-		speed = CharacterManager.Instance.CharacterSpeed;
-	}
+		base.Awake();
 
-	// Update is called once per frame
-	void Update()
-	{
-
+		// get speed value from CharacterManager (this will change)
+		speed = m_CharacterManager.CharacterSpeed;
 	}
 
 	void FixedUpdate()
@@ -82,10 +73,10 @@ public class MovementController : MonoBehaviour
 		}
 	}
 
-    #endregion
+	#endregion
 
 
-    #region Private Manipulators
+	#region Private Manipulators
 
 	#endregion
 }

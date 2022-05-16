@@ -100,7 +100,7 @@ public class CharacterManager : MonoBehaviour
 
 	void CreateMovementControllers()
     {
-		MovementController movementController = gameObject.AddComponent<MovementController>();
+		MovementController movementController = gameObject.AddComponent<HumanMovementController>();
 		ShapeToMovementController.Add(ECharacterShape.Human, movementController);
 		CurrentMovementController = movementController;
 
