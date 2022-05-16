@@ -38,24 +38,11 @@ public class MovementController : MonoBehaviour
 
     #region Inherited Manipulators
 
-    private void Awake()
-    {
-		// register callback
-		ShapeController.OnShapeChanged += OnShapeChanged;
-	}
-
 	// Start is called before the first frame update
 	void Start()
 	{
 		speed = CharacterManager.Instance.CharacterSpeed;
 	}
-
-	private void OnDestroy()
-	{
-		// unregister callback
-		ShapeController.OnShapeChanged -= OnShapeChanged;
-	}
-
 
 	// Update is called once per frame
 	void Update()
@@ -79,11 +66,6 @@ public class MovementController : MonoBehaviour
 
 
     #region Private Manipulators
-
-    void OnShapeChanged(ECharacterShape shape)
-    {
-
-    }
 
 	#endregion
 }

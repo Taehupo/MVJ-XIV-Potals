@@ -18,27 +18,10 @@ public interface IAttackController
 
 	#region Inherited Manipulators
 
-	private void Awake()
-	{
-		// register callback
-		ShapeController.OnShapeChanged += OnShapeChanged;
-	}
-
-	private void OnDestroy()
-	{
-		// unregister callback
-		ShapeController.OnShapeChanged -= OnShapeChanged;
-	}
-
 	#endregion
 
 
 	#region Private Manipulators
-
-	void OnShapeChanged(ECharacterShape shape)
-	{
-
-	}
 
 	#endregion
 }
