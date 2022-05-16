@@ -560,8 +560,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 531925011}
         m_TargetAssemblyTypeName: CharacterManager, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: Jump
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -589,7 +589,19 @@ MonoBehaviour:
     m_ActionId: aef0bfe0-e009-49eb-99a2-73edb67ae4b3
     m_ActionName: Default/Move[/Keyboard/z,/Keyboard/s,/Keyboard/q,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 531925011}
+        m_TargetAssemblyTypeName: CharacterManager, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3dffcdca-8fb4-4156-9c9b-81a08f5bea0f
     m_ActionName: Default/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -614,7 +626,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSpeed: 5
-  rb: {fileID: 0}
 --- !u!50 &531925012
 Rigidbody2D:
   serializedVersion: 4
