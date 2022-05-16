@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackController : MonoBehaviour
+public interface IAttackController
 {
 	#region Members
 
@@ -10,6 +10,8 @@ public class AttackController : MonoBehaviour
 
 
 	#region Public Manipulators
+
+	public abstract void Attack();
 
 	#endregion
 
