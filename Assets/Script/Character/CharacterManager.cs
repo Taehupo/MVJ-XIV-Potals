@@ -11,7 +11,7 @@ public class CharacterManager : MonoBehaviour
 
 	public ShapeController ShapeController { get; private set; }
 	public MovementController CurrentMovementController { get; private set; }
-	public AttackController CurrentAttackController { get; private set; }
+	public IAttackController CurrentAttackController { get; private set; }
 
 	public float CharacterSpeed { get => characterSpeed; set => characterSpeed = value; }
 
@@ -21,7 +21,7 @@ public class CharacterManager : MonoBehaviour
 
     public Rigidbody2D rb;
 	private Dictionary<ECharacterShape, MovementController> ShapeToMovementController = new();
-	private Dictionary<ECharacterShape, AttackController> ShapeToAttackController = new();
+	private Dictionary<ECharacterShape, IAttackController> ShapeToAttackController = new();
 
 	#endregion
 
@@ -44,7 +44,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Attack(InputAction.CallbackContext context)
 	{
-		AttackController.Attack();
+		CurrentAttackController.Attack();
 	}
 	#endregion
 
@@ -110,7 +110,7 @@ public class CharacterManager : MonoBehaviour
 
 	void CreateAttackControllers()
 	{
-		AttackController attackController = gameObject.AddComponent<AttackController>();
+		IAttackController attackController = gameObject.AddComponent<HumanAttackController>();
 		ShapeToAttackController.Add(ECharacterShape.Human, attackController);
 		CurrentAttackController = attackController;
 
