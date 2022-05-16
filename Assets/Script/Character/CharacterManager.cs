@@ -81,10 +81,6 @@ public class CharacterManager : MonoBehaviour
 		ShapeToAttackController.Clear();
 	}
 
-    void Start()
-	{
-	}
-
 	#endregion
 
 
