@@ -64,9 +64,18 @@ public class CharacterManager : MonoBehaviour
 		rb = GetComponent<Rigidbody2D>();
 
 		CreateSubComponents();
-    }
 
-	void Start()
+		// register callback
+		ShapeController.OnShapeChanged += OnShapeChanged;
+	}
+
+    private void OnDestroy()
+    {
+		// unregister callback
+		ShapeController.OnShapeChanged -= OnShapeChanged;
+	}
+
+    void Start()
 	{
 	}
 
@@ -82,5 +91,10 @@ public class CharacterManager : MonoBehaviour
 		ShapeController = gameObject.AddComponent<ShapeController>();
 	}
 
-    #endregion
+	void OnShapeChanged(ECharacterShape shape)
+    {
+
+    }
+
+	#endregion
 }
