@@ -13,13 +13,15 @@ public class CharacterManager : MonoBehaviour
 	public MovementController CurrentMovementController { get; private set; }
 	public IAttackController CurrentAttackController { get; private set; }
 
+
+	public Rigidbody2D rb { get; private set; }
+
 	public float CharacterSpeed { get => characterSpeed; set => characterSpeed = value; }
 
 
 	[SerializeField]
 	float characterSpeed;
 
-    public Rigidbody2D rb;
 	private Dictionary<ECharacterShape, MovementController> ShapeToMovementController = new();
 	private Dictionary<ECharacterShape, IAttackController> ShapeToAttackController = new();
 
