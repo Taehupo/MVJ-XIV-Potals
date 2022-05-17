@@ -17,6 +17,7 @@ public abstract class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        Debug.Log("Aïe");
 
         if (currentHealth <= 0)
             Defeat();
@@ -38,7 +39,8 @@ public abstract class Enemy : MonoBehaviour
 
     private void Defeat()
     {
-        Destroy(this);
+        Debug.Log("Dead");
+        /*Destroy(this);*/
     }
 
     #endregion

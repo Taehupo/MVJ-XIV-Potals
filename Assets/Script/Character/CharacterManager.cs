@@ -5,9 +5,13 @@ using UnityEngine.InputSystem;
 
 public class CharacterManager : MonoBehaviour
 {
-    #region Members
+	#region Members
+	public Transform humanAttackPoint;
+	public float humanAttackRange;
+	public LayerMask attackLayerMask;
+	public int humanAttackDamage;
 
-    public static CharacterManager Instance { get; private set; }
+	public static CharacterManager Instance { get; private set; }
 
 	public ShapeController ShapeController { get; private set; }
 	public MovementController CurrentMovementController { get; private set; }
@@ -108,9 +112,10 @@ public class CharacterManager : MonoBehaviour
 
 	void CreateAttackControllers()
 	{
-		IAttackController attackController = gameObject.AddComponent<HumanAttackController>();
-		ShapeToAttackController.Add(ECharacterShape.Human, attackController);
-		CurrentAttackController = attackController;
+		IAttackController humanAttackController = new HumanAttackController(humanAttackPoint, humanAttackRange, attackLayerMask, humanAttackDamage);
+		ShapeToAttackController.Add(ECharacterShape.Human, humanAttackController);
+		
+		CurrentAttackController = humanAttackController;
 
 		// add other shape related AttackController
 	}
@@ -128,6 +133,12 @@ public class CharacterManager : MonoBehaviour
 
 		// Swap Other Controller based on shape here
 	}
+
+	void OnDrawGizmosSelected()
+    {
+		if (CurrentAttackController != null)
+			CurrentAttackController.Draw();
+    }
 
 	#endregion
 }

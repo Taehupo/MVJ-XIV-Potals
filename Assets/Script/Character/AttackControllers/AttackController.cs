@@ -12,13 +12,17 @@ public interface IAttackController
 	#region Public Manipulators
 
 	public void Attack();
+    public void Draw();
 
     #endregion
 
 
     #region Inherited Manipulators
 
-    /*GameObject AttackHitbox { get; set; }*/
+    public Transform AttackPoint { get; set; }
+    public float AttackRange { get; set; }
+    public LayerMask EnemyLayer { get; set; }
+    public int Damage { get; set; }  
 
     #endregion
 
