@@ -50,7 +50,8 @@ public class CharacterManager : MonoBehaviour
 
 	public void Attack(InputAction.CallbackContext context)
 	{
-		CurrentAttackController.Attack();
+		if (context.started)
+			CurrentAttackController.Attack();
 	}
 	#endregion
 
