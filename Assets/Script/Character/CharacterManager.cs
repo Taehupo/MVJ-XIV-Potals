@@ -57,11 +57,23 @@ public class CharacterManager : MonoBehaviour
 	#region Public Manipulators
 	public void Move(InputAction.CallbackContext context)
 	{
+		if(CurrentMovementController == null)
+        {
+			Debug.LogError("CharacterManager.Move() Error : CurrentMovementController is null");
+			return;
+        }
+
 		CurrentMovementController.Move(context);
 	}
 
 	public void Jump(InputAction.CallbackContext context)
 	{
+		if (CurrentMovementController == null)
+		{
+			Debug.LogError("CharacterManager.Jump() Error : CurrentMovementController is null");
+			return;
+		}
+
 		CurrentMovementController.Jump(context);
 	}
 
