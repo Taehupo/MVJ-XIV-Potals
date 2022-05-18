@@ -109,6 +109,11 @@ public class HumanMovementController : MovementController
 		Gizmos.DrawWireCube(boxCastOrigin, new Vector3(0.47f, 0.1f, 1.0f));
 	}
 
+	#endregion
+
+
+	#region Private Manipulators
+
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
@@ -135,11 +140,6 @@ public class HumanMovementController : MovementController
 			isCollidingInAir = false;
 		}
 	}
-
-	#endregion
-
-
-	#region Private Manipulators
 
 	#endregion
 }
