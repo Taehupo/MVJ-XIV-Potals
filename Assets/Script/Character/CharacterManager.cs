@@ -11,6 +11,8 @@ public class CharacterManager : MonoBehaviour
 	public LayerMask attackLayerMask;
 	public int humanAttackDamage;
 
+	public Animator animator;
+
 	public static CharacterManager Instance { get; private set; }
 
 	public ShapeController ShapeController { get; private set; }
@@ -51,7 +53,10 @@ public class CharacterManager : MonoBehaviour
 	public void Attack(InputAction.CallbackContext context)
 	{
 		if (context.started)
+        {
+			animator.SetTrigger("Attack");
 			CurrentAttackController.Attack();
+		}
 	}
 	#endregion
 
