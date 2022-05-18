@@ -9,6 +9,9 @@ public class HumanMovementController : MovementController
 
 	Vector2 moveForce;
 	float speed;
+	float jumpSpeed;
+
+	bool isCollidingInAir = false;
 
 	#endregion
 
@@ -53,12 +56,12 @@ public class HumanMovementController : MovementController
 		base.Awake();
 
 		// get speed value from CharacterManager (this will change)
-		speed = m_CharacterManager.CharacterSpeed;
+		speed = CharacterManager.Instance.CharacterSpeed;
 	}
 
 	void FixedUpdate()
 	{
-		if (isMoving)
+		if ((isMoving && CharacterManager.Instance.IsGrounded) || (isMoving && !CharacterManager.Instance.IsGrounded && !isCollidingInAir))
 		{
 			CharacterManager.Instance.rb.velocity = new Vector2(speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
 		}
@@ -67,9 +70,69 @@ public class HumanMovementController : MovementController
 			CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
 		}
 
-		if (isJumping)
+		if (isJumping && CharacterManager.Instance.IsGrounded)
 		{
-			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, 5);
+			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, CharacterManager.Instance.CharacterJumpForce);
+			CharacterManager.Instance.IsGrounded = false;
+		}
+	}
+
+	void Update()
+	{
+		Vector2 boxCastOrigin = gameObject.transform.position;
+		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
+		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
+		RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, new Vector3(0.47f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
+		if (hit.collider != null)
+		{
+			Debug.Log(hit.collider.name);
+			if (hit.collider.tag == "Platform")
+			{
+				CharacterManager.Instance.IsGrounded = true;
+			}
+			else
+			{
+				CharacterManager.Instance.IsGrounded = false;
+			}
+		}
+		else
+		{
+			CharacterManager.Instance.IsGrounded = false;
+		}
+	}
+
+	override public void Draw()
+	{
+		Vector2 boxCastOrigin = gameObject.transform.position;
+		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
+		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
+		Gizmos.DrawWireCube(boxCastOrigin, new Vector3(0.47f, 0.1f, 1.0f));
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		{
+			Debug.Log("I am touching platform !");
+			isCollidingInAir = true;
+		}
+	}
+
+	private void OnCollisionStay2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		{
+			Debug.Log("I am touching platform !");
+			isCollidingInAir = true;
+		}
+	}
+
+	private void OnCollisionExit2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		{
+			Debug.Log("I am touching NOT platform anymore !");
+			isCollidingInAir = false;
 		}
 	}
 

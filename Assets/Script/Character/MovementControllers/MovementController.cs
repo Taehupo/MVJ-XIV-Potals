@@ -21,6 +21,8 @@ public abstract class MovementController : MonoBehaviour
 
 	public abstract void Jump(InputAction.CallbackContext context);
 
+	public abstract void Draw();
+
     #endregion
 
 

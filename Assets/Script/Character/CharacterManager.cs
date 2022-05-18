@@ -23,14 +23,34 @@ public class CharacterManager : MonoBehaviour
 	public Rigidbody2D rb { get; private set; }
 
 	public float CharacterSpeed { get => characterSpeed; set => characterSpeed = value; }
-
+	public float CharacterJumpForce { get => characterJumpForce; set => characterJumpForce = value; }
+	public float GroundingOffset { get => groundingOffset; set => groundingOffset = value; }
+	public float BoxCastXOffset { get => boxCastXOffset; set => boxCastXOffset = value; }
 
 	[SerializeField]
 	float characterSpeed;
 
+	[SerializeField]
+	float characterJumpForce;
+
 	private Dictionary<ECharacterShape, MovementController> ShapeToMovementController = new();
 	private Dictionary<ECharacterShape, IAttackController> ShapeToAttackController = new();
 
+	[SerializeField]
+	float groundingOffset = -0.4f;
+
+	[SerializeField]
+	float boxCastXOffset;
+
+	#endregion
+
+	#region Flags
+	public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
+	public bool SideCollision { get => sideCollision; set => sideCollision = value; }
+
+	[SerializeField]
+	bool isGrounded = false;
+	bool sideCollision = false;
 	#endregion
 
 
@@ -143,7 +163,14 @@ public class CharacterManager : MonoBehaviour
 	void OnDrawGizmosSelected()
     {
 		if (CurrentAttackController != null)
+		{
 			CurrentAttackController.Draw();
+		}
+		if (CurrentMovementController != null)
+		{
+			CurrentMovementController.Draw();
+		}
+
     }
 
 	#endregion
