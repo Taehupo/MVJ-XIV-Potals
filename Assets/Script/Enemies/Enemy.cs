@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IDamageable
 {
     #region Members
 
@@ -17,7 +17,7 @@ public abstract class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        Debug.Log("AÔe");
+        Debug.Log("AÅE");
 
         if (currentHealth <= 0)
             Defeat();

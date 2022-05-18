@@ -26,7 +26,7 @@ public class HumanAttackController : IAttackController
         Collider2D[] hitTargets = Physics2D.OverlapBoxAll(AttackPoint.position, new Vector2(AttackRange,AttackRange/2), 0.0f, EnemyLayer);
         foreach(Collider2D hitTarget in hitTargets)
         {
-            hitTarget.GetComponent<Enemy>().TakeDamage(Damage);
+            hitTarget.GetComponent<IDamageable>().TakeDamage(Damage);
         }
     }
 
