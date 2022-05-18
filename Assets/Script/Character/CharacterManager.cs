@@ -172,6 +172,7 @@ public class CharacterManager : MonoBehaviour
 		// Swap Other Controller based on shape here
 	}
 
+	// Preview cast Area on Player seleted if Gizmo is activated
 	void OnDrawGizmosSelected()
     {
 		if (CurrentAttackController != null)
