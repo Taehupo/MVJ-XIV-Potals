@@ -210,7 +210,7 @@ MonoBehaviour:
   characterSpeed: 10
   characterJumpForce: 10
   groundingOffset: -0.4
-  boxCastXOffset: -0.1
+  boxCastXOffset: -0.15
   isGrounded: 0
 --- !u!114 &3423041773590120211
 MonoBehaviour:
