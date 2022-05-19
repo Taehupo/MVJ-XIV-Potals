@@ -9,6 +9,7 @@ public abstract class MovementController : MonoBehaviour
 
 	protected static bool isMoving;
 	protected static bool isJumping;
+	protected Animator Animator { get; set; }
 
 	protected CharacterManager m_CharacterManager;
 

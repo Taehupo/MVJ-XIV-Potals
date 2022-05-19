@@ -24,6 +24,7 @@ public class HumanMovementController : MovementController
 		if (context.phase == InputActionPhase.Started)
 		{
 			isMoving = true;
+			CharacterManager.Instance.Flip(context.ReadValue<Vector2>().x > 0);
 		}
 		if (context.phase == InputActionPhase.Canceled)
 		{
@@ -57,6 +58,7 @@ public class HumanMovementController : MovementController
 
 		// get speed value from CharacterManager (this will change)
 		speed = CharacterManager.Instance.CharacterSpeed;
+		Animator = CharacterManager.Instance.animator;
 	}
 
 	void FixedUpdate()
@@ -75,6 +77,7 @@ public class HumanMovementController : MovementController
 			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, CharacterManager.Instance.CharacterJumpForce);
 			CharacterManager.Instance.IsGrounded = false;
 		}
+		Animator.SetFloat("Speed", Mathf.Abs(CharacterManager.Instance.rb.velocity.x));
 	}
 
 	void Update()
@@ -95,15 +98,18 @@ public class HumanMovementController : MovementController
 			if (hit.collider.tag == "Platform")
 			{
 				CharacterManager.Instance.IsGrounded = true;
+				Animator.SetBool("Grounded", true);
 			}
 			else
 			{
 				CharacterManager.Instance.IsGrounded = false;
+				Animator.SetBool("Grounded", false);
 			}
 		}
 		else
 		{
 			CharacterManager.Instance.IsGrounded = false;
+			Animator.SetBool("Grounded", false);
 		}
 	}
 
