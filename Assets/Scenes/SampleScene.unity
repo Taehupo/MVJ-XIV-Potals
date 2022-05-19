@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &160352933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3423041773590120207, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+  m_PrefabInstance: {fileID: 3423041773916458753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &172323806
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +190,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7450683, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -422,6 +427,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3423041773590120209, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
   m_PrefabInstance: {fileID: 3423041773916458753}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &531925014 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3423041773590120206, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+  m_PrefabInstance: {fileID: 3423041773916458753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &531925015
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160352933}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.032980017, y: 0.30857354}
+  serializedVersion: 2
+  m_Radius: 0.2705196
 --- !u!1 &1198085709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,6 +1139,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3423041773590120208, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: m_Size.x
+      value: 0.51544964
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423041773590120208, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: m_Size.y
+      value: 0.6747819
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423041773590120208, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.029276073
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423041773590120208, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.737338
+      objectReference: {fileID: 0}
     - target: {fileID: 3423041773590120209, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1162,8 +1204,16 @@ PrefabInstance:
       value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 3423041773590120210, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 531925014}
+    - target: {fileID: 3423041773590120210, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
       propertyPath: attackLayerMask.m_Bits
       value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423041773590120213, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: m_GravityScale
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
@@ -1451,7 +1501,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7450683, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

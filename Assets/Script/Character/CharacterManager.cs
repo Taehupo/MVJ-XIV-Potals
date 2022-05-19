@@ -12,6 +12,7 @@ public class CharacterManager : MonoBehaviour
 	public int humanAttackDamage;
 
 	public Animator animator;
+	public SpriteRenderer spriteRenderer;
 
 	public static CharacterManager Instance { get; private set; }
 
@@ -74,6 +75,7 @@ public class CharacterManager : MonoBehaviour
 			return;
 		}
 
+		animator.SetTrigger("Jump");
 		CurrentMovementController.Jump(context);
 	}
 
@@ -90,6 +92,11 @@ public class CharacterManager : MonoBehaviour
 			CurrentAttackController.Attack();
 		}
 	}
+
+	public void Flip(bool isRight)
+    {
+		spriteRenderer.flipX = isRight;
+    }
 	#endregion
 
 
