@@ -79,13 +79,19 @@ public class HumanMovementController : MovementController
 
 	void Update()
 	{
+		// Change player direction
+		if (CharacterManager.Instance.rb.velocity.x > 0)
+			CharacterManager.Instance.transform.eulerAngles = Vector3.zero;
+		else if (CharacterManager.Instance.rb.velocity.x < 0)
+			CharacterManager.Instance.transform.eulerAngles = new Vector3(0, 180, 0);
+
 		Vector2 boxCastOrigin = gameObject.transform.position;
 		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
 		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
 		RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, new Vector3(0.47f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
 		if (hit.collider != null)
 		{
-			Debug.Log(hit.collider.name);
+			//Debug.Log(hit.collider.name);
 			if (hit.collider.tag == "Platform")
 			{
 				CharacterManager.Instance.IsGrounded = true;
