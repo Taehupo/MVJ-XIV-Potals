@@ -82,12 +82,6 @@ public class HumanMovementController : MovementController
 
 	void Update()
 	{
-		// Change player direction
-		if (CharacterManager.Instance.rb.velocity.x > 0)
-			CharacterManager.Instance.transform.eulerAngles = Vector3.zero;
-		else if (CharacterManager.Instance.rb.velocity.x < 0)
-			CharacterManager.Instance.transform.eulerAngles = new Vector3(0, 180, 0);
-
 		Vector2 boxCastOrigin = gameObject.transform.position;
 		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
 		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
