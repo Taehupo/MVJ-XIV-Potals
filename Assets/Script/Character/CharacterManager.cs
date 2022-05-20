@@ -43,6 +43,15 @@ public class CharacterManager : MonoBehaviour
 	[SerializeField]
 	float boxCastXOffset;
 
+	public int MaxHealth { get => maxHealth; set => maxHealth = value; }
+	public int CurrentHealth { get => currentHealth; set => currentHealth = value; }
+
+	[SerializeField]
+	int maxHealth;
+
+	[SerializeField]
+	int currentHealth;
+
 	#endregion
 
 	#region Flags
@@ -97,6 +106,29 @@ public class CharacterManager : MonoBehaviour
     {
 		spriteRenderer.flipX = isRight;
     }
+
+	public void TakeDamage(int damage)
+	{
+		CurrentHealth -= damage;
+		Debug.Log("Took " + damage + ", health remaining : " + CurrentHealth);
+
+		if (CurrentHealth <= 0)
+        {
+			Debug.Log("Player is ded =(");
+		}
+	}
+
+	public void Heal(int amount)
+	{
+		CurrentHealth += amount;
+
+		if (CurrentHealth > MaxHealth)
+		{
+			CurrentHealth = MaxHealth;
+		}
+		Debug.Log("Healed " + amount + ", health : " + CurrentHealth);
+	}
+
 	#endregion
 
 
@@ -121,6 +153,11 @@ public class CharacterManager : MonoBehaviour
 		// register callback
 		ShapeController.OnShapeChanged += OnShapeChanged;
 	}
+
+    private void Start()
+    {
+		CurrentHealth = MaxHealth;
+    }
 
     private void OnDestroy()
     {
