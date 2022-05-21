@@ -20,11 +20,6 @@ public abstract class AttackController : MonoBehaviour
 
 
     #region Public Manipulators
-    public AttackController()
-    {
-        ContactFilter2D contactFilter = new();
-        contactFilter.SetLayerMask(enemyLayer);
-    }
 
     public abstract void Attack(InputAction.CallbackContext context);
     public void Draw() { }
@@ -35,6 +30,9 @@ public abstract class AttackController : MonoBehaviour
         this.damage = _damage;
         this.attackRate = _attackRate;
         this.animator = _animator;
+
+        contactFilter = new();
+        contactFilter.SetLayerMask(_enemyLayer);
     }
 
     #endregion
