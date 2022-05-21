@@ -14,11 +14,17 @@ public abstract class AttackController : MonoBehaviour
     public Animator animator;
 
     protected float nextAtkTime = 0f;
+    protected ContactFilter2D contactFilter;
 
     #endregion
 
 
     #region Public Manipulators
+    public AttackController()
+    {
+        ContactFilter2D contactFilter = new();
+        contactFilter.SetLayerMask(enemyLayer);
+    }
 
     public abstract void Attack(InputAction.CallbackContext context);
     public void Draw() { }
