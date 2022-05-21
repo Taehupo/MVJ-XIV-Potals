@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class AttackController : MonoBehaviour
 {
@@ -10,20 +11,24 @@ public abstract class AttackController : MonoBehaviour
     public LayerMask enemyLayer;
     public int damage;
     public int attackRate;
+    public Animator animator;
+
+    protected float nextAtkTime = 0f;
 
     #endregion
 
 
     #region Public Manipulators
 
-    public void Attack() { }
+    public abstract void Attack(InputAction.CallbackContext context);
     public void Draw() { }
-    public void Set(GameObject _attackHitbox, LayerMask _enemyLayer, int _damage, int _attackRate)
+    public void Set(GameObject _attackHitbox, LayerMask _enemyLayer, int _damage, int _attackRate, Animator _animator)
     {
         this.attackHitbox = _attackHitbox;
         this.enemyLayer = _enemyLayer;
         this.damage = _damage;
         this.attackRate = _attackRate;
+        this.animator = _animator;
     }
 
     #endregion

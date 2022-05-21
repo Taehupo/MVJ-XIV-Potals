@@ -96,11 +96,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Attack(InputAction.CallbackContext context)
 	{
-		if (context.started)
-        {
-			animator.SetTrigger("Attack");
-			CurrentAttackController.Attack();
-		}
+		CurrentAttackController.Attack(context);
 	}
 
 	public void Flip(bool isRight)
@@ -151,6 +147,8 @@ public class CharacterManager : MonoBehaviour
 
 		CreateSubComponents();
 
+		humanAttackHitbox.SetActive(false);
+
 		// register callback
 		ShapeController.OnShapeChanged += OnShapeChanged;
 	}
@@ -196,7 +194,7 @@ public class CharacterManager : MonoBehaviour
 	void CreateAttackControllers()
 	{
 		AttackController humanAttackController = gameObject.AddComponent<HumanAttackController>(); //= new HumanAttackController(humanAttackPoint, humanAttackRange, attackLayerMask, humanAttackDamage);
-		humanAttackController.Set(humanAttackHitbox,attackLayerMask,humanAttackDamage,humanAttackRate);
+		humanAttackController.Set(humanAttackHitbox,attackLayerMask,humanAttackDamage,humanAttackRate, animator);
 		ShapeToAttackController.Add(ECharacterShape.Human, humanAttackController);
 		// add other shape related AttackController
 

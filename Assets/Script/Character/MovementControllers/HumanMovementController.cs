@@ -30,7 +30,7 @@ public class HumanMovementController : MovementController
 		{
 			isMoving = false;
 		}
-		Debug.Log(context.ReadValue<Vector2>());
+		//Debug.Log(context.ReadValue<Vector2>());
 		moveForce = context.ReadValue<Vector2>();
 	}
 
@@ -124,7 +124,7 @@ public class HumanMovementController : MovementController
 	{
 		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
 		{
-			Debug.Log("I am touching platform !");
+			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
 		}
 	}
@@ -133,7 +133,7 @@ public class HumanMovementController : MovementController
 	{
 		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
 		{
-			Debug.Log("I am touching platform !");
+			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
 		}
 	}
@@ -142,7 +142,7 @@ public class HumanMovementController : MovementController
 	{
 		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
 		{
-			Debug.Log("I am touching NOT platform anymore !");
+			//Debug.Log("I am touching NOT platform anymore !");
 			isCollidingInAir = false;
 		}
 	}

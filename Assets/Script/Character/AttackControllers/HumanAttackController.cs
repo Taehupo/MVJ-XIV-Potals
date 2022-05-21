@@ -1,11 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HumanAttackController : AttackController
 {
-    public new void Attack()
+    public override void Attack(InputAction.CallbackContext context)
     {
-        attackHitbox.SetActive(true);
+        if (context.started)
+        {
+            if (Time.time >= nextAtkTime)
+            {
+                Debug.Log("Attack !");
+                animator.SetTrigger("Attack");
+                nextAtkTime = Time.time + 1f / attackRate;
+                attackHitbox.SetActive(true);
+                List<Collider2D> hitTargets = new List<Collider2D>();
+                ContactFilter2D contactFilter = new ContactFilter2D();
+                contactFilter.SetLayerMask(enemyLayer);
+                Physics2D.OverlapCollider(attackHitbox.GetComponent<BoxCollider2D>(), contactFilter, hitTargets); 
+                foreach (Collider2D hitTarget in hitTargets)
+                {
+                    Debug.Log("Attacking " + hitTarget.name + " !");
+                    hitTarget.GetComponent<IDamageable>().TakeDamage(damage);
+                }
+                attackHitbox.SetActive(false);
+            }
+        }
     }
 }
