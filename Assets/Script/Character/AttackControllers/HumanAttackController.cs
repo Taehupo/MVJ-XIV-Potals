@@ -11,17 +11,16 @@ public class HumanAttackController : AttackController
         {
             if (Time.time >= nextAtkTime)
             {
-                Debug.Log("Attack !");
+                //Debug.Log("Attack !");
                 animator.SetTrigger("Attack");
                 nextAtkTime = Time.time + 1f / attackRate;
+                
                 attackHitbox.SetActive(true);
                 List<Collider2D> hitTargets = new List<Collider2D>();
-                ContactFilter2D contactFilter = new ContactFilter2D();
-                contactFilter.SetLayerMask(enemyLayer);
                 Physics2D.OverlapCollider(attackHitbox.GetComponent<BoxCollider2D>(), contactFilter, hitTargets); 
                 foreach (Collider2D hitTarget in hitTargets)
                 {
-                    Debug.Log("Attacking " + hitTarget.name + " !");
+                    //Debug.Log("Attacking " + hitTarget.name + " !");
                     hitTarget.GetComponent<IDamageable>().TakeDamage(damage);
                 }
                 attackHitbox.SetActive(false);

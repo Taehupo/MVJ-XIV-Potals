@@ -14,6 +14,7 @@ public abstract class AttackController : MonoBehaviour
     public Animator animator;
 
     protected float nextAtkTime = 0f;
+    protected ContactFilter2D contactFilter;
 
     #endregion
 
@@ -29,6 +30,9 @@ public abstract class AttackController : MonoBehaviour
         this.damage = _damage;
         this.attackRate = _attackRate;
         this.animator = _animator;
+
+        contactFilter = new();
+        contactFilter.SetLayerMask(_enemyLayer);
     }
 
     #endregion
