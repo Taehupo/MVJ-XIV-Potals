@@ -6,10 +6,11 @@ using UnityEngine.InputSystem;
 public class CharacterManager : MonoBehaviour
 {
 	#region Members
-	public Transform humanAttackPoint;
-	public float humanAttackRange;
+
+	public GameObject humanAttackHitbox;
 	public LayerMask attackLayerMask;
 	public int humanAttackDamage;
+	public int humanAttackRate;
 
 	public Animator animator;
 	public SpriteRenderer spriteRenderer;
@@ -18,7 +19,7 @@ public class CharacterManager : MonoBehaviour
 
 	public ShapeController ShapeController { get; private set; }
 	public MovementController CurrentMovementController { get; private set; }
-	public IAttackController CurrentAttackController { get; private set; }
+	public AttackController CurrentAttackController { get; private set; }
 
 
 	public Rigidbody2D rb { get; private set; }
@@ -35,7 +36,7 @@ public class CharacterManager : MonoBehaviour
 	float characterJumpForce;
 
 	private Dictionary<ECharacterShape, MovementController> ShapeToMovementController = new();
-	private Dictionary<ECharacterShape, IAttackController> ShapeToAttackController = new();
+	private Dictionary<ECharacterShape, AttackController> ShapeToAttackController = new();
 
 	[SerializeField]
 	float groundingOffset = -0.4f;
@@ -194,12 +195,13 @@ public class CharacterManager : MonoBehaviour
 
 	void CreateAttackControllers()
 	{
-		IAttackController humanAttackController = new HumanAttackController(humanAttackPoint, humanAttackRange, attackLayerMask, humanAttackDamage);
+		AttackController humanAttackController = gameObject.AddComponent<HumanAttackController>(); //= new HumanAttackController(humanAttackPoint, humanAttackRange, attackLayerMask, humanAttackDamage);
+		humanAttackController.Set(humanAttackHitbox,attackLayerMask,humanAttackDamage,humanAttackRate);
 		ShapeToAttackController.Add(ECharacterShape.Human, humanAttackController);
-		
+		// add other shape related AttackController
+
 		CurrentAttackController = humanAttackController;
 
-		// add other shape related AttackController
 	}
 
 	void OnShapeChanged(ECharacterShape shape)
