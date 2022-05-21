@@ -39,7 +39,7 @@ public class CharacterManager : MonoBehaviour
 	private Dictionary<ECharacterShape, AttackController> ShapeToAttackController = new();
 
 	[SerializeField]
-	float groundingOffset = -0.4f;
+	float groundingOffset;
 
 	[SerializeField]
 	float boxCastXOffset;
@@ -62,6 +62,7 @@ public class CharacterManager : MonoBehaviour
 	[SerializeField]
 	bool isGrounded = false;
 	bool sideCollision = false;
+	bool isAlive = true;
 	#endregion
 
 
@@ -106,12 +107,16 @@ public class CharacterManager : MonoBehaviour
 
 	public void TakeDamage(int damage)
 	{
-		CurrentHealth -= damage;
-		Debug.Log("Took " + damage + ", health remaining : " + CurrentHealth);
+		if (isAlive)
+		{
+			CurrentHealth -= damage;
+			Debug.Log("Took " + damage + ", health remaining : " + CurrentHealth);
+		}		
 
 		if (CurrentHealth <= 0)
         {
 			Debug.Log("Player is ded =(");
+			isAlive = false;
 		}
 	}
 

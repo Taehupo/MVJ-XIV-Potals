@@ -85,10 +85,9 @@ public class HumanMovementController : MovementController
 		Vector2 boxCastOrigin = gameObject.transform.position;
 		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
 		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
-		RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, new Vector3(0.47f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
+		RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
 		if (hit.collider != null)
 		{
-			//Debug.Log(hit.collider.name);
 			if (hit.collider.tag == "Platform")
 			{
 				CharacterManager.Instance.IsGrounded = true;
@@ -112,7 +111,7 @@ public class HumanMovementController : MovementController
 		Vector2 boxCastOrigin = gameObject.transform.position;
 		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
 		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
-		Gizmos.DrawWireCube(boxCastOrigin, new Vector3(0.47f, 0.1f, 1.0f));
+		Gizmos.DrawWireCube(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f));
 	}
 
 	#endregion
