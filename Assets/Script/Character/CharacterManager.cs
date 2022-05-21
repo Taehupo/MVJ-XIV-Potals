@@ -75,7 +75,10 @@ public class CharacterManager : MonoBehaviour
 			return;
         }
 
-		CurrentMovementController.Move(context);
+		if (isAlive)
+		{
+			CurrentMovementController.Move(context);
+		}		
 	}
 
 	public void Jump(InputAction.CallbackContext context)
@@ -86,8 +89,11 @@ public class CharacterManager : MonoBehaviour
 			return;
 		}
 
-		animator.SetTrigger("Jump");
-		CurrentMovementController.Jump(context);
+		if (isAlive)
+		{
+			animator.SetTrigger("Jump");
+			CurrentMovementController.Jump(context);
+		}		
 	}
 
 	public void Crouch(InputAction.CallbackContext context)
@@ -97,7 +103,10 @@ public class CharacterManager : MonoBehaviour
 
 	public void Attack(InputAction.CallbackContext context)
 	{
-		CurrentAttackController.Attack(context);
+		if (isAlive)
+		{
+			CurrentAttackController.Attack(context);
+		}
 	}
 
 	public void Flip(bool isRight)
