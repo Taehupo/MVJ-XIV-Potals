@@ -2,27 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAttackController
+public abstract class AttackController : MonoBehaviour
 {
-	#region Members
+    #region Members
 
-	#endregion
+    public GameObject attackHitbox;
+    public LayerMask enemyLayer;
+    public int damage;
+    public int attackRate;
+
+    #endregion
 
 
-	#region Public Manipulators
+    #region Public Manipulators
 
-	public void Attack();
-    public void Draw();
+    public void Attack() { }
+    public void Draw() { }
+    public void Set(GameObject _attackHitbox, LayerMask _enemyLayer, int _damage, int _attackRate)
+    {
+        this.attackHitbox = _attackHitbox;
+        this.enemyLayer = _enemyLayer;
+        this.damage = _damage;
+        this.attackRate = _attackRate;
+    }
 
     #endregion
 
 
     #region Inherited Manipulators
-
-    public Transform AttackPoint { get; set; }
-    public float AttackRange { get; set; }
-    public LayerMask EnemyLayer { get; set; }
-    public int Damage { get; set; }  
 
     #endregion
 
