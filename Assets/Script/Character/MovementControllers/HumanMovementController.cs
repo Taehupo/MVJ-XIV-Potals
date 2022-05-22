@@ -129,27 +129,24 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !CharacterManager.Instance.IsGrounded)
 		{
-			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
 		}
 	}
 
 	private void OnCollisionStay2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !CharacterManager.Instance.IsGrounded)
 		{
-			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
 		}
 	}
 
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !CharacterManager.Instance.IsGrounded)
 		{
-			//Debug.Log("I am touching NOT platform anymore !");
 			isCollidingInAir = false;
 		}
 	}
