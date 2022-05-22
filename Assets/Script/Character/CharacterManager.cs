@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,6 +65,7 @@ public class CharacterManager : MonoBehaviour
 	bool sideCollision = false;
 	bool isAlive = true;
 	bool isInvicible = false;
+	Timer invincibleTimer;
 	#endregion
 
 
@@ -123,7 +125,8 @@ public class CharacterManager : MonoBehaviour
 			Debug.Log("Took " + damage + ", health remaining : " + CurrentHealth);
 			animator.SetTrigger("Hurt");
 			MovementController.Stagger();
-			//isInvicible = true;
+			isInvicible = true;
+			invincibleTimer.StartTimer(1);
 		}		
 
 		if (CurrentHealth <= 0)
@@ -167,6 +170,9 @@ public class CharacterManager : MonoBehaviour
 
 		humanAttackHitbox.SetActive(false);
 
+		invincibleTimer = gameObject.AddComponent<Timer>();
+		invincibleTimer.OnEnd = () => { isInvicible = false; spriteRenderer.enabled = true; };
+
 		// register callback
 		ShapeController.OnShapeChanged += OnShapeChanged;
 	}
@@ -186,12 +192,20 @@ public class CharacterManager : MonoBehaviour
 		ShapeToAttackController.Clear();
 	}
 
-	#endregion
+    private void FixedUpdate()
+    {
+        if (isInvicible)
+        {
+			spriteRenderer.enabled = !spriteRenderer.enabled;
+		}
+    }
+
+    #endregion
 
 
-	#region Private Manipulators
+    #region Private Manipulators
 
-	void CreateSubComponents()
+    void CreateSubComponents()
 	{
 		ShapeController = gameObject.AddComponent<ShapeController>();
 
