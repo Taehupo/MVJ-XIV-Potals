@@ -15,6 +15,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     private Timer invincibleTimer;
     private bool isStaggered = false;
 
+    private bool hitRight = false;
+
+    public bool HitRight { get => hitRight; set => hitRight = value; }
+
     #endregion
 
     #region Public Manipulators
@@ -55,8 +59,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         if (isStaggered)
         {
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-10f, 10f); 
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2((hitRight?1:-1)*10f, 10f);
+            isStaggered = false;
         }
+
         if (isInvicible)
         {
             gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;

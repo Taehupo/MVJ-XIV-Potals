@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterManager : MonoBehaviour
+public class CharacterManager : MonoBehaviour, IDamageable
 {
 	#region Members
 
@@ -59,6 +59,9 @@ public class CharacterManager : MonoBehaviour
 	#region Flags
 	public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
 	public bool SideCollision { get => sideCollision; set => sideCollision = value; }
+
+	private bool hitRight = false;
+	public bool HitRight { get => hitRight; set => hitRight = value; }
 
 	[SerializeField]
 	bool isGrounded = false;

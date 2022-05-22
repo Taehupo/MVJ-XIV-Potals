@@ -22,6 +22,7 @@ public class HumanAttackController : AttackController
                 {
                     //Debug.Log("Attacking " + hitTarget.name + " !");
                     hitTarget.GetComponent<IDamageable>().TakeDamage(damage);
+                    hitTarget.GetComponent<IDamageable>().HitRight = (hitTarget.gameObject.transform.position.x > gameObject.transform.position.x);
                 }
                 attackHitbox.SetActive(false);
             }
