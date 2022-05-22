@@ -15,6 +15,15 @@ public class ShapeController : MonoBehaviour
 
 
     #region Public Manipulators
+    
+    /// <summary>
+    /// set CharacterShape add call OnShapeChanged
+    /// </summary>
+    /// <param name="shape"></param>
+    public void ChangeShape(ECharacterShape shape)
+    {
+        SetShape(shape);
+    }
 
     #endregion
 

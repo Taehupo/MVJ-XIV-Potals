@@ -183,6 +183,17 @@
                     "action": "Shapeshift",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "946fba1e-4048-44ff-b567-de7285adbac3",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shapeshift",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

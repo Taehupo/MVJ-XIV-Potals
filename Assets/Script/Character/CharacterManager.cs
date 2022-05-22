@@ -118,8 +118,7 @@ public class CharacterManager : MonoBehaviour
 		{
 			int nextShape = (int)(ShapeController.CharacterShape + 1) % (int)(ECharacterShape.count);
 			Debug.Log(nextShape);
-			ShapeController.
-			OnShapeChanged((ECharacterShape)nextShape);
+			ShapeController.ChangeShape((ECharacterShape)nextShape);
 		}
 	}
 
@@ -271,8 +270,6 @@ public class CharacterManager : MonoBehaviour
 			keyValuePair.Value.enabled = false;
         }
 		CurrentMovementController.enabled = true;
-
-		Debug.Log(ShapeController.CharacterShape);
 	}
 
 	// Preview cast Area on Player seleted if Gizmo is activated
