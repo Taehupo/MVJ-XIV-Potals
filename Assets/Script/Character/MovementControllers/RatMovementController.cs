@@ -52,7 +52,6 @@ public class RatMovementController : MovementController
 
 	#endregion
 
-
 	#region Inherited Manipulators
 
 	protected override void Awake()

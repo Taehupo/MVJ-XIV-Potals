@@ -6,6 +6,11 @@ public class DummyEnemy : Enemy
 {
     [SerializeField] private int contactDamage;
 
+    private void Awake()
+    {
+        canBeStaggered = true;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.GetComponent<CharacterManager>() != null)

@@ -124,12 +124,19 @@ public class CharacterManager : MonoBehaviour
 
 	public void Flip(bool isRight)
     {
+		// Flip la hitbox d'attaque
+		if (isRight != spriteRenderer.flipX)
+		{
+			Vector2 tmp = humanAttackHitbox.GetComponent<Collider2D>().offset;
+			tmp.x *= -1;
+			humanAttackHitbox.GetComponent<Collider2D>().offset = tmp;
+		}
 		spriteRenderer.flipX = isRight;
     }
 
 	public void TakeDamage(int damage)
 	{
-		if (isAlive)
+		if (isAlive && !isInvicible)
 		{
 			CurrentHealth -= damage;
 			Debug.Log("Took " + damage + ", health remaining : " + CurrentHealth);
