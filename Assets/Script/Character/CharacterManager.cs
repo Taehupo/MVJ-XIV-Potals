@@ -112,14 +112,25 @@ public class CharacterManager : MonoBehaviour
 		}
 	}
 
+	public void ChangeShape(InputAction.CallbackContext context)
+	{
+		if (context.started)
+		{
+			int nextShape = (int)(ShapeController.CharacterShape + 1) % (int)(ECharacterShape.count);
+			Debug.Log(nextShape);
+			ShapeController.
+			OnShapeChanged((ECharacterShape)nextShape);
+		}
+	}
+
 	public void Flip(bool isRight)
     {
 		spriteRenderer.flipX = isRight;
     }
 
-	public void TakeDamage(int damage) // Doit déterminer le côté de collision et attente du putain de gestionnaire de temps de Super Lulu, je sais que tu me lis putain mets le
+	public void TakeDamage(int damage)
 	{
-		if (isAlive && !isInvicible)
+		if (isAlive)
 		{
 			CurrentHealth -= damage;
 			Debug.Log("Took " + damage + ", health remaining : " + CurrentHealth);
@@ -217,10 +228,13 @@ public class CharacterManager : MonoBehaviour
     {
 		MovementController movementController = gameObject.AddComponent<HumanMovementController>();
 		ShapeToMovementController.Add(ECharacterShape.Human, movementController);
-		CurrentMovementController = movementController;
 
 		// add other shape related MovementController
+		MovementController ratMovementController = gameObject.AddComponent<RatMovementController>();
+		ratMovementController.enabled = false;
+		ShapeToMovementController.Add(ECharacterShape.Rat, ratMovementController);
 
+		CurrentMovementController = movementController;
 	}
 
 	void CreateAttackControllers()
@@ -229,13 +243,19 @@ public class CharacterManager : MonoBehaviour
 		humanAttackController.Set(humanAttackHitbox,attackLayerMask,humanAttackDamage,humanAttackRate, animator);
 		ShapeToAttackController.Add(ECharacterShape.Human, humanAttackController);
 		// add other shape related AttackController
+		AttackController ratAttackController = gameObject.AddComponent<RatAttackController>();
+		ratAttackController.Set(humanAttackHitbox, attackLayerMask, humanAttackDamage, humanAttackRate, animator);
+		ShapeToAttackController.Add(ECharacterShape.Rat, ratAttackController);
 
 		CurrentAttackController = humanAttackController;
+
 
 	}
 
 	void OnShapeChanged(ECharacterShape shape)
 	{
+		Debug.Log("Changed shape to " + shape);
+
 		if (shape == ECharacterShape.count)
 			return;
 
@@ -246,6 +266,13 @@ public class CharacterManager : MonoBehaviour
 			CurrentAttackController = ShapeToAttackController[shape];
 
 		// Swap Other Controller based on shape here
+		foreach (KeyValuePair< ECharacterShape, MovementController> keyValuePair in ShapeToMovementController)
+        {
+			keyValuePair.Value.enabled = false;
+        }
+		CurrentMovementController.enabled = true;
+
+		Debug.Log(ShapeController.CharacterShape);
 	}
 
 	// Preview cast Area on Player seleted if Gizmo is activated
