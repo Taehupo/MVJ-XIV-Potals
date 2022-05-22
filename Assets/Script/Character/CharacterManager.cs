@@ -115,6 +115,7 @@ public class CharacterManager : MonoBehaviour
 		{
 			int nextShape = (int)(ShapeController.CharacterShape + 1) % (int)(ECharacterShape.count);
 			Debug.Log(nextShape);
+			ShapeController.
 			OnShapeChanged((ECharacterShape)nextShape);
 		}
 	}

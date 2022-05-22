@@ -63,21 +63,29 @@ public class HumanMovementController : MovementController
 
 	void FixedUpdate()
 	{
-		if ((isMoving && CharacterManager.Instance.IsGrounded) || (isMoving && !CharacterManager.Instance.IsGrounded && !isCollidingInAir))
+		if (isStaggered)
 		{
-			CharacterManager.Instance.rb.velocity = new Vector2(speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
+			CharacterManager.Instance.rb.velocity = new Vector2(-10f, 10f);
+			isStaggered = false;
 		}
 		else
-		{
-			CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
-		}
+        {
+			if ((isMoving && CharacterManager.Instance.IsGrounded) || (isMoving && !CharacterManager.Instance.IsGrounded && !isCollidingInAir))
+			{
+				CharacterManager.Instance.rb.velocity = new Vector2(speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
+			}
+			else
+			{
+				CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
+			}
 
-		if (isJumping && CharacterManager.Instance.IsGrounded)
-		{
-			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, CharacterManager.Instance.CharacterJumpForce);
-			CharacterManager.Instance.IsGrounded = false;
+			if (isJumping && CharacterManager.Instance.IsGrounded)
+			{
+				CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, CharacterManager.Instance.CharacterJumpForce);
+				CharacterManager.Instance.IsGrounded = false;
+			}
+			Animator.SetFloat("Speed", Mathf.Abs(CharacterManager.Instance.rb.velocity.x));
 		}
-		Animator.SetFloat("Speed", Mathf.Abs(CharacterManager.Instance.rb.velocity.x));
 	}
 
 	void Update()
