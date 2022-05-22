@@ -9,6 +9,7 @@ public abstract class MovementController : MonoBehaviour
 
 	protected static bool isMoving;
 	protected static bool isJumping;
+	protected static bool isStaggered = false;
 	protected Animator Animator { get; set; }
 
 	protected CharacterManager m_CharacterManager;
@@ -23,6 +24,8 @@ public abstract class MovementController : MonoBehaviour
 	public abstract void Jump(InputAction.CallbackContext context);
 
 	public abstract void Draw();
+
+	public static void Stagger() { isStaggered = true; }
 
     #endregion
 

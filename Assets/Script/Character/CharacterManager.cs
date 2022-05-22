@@ -63,6 +63,7 @@ public class CharacterManager : MonoBehaviour
 	bool isGrounded = false;
 	bool sideCollision = false;
 	bool isAlive = true;
+	bool isInvicible = false;
 	#endregion
 
 
@@ -114,12 +115,15 @@ public class CharacterManager : MonoBehaviour
 		spriteRenderer.flipX = isRight;
     }
 
-	public void TakeDamage(int damage)
+	public void TakeDamage(int damage) // Doit déterminer le côté de collision et attente du putain de gestionnaire de temps de Super Lulu, je sais que tu me lis putain mets le
 	{
-		if (isAlive)
+		if (isAlive && !isInvicible)
 		{
 			CurrentHealth -= damage;
 			Debug.Log("Took " + damage + ", health remaining : " + CurrentHealth);
+			animator.SetTrigger("Hurt");
+			MovementController.Stagger();
+			//isInvicible = true;
 		}		
 
 		if (CurrentHealth <= 0)
