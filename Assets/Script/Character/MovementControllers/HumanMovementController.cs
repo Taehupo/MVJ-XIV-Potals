@@ -10,6 +10,8 @@ public class HumanMovementController : MovementController
 	Vector2 moveForce;
 	float speed;
 	float jumpSpeed;
+	[SerializeField] float maxJumpTime = 0.15f;
+	float currentJumpTime = 0f;
 
 	bool isCollidingInAir = false;
 
@@ -44,6 +46,8 @@ public class HumanMovementController : MovementController
 		if (context.phase == InputActionPhase.Canceled)
 		{
 			isJumping = false;
+			// Prevents double jump
+			currentJumpTime = maxJumpTime;
 		}
 	}
 
@@ -79,11 +83,22 @@ public class HumanMovementController : MovementController
 				CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
 			}
 
-			if (isJumping && CharacterManager.Instance.IsGrounded)
+			if (isJumping)
 			{
-				CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, CharacterManager.Instance.CharacterJumpForce);
-				CharacterManager.Instance.IsGrounded = false;
+				if (CharacterManager.Instance.IsGrounded)
+				{
+					CharacterManager.Instance.IsGrounded = false;
+					currentJumpTime = 0f;
+				}
+
+				// Let player jumps higher if held
+				if (currentJumpTime < maxJumpTime)
+				{
+					CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, CharacterManager.Instance.CharacterJumpForce);
+					currentJumpTime += Time.deltaTime;
+				}
 			}
+
 			Animator.SetFloat("Speed", Mathf.Abs(CharacterManager.Instance.rb.velocity.x));
 		}
 	}
