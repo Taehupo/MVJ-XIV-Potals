@@ -9,14 +9,20 @@ public abstract class MovementController : MonoBehaviour
 
     public virtual ECharacterShape Shape { get => ECharacterShape.count; }
 
-	protected CharacterShapeProperties m_ShapeProperties { get; set; }
 
+	protected Vector2 moveForce;
+
+	public static bool IsGrounded { get; protected set; }
 	protected static bool isMoving;
 	protected static bool isJumping;
 	protected static bool isStaggered;
+	protected static bool isCollidingInAir;
+
 	protected Animator Animator { get; set; }
 
 	protected CharacterManager m_CharacterManager;
+
+	CharacterShapeProperties m_ShapeProperties;
 
 	#endregion
 

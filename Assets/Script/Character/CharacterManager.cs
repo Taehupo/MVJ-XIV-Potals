@@ -37,14 +37,11 @@ public class CharacterManager : MonoBehaviour, IDamageable
 
 
 	#region Flags
-	public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
 	public bool SideCollision { get => sideCollision; set => sideCollision = value; }
 
 	private bool hitRight = false;
 	public bool HitRight { get => hitRight; set => hitRight = value; }
 
-	[SerializeField]
-	bool isGrounded = false;
 	bool sideCollision = false;
 	bool isAlive = true;
 	bool isInvicible = false;

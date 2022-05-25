@@ -9,10 +9,7 @@ public class HumanMovementController : MovementController
 
     public override ECharacterShape Shape { get => ECharacterShape.Human; }
 
-    Vector2 moveForce;
 	float currentJumpTime = 0f;
-
-	bool isCollidingInAir = false;
 
 	#endregion
 
@@ -71,7 +68,7 @@ public class HumanMovementController : MovementController
 		}
 		else
         {
-			if ((isMoving && CharacterManager.Instance.IsGrounded) || (isMoving && !CharacterManager.Instance.IsGrounded && !isCollidingInAir))
+			if ((isMoving && IsGrounded) || (isMoving && !IsGrounded && !isCollidingInAir))
 			{
 				CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
 			}
@@ -82,9 +79,9 @@ public class HumanMovementController : MovementController
 
 			if (isJumping)
 			{
-				if (CharacterManager.Instance.IsGrounded)
+				if (IsGrounded)
 				{
-					CharacterManager.Instance.IsGrounded = false;
+					IsGrounded = false;
 					currentJumpTime = 0f;
 				}
 
@@ -110,18 +107,18 @@ public class HumanMovementController : MovementController
 		{
 			if (hit.collider.tag == "Platform")
 			{
-				CharacterManager.Instance.IsGrounded = true;
+				IsGrounded = true;
 				Animator.SetBool("Grounded", true);
 			}
 			else
 			{
-				CharacterManager.Instance.IsGrounded = false;
+				IsGrounded = false;
 				Animator.SetBool("Grounded", false);
 			}
 		}
 		else
 		{
-			CharacterManager.Instance.IsGrounded = false;
+			IsGrounded = false;
 			Animator.SetBool("Grounded", false);
 		}
 	}
@@ -141,7 +138,7 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !CharacterManager.Instance.IsGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
 		{
 			isCollidingInAir = true;
 		}
@@ -149,7 +146,7 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionStay2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !CharacterManager.Instance.IsGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
 		{
 			isCollidingInAir = true;
 		}
@@ -157,7 +154,7 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !CharacterManager.Instance.IsGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
 		{
 			isCollidingInAir = false;
 		}

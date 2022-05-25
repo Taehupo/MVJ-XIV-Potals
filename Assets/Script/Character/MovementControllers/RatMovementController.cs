@@ -7,9 +7,6 @@ public class RatMovementController : MovementController
 {
 	#region Members
 
-	Vector2 moveForce;
-
-	bool isCollidingInAir = false;
 	public override ECharacterShape Shape { get => ECharacterShape.Rat; }
 
 	#endregion
@@ -59,7 +56,7 @@ public class RatMovementController : MovementController
 
 	void FixedUpdate()
 	{
-		if ((isMoving && CharacterManager.Instance.IsGrounded) || (isMoving && !CharacterManager.Instance.IsGrounded && !isCollidingInAir))
+		if ((isMoving && IsGrounded) || (isMoving && !IsGrounded && !isCollidingInAir))
 		{
 			CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
 		}
@@ -68,11 +65,11 @@ public class RatMovementController : MovementController
 			CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
 		}
 
-		if (isJumping && CharacterManager.Instance.IsGrounded)
+		if (isJumping && IsGrounded)
 		{
 			Debug.Log("Rat jumps at force : " + JumpForce);
 			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, JumpForce);
-			CharacterManager.Instance.IsGrounded = false;
+			IsGrounded = false;
 		}
 		Animator.SetFloat("Speed", Mathf.Abs(CharacterManager.Instance.rb.velocity.x));
 	}
@@ -87,18 +84,18 @@ public class RatMovementController : MovementController
 		{
 			if (hit.collider.tag == "Platform")
 			{
-				CharacterManager.Instance.IsGrounded = true;
+				IsGrounded = true;
 				Animator.SetBool("Grounded", true);
 			}
 			else
 			{
-				CharacterManager.Instance.IsGrounded = false;
+				IsGrounded = false;
 				Animator.SetBool("Grounded", false);
 			}
 		}
 		else
 		{
-			CharacterManager.Instance.IsGrounded = false;
+			IsGrounded = false;
 			Animator.SetBool("Grounded", false);
 		}
 	}
@@ -118,7 +115,7 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		if (collision.gameObject.tag == "Platform" && !IsGrounded)
 		{
 			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
@@ -127,7 +124,7 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionStay2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		if (collision.gameObject.tag == "Platform" && !IsGrounded)
 		{
 			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
@@ -136,7 +133,7 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		if (collision.gameObject.tag == "Platform" && !IsGrounded)
 		{
 			//Debug.Log("I am touching NOT platform anymore !");
 			isCollidingInAir = false;
