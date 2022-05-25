@@ -17,23 +17,23 @@ public class CharacterShapeProperties : ScriptableObject
 
     // MovementProperties
     [SerializeField]
-    private float m_Speed;
+    private float m_Speed = 10;
     [SerializeField]
-    private float m_JumpForce;
+    private float m_JumpForce = 10;
     [SerializeField]
-    private float m_MaxJumpTime;
+    private float m_MaxJumpTime = 0.15f;
     [SerializeField]
-    private float m_GroundingOffset;
+    private float m_GroundingOffset = -0.1f;
     [SerializeField]
-    private float m_BoxCastXOffset;
+    private float m_BoxCastXOffset = -0.03f;
 
     // AttackProperties
     [SerializeField]
     private GameObject m_AttackHitbox;
     [SerializeField]
-    private float m_AttackDamage;
+    private float m_AttackDamage = 1;
     [SerializeField]
-    private float m_AttackRate;
+    private float m_AttackRate = 3;
 
     #endregion
 
