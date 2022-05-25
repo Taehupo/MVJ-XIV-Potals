@@ -10,8 +10,6 @@ public class CharacterManager : MonoBehaviour, IDamageable
 
 	public GameObject humanAttackHitbox;
 	public LayerMask attackLayerMask;
-	public int humanAttackDamage;
-	public int humanAttackRate;
 
 	public Animator animator;
 	public SpriteRenderer spriteRenderer;
@@ -19,28 +17,9 @@ public class CharacterManager : MonoBehaviour, IDamageable
 	public static CharacterManager Instance { get; private set; }
 
 	public ShapeController ShapeController { get; private set; }
-	public MovementController CurrentMovementController { get; private set; }
-	public AttackController CurrentAttackController { get; private set; }
 
 
 	public Rigidbody2D rb { get; private set; }
-
-	public float CharacterSpeed { get => characterSpeed; set => characterSpeed = value; }
-	public float CharacterJumpForce { get => characterJumpForce; set => characterJumpForce = value; }
-	public float GroundingOffset { get => groundingOffset; set => groundingOffset = value; }
-	public float BoxCastXOffset { get => boxCastXOffset; set => boxCastXOffset = value; }
-
-	[SerializeField]
-	float characterSpeed;
-
-	[SerializeField]
-	float characterJumpForce;
-
-	[SerializeField]
-	float groundingOffset;
-
-	[SerializeField]
-	float boxCastXOffset;
 
 	public int MaxHealth { get => maxHealth; set => maxHealth = value; }
 	public int CurrentHealth { get => currentHealth; set => currentHealth = value; }
@@ -55,6 +34,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 	public List<CharacterShapeProperties> ShapesProperties;
 
 	#endregion
+
 
 	#region Flags
 	public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
@@ -72,12 +52,13 @@ public class CharacterManager : MonoBehaviour, IDamageable
 	#endregion
 
 
-	#region Accessor
+	#region Accessors
 
 	public MovementController MovementController { get => ShapeController.MovementController; }
 	public AttackController AttackController { get => ShapeController.AttackController; }
 
 	#endregion
+
 
 	#region PlayerInput
 
