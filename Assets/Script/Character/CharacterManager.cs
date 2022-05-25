@@ -36,9 +36,6 @@ public class CharacterManager : MonoBehaviour, IDamageable
 	[SerializeField]
 	float characterJumpForce;
 
-	private Dictionary<ECharacterShape, MovementController> ShapeToMovementController = new();
-	private Dictionary<ECharacterShape, AttackController> ShapeToAttackController = new();
-
 	[SerializeField]
 	float groundingOffset;
 
@@ -53,6 +50,9 @@ public class CharacterManager : MonoBehaviour, IDamageable
 
 	[SerializeField]
 	int currentHealth;
+
+
+	public List<CharacterShapeProperties> ShapesProperties;
 
 	#endregion
 
@@ -72,34 +72,44 @@ public class CharacterManager : MonoBehaviour, IDamageable
 	#endregion
 
 
-	#region Public Manipulators
+	#region Accessor
+
+	public MovementController MovementController { get => ShapeController.MovementController; }
+	public AttackController AttackController { get => ShapeController.AttackController; }
+
+	#endregion
+
+	#region PlayerInput
+
 	public void Move(InputAction.CallbackContext context)
 	{
-		if(CurrentMovementController == null)
-        {
-			Debug.LogError("CharacterManager.Move() Error : CurrentMovementController is null");
+		// error control
+		if (MovementController == null)
+		{
+			Debug.LogError("CharacterManager.Move() Error : MovementController is null");
 			return;
-        }
+		}
 
 		if (isAlive)
 		{
-			CurrentMovementController.Move(context);
-		}		
+			MovementController.Move(context);
+		}
 	}
 
 	public void Jump(InputAction.CallbackContext context)
 	{
-		if (CurrentMovementController == null)
+		// error control
+		if (MovementController == null)
 		{
-			Debug.LogError("CharacterManager.Jump() Error : CurrentMovementController is null");
+			Debug.LogError("CharacterManager.Jump() Error : MovementController is null");
 			return;
 		}
 
 		if (isAlive)
 		{
 			animator.SetTrigger("Jump");
-			CurrentMovementController.Jump(context);
-		}		
+			MovementController.Jump(context);
+		}
 	}
 
 	public void Crouch(InputAction.CallbackContext context)
@@ -109,9 +119,16 @@ public class CharacterManager : MonoBehaviour, IDamageable
 
 	public void Attack(InputAction.CallbackContext context)
 	{
+		// error control
+		if (AttackController == null)
+		{
+			Debug.LogError("CharacterManager.Attack() Error : AttackController is null");
+			return;
+		}
+
 		if (isAlive)
 		{
-			CurrentAttackController.Attack(context);
+			AttackController.Attack(context);
 		}
 	}
 
@@ -124,6 +141,11 @@ public class CharacterManager : MonoBehaviour, IDamageable
 			ShapeController.ChangeShape((ECharacterShape)nextShape);
 		}
 	}
+
+	#endregion
+
+
+	#region Public Manipulators
 
 	public void Flip(bool isRight)
     {
@@ -192,25 +214,12 @@ public class CharacterManager : MonoBehaviour, IDamageable
 
 		invincibleTimer = gameObject.AddComponent<Timer>();
 		invincibleTimer.OnEnd = () => { isInvicible = false; spriteRenderer.enabled = true; };
-
-		// register callback
-		ShapeController.OnShapeChanged += OnShapeChanged;
 	}
 
     private void Start()
     {
 		CurrentHealth = MaxHealth;
     }
-
-    private void OnDestroy()
-    {
-		// unregister callback
-		ShapeController.OnShapeChanged -= OnShapeChanged;
-
-		// clear dictionnary
-		ShapeToMovementController.Clear();
-		ShapeToAttackController.Clear();
-	}
 
     private void FixedUpdate()
     {
@@ -228,72 +237,19 @@ public class CharacterManager : MonoBehaviour, IDamageable
     void CreateSubComponents()
 	{
 		ShapeController = gameObject.AddComponent<ShapeController>();
-
-		CreateMovementControllers();
-		CreateAttackControllers();
-	}
-
-	void CreateMovementControllers()
-    {
-		MovementController movementController = gameObject.AddComponent<HumanMovementController>();
-		ShapeToMovementController.Add(ECharacterShape.Human, movementController);
-
-		// add other shape related MovementController
-		MovementController ratMovementController = gameObject.AddComponent<RatMovementController>();
-		ratMovementController.enabled = false;
-		ShapeToMovementController.Add(ECharacterShape.Rat, ratMovementController);
-
-		CurrentMovementController = movementController;
-	}
-
-	void CreateAttackControllers()
-	{
-		AttackController humanAttackController = gameObject.AddComponent<HumanAttackController>(); //= new HumanAttackController(humanAttackPoint, humanAttackRange, attackLayerMask, humanAttackDamage);
-		humanAttackController.Set(humanAttackHitbox,attackLayerMask,humanAttackDamage,humanAttackRate, animator);
-		ShapeToAttackController.Add(ECharacterShape.Human, humanAttackController);
-		// add other shape related AttackController
-		AttackController ratAttackController = gameObject.AddComponent<RatAttackController>();
-		ratAttackController.Set(humanAttackHitbox, attackLayerMask, humanAttackDamage, humanAttackRate, animator);
-		ShapeToAttackController.Add(ECharacterShape.Rat, ratAttackController);
-
-		CurrentAttackController = humanAttackController;
-
-
-	}
-
-	void OnShapeChanged(ECharacterShape shape)
-	{
-		Debug.Log("Changed shape to " + shape);
-
-		if (shape == ECharacterShape.count)
-			return;
-
-		if(ShapeToMovementController[shape] != null)
-			CurrentMovementController = ShapeToMovementController[shape];
-
-		if(ShapeToAttackController[shape] != null)
-			CurrentAttackController = ShapeToAttackController[shape];
-
-		// Swap Other Controller based on shape here
-		foreach (KeyValuePair< ECharacterShape, MovementController> keyValuePair in ShapeToMovementController)
-        {
-			keyValuePair.Value.enabled = false;
-        }
-		CurrentMovementController.enabled = true;
 	}
 
 	// Preview cast Area on Player seleted if Gizmo is activated
 	void OnDrawGizmosSelected()
     {
-		if (CurrentAttackController != null)
+		if (ShapeController != null)
 		{
-			CurrentAttackController.Draw();
+			AttackController.Draw();
 		}
-		if (CurrentMovementController != null)
+		if (ShapeController != null)
 		{
-			CurrentMovementController.Draw();
+			MovementController.Draw();
 		}
-
     }
 
 	#endregion
