@@ -15,8 +15,9 @@ MonoBehaviour:
   m_Shape: 0
   m_Speed: 10
   m_JumpForce: 10
+  m_MaxJumpTime: 0.15
   m_GroundingOffset: -0.1
   m_BoxCastXOffset: -0.03
-  m_AttackHitbox: {fileID: 0}
+  m_AttackHitbox: {fileID: 1548830107684962348, guid: 64048df9465481f43bbca11415866c18, type: 3}
   m_AttackDamage: 1
   m_AttackRate: 3

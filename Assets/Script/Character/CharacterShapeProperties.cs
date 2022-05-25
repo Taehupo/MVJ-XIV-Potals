@@ -21,6 +21,8 @@ public class CharacterShapeProperties : ScriptableObject
     [SerializeField]
     private float m_JumpForce;
     [SerializeField]
+    private float m_MaxJumpTime;
+    [SerializeField]
     private float m_GroundingOffset;
     [SerializeField]
     private float m_BoxCastXOffset;
@@ -43,6 +45,7 @@ public class CharacterShapeProperties : ScriptableObject
     // MovementProperties
     public float Speed { get => m_Speed; }
     public float JumpForce { get => m_JumpForce; }
+    public float MaxJumpTime { get => m_MaxJumpTime; }
     public float GroundingOffset { get => m_GroundingOffset; }
     public float BoxCastXOffset { get => m_BoxCastXOffset; }
 
@@ -53,4 +56,24 @@ public class CharacterShapeProperties : ScriptableObject
     public float AttackRate { get => m_AttackRate; }
 
     #endregion
+
+
+
+
+    // it's just to flex
+    [MenuItem("Tool/CreateShapeProperties")]
+    static public void Test()
+    {
+        CharacterShapeProperties shapeProperties = CreateInstance<CharacterShapeProperties>();
+
+
+        AssetDatabase.CreateAsset(shapeProperties, "Assets/CharacterShape/Properties/NewShape.asset");
+        AssetDatabase.SaveAssets();
+
+
+        EditorUtility.FocusProjectWindow();
+
+        // define inspector object to the newly created one
+        Selection.activeObject = shapeProperties;
+    }
 }
