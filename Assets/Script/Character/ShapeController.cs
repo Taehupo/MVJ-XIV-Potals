@@ -82,6 +82,7 @@ public class ShapeController : MonoBehaviour
     void CreateMovementControllers()
     {
         MovementController movementController = gameObject.AddComponent<HumanMovementController>();
+        movementController.enabled = false;
         m_ShapeToMovementController.Add(ECharacterShape.Human, movementController);
 
         movementController = gameObject.AddComponent<RatMovementController>();
@@ -97,12 +98,14 @@ public class ShapeController : MonoBehaviour
 
 
         AttackController attackController = gameObject.AddComponent<HumanAttackController>();
+        attackController.enabled = false;
 
         // TODO AttackController fetch properties also float and AttackHitbox properties
         attackController.Set(CharacterManager.Instance.humanAttackHitbox, CharacterManager.Instance.attackLayerMask, (int) shapeProperties.AttackDamage, (int) shapeProperties.AttackRate, CharacterManager.Instance.animator);
         m_ShapeToAttackController.Add(ECharacterShape.Human, attackController);
 
         attackController = gameObject.AddComponent<RatAttackController>();
+        attackController.enabled = false;
 
         // TODO AttackController fetch properties also float and AttackHitbox properties
         attackController.Set(CharacterManager.Instance.humanAttackHitbox, CharacterManager.Instance.attackLayerMask, (int)shapeProperties.AttackDamage, (int)shapeProperties.AttackRate, CharacterManager.Instance.animator);
@@ -126,15 +129,29 @@ public class ShapeController : MonoBehaviour
 
     void SwapControllers(ECharacterShape shape)
     {
+        // MovementController
+        if (MovementController != null)
+            MovementController.enabled = false;
+
         if (m_ShapeToMovementController[shape] == null)
             Debug.LogError("ShapeController.SwapControllers() Error : No MovementController found for " + shape);
         else
+        {
             MovementController = m_ShapeToMovementController[shape];
+            MovementController.enabled = true;
+        }
+
+        // AttackController
+        if (AttackController != null)
+            AttackController.enabled = false;
 
         if (m_ShapeToAttackController[shape] == null)
             Debug.LogError("ShapeController.SwapControllers() Error : No AttackController found for " + shape);
         else
+        {
             AttackController = m_ShapeToAttackController[shape];
+            AttackController.enabled = true;
+        }
 
         // Swap Other Controller based on shape here
     }
