@@ -10,6 +10,7 @@ public class RatMovementController : MovementController
 	Vector2 moveForce;
 
 	bool isCollidingInAir = false;
+	public override ECharacterShape Shape { get => ECharacterShape.Rat; }
 
 	#endregion
 
