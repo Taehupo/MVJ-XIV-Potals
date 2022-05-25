@@ -5,6 +5,12 @@ using UnityEngine.InputSystem;
 
 public class HumanAttackController : AttackController
 {
+    #region Members
+
+    public override ECharacterShape Shape { get => ECharacterShape.Human; }
+
+    #endregion
+
     public override void Attack(InputAction.CallbackContext context)
     {
         if (context.started)
