@@ -151,14 +151,11 @@ MonoBehaviour:
   humanAttackRate: 3
   animator: {fileID: 3423041773590120212}
   spriteRenderer: {fileID: 3423041773590120206}
-  characterSpeed: 10
-  characterJumpForce: 10
-  groundingOffset: -0.1
-  boxCastXOffset: -0.03
   maxHealth: 100
   currentHealth: 0
   ShapesProperties:
   - {fileID: 11400000, guid: 40b622f3173ac3c49a38317effd9dac6, type: 2}
+  - {fileID: 11400000, guid: 4a8a1bd52f9e90c42b0309a1dc9ec06b, type: 2}
   isGrounded: 0
 --- !u!114 &3423041773590120211
 MonoBehaviour:
