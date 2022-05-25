@@ -7,7 +7,7 @@ using UnityEditor;
 /// <summary>
 /// Properties that define a CharacterShape used by the CharacterControllers
 /// </summary>
-[CreateAssetMenu(menuName = "ScriptableObjects/ShapeProperties", order = 1)]
+[CreateAssetMenu(menuName = "ScriptableObjects/CharacterShapeProperties ", order = 1)]
 public class CharacterShapeProperties : ScriptableObject
 {
     #region Members
@@ -56,24 +56,4 @@ public class CharacterShapeProperties : ScriptableObject
     public float AttackRate { get => m_AttackRate; }
 
     #endregion
-
-
-
-
-    // it's just to flex
-    [MenuItem("Tool/CreateShapeProperties")]
-    static public void Test()
-    {
-        CharacterShapeProperties shapeProperties = CreateInstance<CharacterShapeProperties>();
-
-
-        AssetDatabase.CreateAsset(shapeProperties, "Assets/CharacterShape/Properties/NewShape.asset");
-        AssetDatabase.SaveAssets();
-
-
-        EditorUtility.FocusProjectWindow();
-
-        // define inspector object to the newly created one
-        Selection.activeObject = shapeProperties;
-    }
 }
