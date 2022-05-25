@@ -8,11 +8,6 @@ public class RatMovementController : MovementController
 	#region Members
 
 	Vector2 moveForce;
-	float speed;
-	float jumpSpeed;
-
-	// Jump difference compared to normal state
-	float jumpModifier = 0.5f;
 
 	bool isCollidingInAir = false;
 
@@ -58,8 +53,6 @@ public class RatMovementController : MovementController
 	{
 		base.Awake();
 
-		// get speed value from CharacterManager (this will change)
-		speed = CharacterManager.Instance.CharacterSpeed;
 		Animator = CharacterManager.Instance.animator;
 	}
 
@@ -67,7 +60,7 @@ public class RatMovementController : MovementController
 	{
 		if ((isMoving && CharacterManager.Instance.IsGrounded) || (isMoving && !CharacterManager.Instance.IsGrounded && !isCollidingInAir))
 		{
-			CharacterManager.Instance.rb.velocity = new Vector2(speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
+			CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
 		}
 		else
 		{
@@ -76,9 +69,8 @@ public class RatMovementController : MovementController
 
 		if (isJumping && CharacterManager.Instance.IsGrounded)
 		{
-			float jumpForce = CharacterManager.Instance.CharacterJumpForce * jumpModifier;
-			Debug.Log("Rat jumps at force : " + jumpForce);
-			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, jumpForce);
+			Debug.Log("Rat jumps at force : " + JumpForce);
+			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, JumpForce);
 			CharacterManager.Instance.IsGrounded = false;
 		}
 		Animator.SetFloat("Speed", Mathf.Abs(CharacterManager.Instance.rb.velocity.x));
@@ -87,8 +79,8 @@ public class RatMovementController : MovementController
 	void Update()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
-		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
-		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
+		boxCastOrigin.y += GroundingOffset;
+		boxCastOrigin.x += BoxCastXOffset;
 		RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
 		if (hit.collider != null)
 		{
@@ -113,8 +105,8 @@ public class RatMovementController : MovementController
 	override public void Draw()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
-		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
-		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
+		boxCastOrigin.y += GroundingOffset;
+		boxCastOrigin.x += BoxCastXOffset;
 		Gizmos.DrawWireCube(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f));
 	}
 

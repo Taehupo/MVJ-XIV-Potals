@@ -5,12 +5,11 @@ using UnityEngine.InputSystem;
 
 public class HumanMovementController : MovementController
 {
-	#region Members
+    #region Members
 
-	Vector2 moveForce;
-	float speed;
-	float jumpSpeed;
-	[SerializeField] float maxJumpTime = 0.15f;
+    public override ECharacterShape Shape { get => ECharacterShape.Human; }
+
+    Vector2 moveForce;
 	float currentJumpTime = 0f;
 
 	bool isCollidingInAir = false;
@@ -47,7 +46,7 @@ public class HumanMovementController : MovementController
 		{
 			isJumping = false;
 			// Prevents double jump
-			currentJumpTime = maxJumpTime;
+			currentJumpTime = MaxJumpTime;
 		}
 	}
 
@@ -60,8 +59,6 @@ public class HumanMovementController : MovementController
 	{
 		base.Awake();
 
-		// get speed value from CharacterManager (this will change)
-		speed = CharacterManager.Instance.CharacterSpeed;
 		Animator = CharacterManager.Instance.animator;
 	}
 
@@ -76,7 +73,7 @@ public class HumanMovementController : MovementController
         {
 			if ((isMoving && CharacterManager.Instance.IsGrounded) || (isMoving && !CharacterManager.Instance.IsGrounded && !isCollidingInAir))
 			{
-				CharacterManager.Instance.rb.velocity = new Vector2(speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
+				CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
 			}
 			else
 			{
@@ -92,9 +89,9 @@ public class HumanMovementController : MovementController
 				}
 
 				// Let player jumps higher if held
-				if (currentJumpTime < maxJumpTime)
+				if (currentJumpTime < MaxJumpTime)
 				{
-					CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, CharacterManager.Instance.CharacterJumpForce);
+					CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, JumpForce);
 					currentJumpTime += Time.deltaTime;
 				}
 			}
@@ -106,8 +103,8 @@ public class HumanMovementController : MovementController
 	void Update()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
-		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
-		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
+		boxCastOrigin.y += GroundingOffset;
+		boxCastOrigin.x += BoxCastXOffset;
 		RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
 		if (hit.collider != null)
 		{
@@ -132,8 +129,8 @@ public class HumanMovementController : MovementController
 	override public void Draw()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
-		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
-		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
+		boxCastOrigin.y += GroundingOffset;
+		boxCastOrigin.x += BoxCastXOffset;
 		Gizmos.DrawWireCube(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f));
 	}
 
