@@ -117,15 +117,11 @@ public class ShapeController : MonoBehaviour
         AttackController attackController = gameObject.AddComponent<HumanAttackController>();
         attackController.enabled = false;
 
-        // TODO AttackController fetch properties also float and AttackHitbox properties
-        attackController.Set(CharacterManager.Instance.humanAttackHitbox, CharacterManager.Instance.attackLayerMask, (int) shapeProperties.AttackDamage, (int) shapeProperties.AttackRate, CharacterManager.Instance.animator);
         m_ShapeToAttackController.Add(ECharacterShape.Human, attackController);
 
         attackController = gameObject.AddComponent<RatAttackController>();
         attackController.enabled = false;
 
-        // TODO AttackController fetch properties also float and AttackHitbox properties
-        attackController.Set(CharacterManager.Instance.humanAttackHitbox, CharacterManager.Instance.attackLayerMask, (int)shapeProperties.AttackDamage, (int)shapeProperties.AttackRate, CharacterManager.Instance.animator);
         m_ShapeToAttackController.Add(ECharacterShape.Rat, attackController);
 
         // Add other shape related AttackController
