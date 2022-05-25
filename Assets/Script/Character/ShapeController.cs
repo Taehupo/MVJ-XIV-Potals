@@ -24,8 +24,25 @@ public class ShapeController : MonoBehaviour
     #endregion
 
 
+    #region Accessors
+
+    public CharacterShapeProperties GetShapeProperties(ECharacterShape shape)
+    {
+        if (!m_ShapeToProperties.ContainsKey(shape))
+        {
+            Debug.LogError("ShapeController.GetShapeProperties() Error : No CharacterShapeProperties for shape " + shape);
+            return null;
+        }
+
+        return m_ShapeToProperties[shape];
+    }
+
+
+    #endregion
+
+
     #region Public Manipulators
-    
+
     public void ChangeShape(ECharacterShape shape)
     {
         SetShape(shape);
