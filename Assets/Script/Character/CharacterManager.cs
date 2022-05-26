@@ -17,6 +17,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 	public static CharacterManager Instance { get; private set; }
 
 	public ShapeController ShapeController { get; private set; }
+	public SpriteManager SpriteManager { get; private set; }
 
 
 	public Rigidbody2D rb { get; private set; }
@@ -32,6 +33,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 
 
 	public List<CharacterShapeProperties> ShapesProperties;
+	public List<CharacterShapeVisuals> ShapesVisuals;
 
 	#endregion
 
@@ -117,6 +119,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 			int nextShape = (int)(ShapeController.CharacterShape + 1) % (int)(ECharacterShape.count);
 			Debug.Log(nextShape);
 			ShapeController.ChangeShape((ECharacterShape)nextShape);
+			SpriteManager.ChangeShape((ECharacterShape)nextShape);
 		}
 	}
 
@@ -215,6 +218,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
     void CreateSubComponents()
 	{
 		ShapeController = gameObject.AddComponent<ShapeController>();
+		SpriteManager = gameObject.AddComponent<SpriteManager>();
 	}
 
 	// Preview cast Area on Player seleted if Gizmo is activated
