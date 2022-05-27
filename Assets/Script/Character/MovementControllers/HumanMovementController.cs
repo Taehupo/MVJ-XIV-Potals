@@ -63,7 +63,7 @@ public class HumanMovementController : MovementController
 	{
 		if (isStaggered)
 		{
-			CharacterManager.Instance.rb.velocity = new Vector2(10f*(CharacterManager.Instance.HitRight?1:-1), 10f);
+			CharacterManager.Instance.rb.velocity = new Vector2(10f*CharacterManager.Instance.GetHitLocation(), 10f);
 			isStaggered = false;
 		}
 		else

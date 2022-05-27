@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterManager : MonoBehaviour, IDamageable
+public class CharacterManager : Damageable
 {
 	#region Members
 
@@ -19,17 +19,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 	public ShapeController ShapeController { get; private set; }
 	public SpriteManager SpriteManager { get; private set; }
 
-
 	public Rigidbody2D rb { get; private set; }
-
-	public int MaxHealth { get => maxHealth; set => maxHealth = value; }
-	public int CurrentHealth { get => currentHealth; set => currentHealth = value; }
-
-	[SerializeField]
-	int maxHealth;
-
-	[SerializeField]
-	int currentHealth;
 
 
 	public List<CharacterShapeProperties> ShapesProperties;
@@ -41,13 +31,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 	#region Flags
 	public bool SideCollision { get => sideCollision; set => sideCollision = value; }
 
-	private bool hitRight = false;
-	public bool HitRight { get => hitRight; set => hitRight = value; }
-
 	bool sideCollision = false;
-	bool isAlive = true;
-	bool isInvicible = false;
-	Timer invincibleTimer;
 	#endregion
 
 
@@ -70,7 +54,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 			return;
 		}
 
-		if (isAlive)
+		if (IsAlive())
 		{
 			MovementController.Move(context);
 		}
@@ -85,7 +69,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 			return;
 		}
 
-		if (isAlive)
+		if (IsAlive())
 		{
 			animator.SetTrigger("Jump");
 			MovementController.Jump(context);
@@ -106,7 +90,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 			return;
 		}
 
-		if (isAlive)
+		if (IsAlive())
 		{
 			AttackController.Attack(context);
 		}
@@ -140,36 +124,6 @@ public class CharacterManager : MonoBehaviour, IDamageable
 		spriteRenderer.flipX = isRight;
     }
 
-	public void TakeDamage(int damage)
-	{
-		if (isAlive && !isInvicible)
-		{
-			CurrentHealth -= damage;
-			Debug.Log("Took " + damage + ", health remaining : " + CurrentHealth);
-			animator.SetTrigger("Hurt");
-			MovementController.Stagger();
-			isInvicible = true;
-			invincibleTimer.StartTimer(1);
-		}		
-
-		if (CurrentHealth <= 0)
-        {
-			Debug.Log("Player is ded =(");
-			isAlive = false;
-		}
-	}
-
-	public void Heal(int amount)
-	{
-		CurrentHealth += amount;
-
-		if (CurrentHealth > MaxHealth)
-		{
-			CurrentHealth = MaxHealth;
-		}
-		Debug.Log("Healed " + amount + ", health : " + CurrentHealth);
-	}
-
 	#endregion
 
 
@@ -192,23 +146,9 @@ public class CharacterManager : MonoBehaviour, IDamageable
 		CreateSubComponents();
 
 		humanAttackHitbox.SetActive(false);
-
 		invincibleTimer = gameObject.AddComponent<Timer>();
-		invincibleTimer.OnEnd = () => { isInvicible = false; spriteRenderer.enabled = true; };
+		invincibleTimer.OnEnd = () => { StopInvincibility(); SpriteManager.StopBlink(); };
 	}
-
-    private void Start()
-    {
-		CurrentHealth = MaxHealth;
-    }
-
-    private void FixedUpdate()
-    {
-        if (isInvicible)
-        {
-			spriteRenderer.enabled = !spriteRenderer.enabled;
-		}
-    }
 
     #endregion
 
@@ -234,5 +174,16 @@ public class CharacterManager : MonoBehaviour, IDamageable
 		}
     }
 
+    public override void Hurt()
+    {
+		animator.SetTrigger("Hurt");
+		MovementController.Stagger();
+		SpriteManager.Blink();
+    }
+
+    public override void Defeat()
+    {
+        throw new NotImplementedException();
+    }
 	#endregion
 }
