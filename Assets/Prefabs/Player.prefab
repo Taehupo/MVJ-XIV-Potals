@@ -147,8 +147,6 @@ MonoBehaviour:
   attackLayerMask:
     serializedVersion: 2
     m_Bits: 72
-  humanAttackDamage: 1
-  humanAttackRate: 3
   animator: {fileID: 3423041773590120212}
   spriteRenderer: {fileID: 3423041773590120206}
   maxHealth: 100
@@ -156,7 +154,9 @@ MonoBehaviour:
   ShapesProperties:
   - {fileID: 11400000, guid: 40b622f3173ac3c49a38317effd9dac6, type: 2}
   - {fileID: 11400000, guid: 4a8a1bd52f9e90c42b0309a1dc9ec06b, type: 2}
-  isGrounded: 0
+  ShapesVisuals:
+  - {fileID: 11400000, guid: 9c8e4d996c54bd74b8c5009fe0d6e186, type: 2}
+  - {fileID: 11400000, guid: eb8b4dffa42b73f43805383744579156, type: 2}
 --- !u!114 &3423041773590120211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,11 +231,35 @@ MonoBehaviour:
     m_ActionId: 3dffcdca-8fb4-4156-9c9b-81a08f5bea0f
     m_ActionName: Default/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3423041773590120210}
+        m_TargetAssemblyTypeName: CharacterManager, Assembly-CSharp
+        m_MethodName: Crouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c99f484e-4267-41e6-8584-b24e7a1d12bc
     m_ActionName: Default/Crouch[/Keyboard/leftShift]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3423041773590120210}
+        m_TargetAssemblyTypeName: CharacterManager, Assembly-CSharp
+        m_MethodName: ChangeShape
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a6265e0a-7feb-403a-9df6-401b1a1d5e3c
     m_ActionName: Default/Shapeshift[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
