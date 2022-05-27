@@ -4,32 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterManager : MonoBehaviour, IDamageable
+public class CharacterManager : Damageable
 {
 	#region Members
 
 	public GameObject humanAttackHitbox;
 	public LayerMask attackLayerMask;
 
-	public Animator animator;
-	public SpriteRenderer spriteRenderer;
-
 	public static CharacterManager Instance { get; private set; }
 
 	public ShapeController ShapeController { get; private set; }
 	public SpriteManager SpriteManager { get; private set; }
 
-
 	public Rigidbody2D rb { get; private set; }
-
-	public int MaxHealth { get => maxHealth; set => maxHealth = value; }
-	public int CurrentHealth { get => currentHealth; set => currentHealth = value; }
-
-	[SerializeField]
-	int maxHealth;
-
-	[SerializeField]
-	int currentHealth;
 
 
 	public List<CharacterShapeProperties> ShapesProperties;
@@ -41,13 +28,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 	#region Flags
 	public bool SideCollision { get => sideCollision; set => sideCollision = value; }
 
-	private bool hitRight = false;
-	public bool HitRight { get => hitRight; set => hitRight = value; }
-
 	bool sideCollision = false;
-	bool isAlive = true;
-	bool isInvicible = false;
-	Timer invincibleTimer;
 	#endregion
 
 
@@ -70,7 +51,7 @@ public class CharacterManager : MonoBehaviour, IDamageable
 			return;
 		}
 
-		if (isAlive)
+		if (IsAlive())
 		{
 			MovementController.Move(context);
 		}
@@ -85,10 +66,10 @@ public class CharacterManager : MonoBehaviour, IDamageable
 			return;
 		}
 
-		if (isAlive)
+		if (IsAlive())
 		{
-			animator.SetTrigger("Jump");
 			MovementController.Jump(context);
+			SpriteManager.SetTrigger("Jump");
 		}
 	}
 
@@ -106,9 +87,10 @@ public class CharacterManager : MonoBehaviour, IDamageable
 			return;
 		}
 
-		if (isAlive)
+		if (IsAlive())
 		{
-			AttackController.Attack(context);
+			if (AttackController.Attack(context))
+				SpriteManager.SetTrigger("Attack");
 		}
 	}
 
@@ -127,47 +109,24 @@ public class CharacterManager : MonoBehaviour, IDamageable
 
 
 	#region Public Manipulators
-
 	public void Flip(bool isRight)
-    {
-		// Flip la hitbox d'attaque
-		if (isRight != spriteRenderer.flipX)
-		{
-			Vector2 tmp = humanAttackHitbox.GetComponent<Collider2D>().offset;
-			tmp.x *= -1;
-			humanAttackHitbox.GetComponent<Collider2D>().offset = tmp;
-		}
-		spriteRenderer.flipX = isRight;
-    }
-
-	public void TakeDamage(int damage)
 	{
-		if (isAlive && !isInvicible)
+		if (isRight != SpriteManager.Flip(isRight))
 		{
-			CurrentHealth -= damage;
-			Debug.Log("Took " + damage + ", health remaining : " + CurrentHealth);
-			animator.SetTrigger("Hurt");
-			MovementController.Stagger();
-			isInvicible = true;
-			invincibleTimer.StartTimer(1);
-		}		
-
-		if (CurrentHealth <= 0)
-        {
-			Debug.Log("Player is ded =(");
-			isAlive = false;
+			ShapeController.AttackController.FlipHitbox(isRight);
 		}
 	}
 
-	public void Heal(int amount)
+	public override void Hurt()
 	{
-		CurrentHealth += amount;
+		SpriteManager.SetTrigger("Hurt");
+		MovementController.Stagger();
+		SpriteManager.Blink();
+	}
 
-		if (CurrentHealth > MaxHealth)
-		{
-			CurrentHealth = MaxHealth;
-		}
-		Debug.Log("Healed " + amount + ", health : " + CurrentHealth);
+	public override void Defeat()
+	{
+		throw new NotImplementedException();
 	}
 
 	#endregion
@@ -192,23 +151,16 @@ public class CharacterManager : MonoBehaviour, IDamageable
 		CreateSubComponents();
 
 		humanAttackHitbox.SetActive(false);
-
 		invincibleTimer = gameObject.AddComponent<Timer>();
-		invincibleTimer.OnEnd = () => { isInvicible = false; spriteRenderer.enabled = true; };
+		invincibleTimer.OnEnd = () => { StopInvincibility(); SpriteManager.StopBlink(); };
 	}
-
-    private void Start()
-    {
-		CurrentHealth = MaxHealth;
-    }
 
     private void FixedUpdate()
     {
-        if (isInvicible)
-        {
-			spriteRenderer.enabled = !spriteRenderer.enabled;
-		}
-    }
+        SpriteManager.SetBool("Grounded", MovementController.IsGrounded());
+		if (MovementController.IsGrounded())
+			SpriteManager.SetFloat("Speed", Mathf.Abs(this.rb.velocity.x));
+	}
 
     #endregion
 
@@ -233,6 +185,5 @@ public class CharacterManager : MonoBehaviour, IDamageable
 			MovementController.Draw();
 		}
     }
-
 	#endregion
 }

@@ -14,7 +14,7 @@ public class RatMovementController : MovementController
 
 	#region Public Manipulators
 
-	public override void Move(InputAction.CallbackContext context)
+	public override float Move(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading Move : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
@@ -28,9 +28,10 @@ public class RatMovementController : MovementController
 		}
 		//Debug.Log(context.ReadValue<Vector2>());
 		moveForce = context.ReadValue<Vector2>();
+		return moveForce.x;
 	}
 
-	public override void Jump(InputAction.CallbackContext context)
+	public override bool Jump(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading jump : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
@@ -41,6 +42,7 @@ public class RatMovementController : MovementController
 		{
 			isJumping = false;
 		}
+		return isJumping;
 	}
 
 	#endregion
@@ -50,13 +52,11 @@ public class RatMovementController : MovementController
 	protected override void Awake()
 	{
 		base.Awake();
-
-		Animator = CharacterManager.Instance.animator;
 	}
 
 	void FixedUpdate()
 	{
-		if ((isMoving && IsGrounded) || (isMoving && !IsGrounded && !isCollidingInAir))
+		if ((isMoving && isGrounded) || (isMoving && !isGrounded && !isCollidingInAir))
 		{
 			CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
 		}
@@ -65,13 +65,12 @@ public class RatMovementController : MovementController
 			CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
 		}
 
-		if (isJumping && IsGrounded)
+		if (isJumping && isGrounded)
 		{
 			Debug.Log("Rat jumps at force : " + JumpForce);
 			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, JumpForce);
-			IsGrounded = false;
+			isGrounded = false;
 		}
-		Animator.SetFloat("Speed", Mathf.Abs(CharacterManager.Instance.rb.velocity.x));
 	}
 
 	void Update()
@@ -84,19 +83,14 @@ public class RatMovementController : MovementController
 		{
 			if (hit.collider.tag == "Platform")
 			{
-				IsGrounded = true;
-				Animator.SetBool("Grounded", true);
+				isGrounded = true;
 			}
 			else
-			{
-				IsGrounded = false;
-				Animator.SetBool("Grounded", false);
-			}
+				isGrounded = false;
 		}
 		else
 		{
-			IsGrounded = false;
-			Animator.SetBool("Grounded", false);
+			isGrounded = false;
 		}
 	}
 
@@ -115,7 +109,7 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !IsGrounded)
+		if (collision.gameObject.tag == "Platform" && !isGrounded)
 		{
 			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
@@ -124,7 +118,7 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionStay2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !IsGrounded)
+		if (collision.gameObject.tag == "Platform" && !isGrounded)
 		{
 			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
@@ -133,7 +127,7 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !IsGrounded)
+		if (collision.gameObject.tag == "Platform" && !isGrounded)
 		{
 			//Debug.Log("I am touching NOT platform anymore !");
 			isCollidingInAir = false;

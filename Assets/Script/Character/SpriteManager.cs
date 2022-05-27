@@ -14,6 +14,9 @@ public class SpriteManager : MonoBehaviour
 
     private readonly Dictionary<ECharacterShape, CharacterShapeVisuals> m_ShapeToVisualController = new();
 
+    private Timer blinkTimer;
+    private int blinkRate = 10;
+
     #endregion
 
     #region Public Manipulators
@@ -24,6 +27,33 @@ public class SpriteManager : MonoBehaviour
     }
 
     #endregion
+    public void Blink()
+    {
+        blinkTimer.StartTimer(1f/blinkRate);
+    }
+    public void StopBlink() 
+    { 
+        blinkTimer.StopTimer(false);
+        spriteRenderer.enabled = true; 
+    }
+    public void SetTrigger(string name)
+    {
+        animator.SetTrigger(name);
+    }
+    public void SetFloat(string name, float value)
+    {
+        animator.SetFloat(name, value);
+    }
+    public void SetBool(string name, bool value)
+    {
+        animator.SetBool(name, value);
+    }
+    public bool Flip(bool isRight)
+    {
+        bool old = spriteRenderer.flipX;
+        spriteRenderer.flipX = isRight;
+        return old;
+    }
 
     #region Inherited Manipulators
 
@@ -36,6 +66,13 @@ public class SpriteManager : MonoBehaviour
 
         // set default shape as Human
         SetVisuals(ECharacterShape.Human);
+        
+        blinkTimer = gameObject.AddComponent<Timer>();
+        blinkTimer.OnEnd = () => 
+        { 
+            spriteRenderer.enabled = !spriteRenderer.enabled; 
+            blinkTimer.StartTimer(1f/blinkRate); 
+        };
     }
 
 

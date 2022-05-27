@@ -11,8 +11,9 @@ public class RatAttackController : AttackController
 
     #endregion
 
-    public override void Attack(InputAction.CallbackContext context)
+    public override bool Attack(InputAction.CallbackContext context)
     {
         Debug.Log("Rat attacks!! not effective...");
+        return false;
     }
 }

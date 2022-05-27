@@ -11,7 +11,6 @@ public abstract class AttackController : MonoBehaviour
 
     public GameObject attackHitbox;
     public LayerMask enemyLayer;
-    public Animator animator;
 
     protected float nextAtkTime = 0f;
     protected ContactFilter2D contactFilter = new();
@@ -35,8 +34,14 @@ public abstract class AttackController : MonoBehaviour
 
     #region Public Manipulators
 
-    public abstract void Attack(InputAction.CallbackContext context);
+    public abstract bool Attack(InputAction.CallbackContext context);
     public void Draw() { }
+    public void FlipHitbox(bool isRight)
+    {
+        Vector2 tmp = attackHitbox.GetComponent<Collider2D>().offset;
+        tmp.x *= -1;
+        attackHitbox.GetComponent<Collider2D>().offset = tmp;
+    }
 
     #endregion
 
@@ -49,7 +54,6 @@ public abstract class AttackController : MonoBehaviour
         m_CharacterManager = CharacterManager.Instance;
         enemyLayer = m_CharacterManager.attackLayerMask;
         contactFilter.SetLayerMask(enemyLayer);
-        animator = m_CharacterManager.animator;
         
         // TODO use Properties HitBox 
         attackHitbox = m_CharacterManager.humanAttackHitbox;

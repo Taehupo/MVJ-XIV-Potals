@@ -16,7 +16,7 @@ public class HumanMovementController : MovementController
 
 	#region Public Manipulators
 
-	public override void Move(InputAction.CallbackContext context)
+	public override float Move(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading Move : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
@@ -30,9 +30,10 @@ public class HumanMovementController : MovementController
 		}
 		//Debug.Log(context.ReadValue<Vector2>());
 		moveForce = context.ReadValue<Vector2>();
+		return moveForce.x;
 	}
 
-	public override void Jump(InputAction.CallbackContext context)
+	public override bool Jump(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading jump : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
@@ -45,6 +46,7 @@ public class HumanMovementController : MovementController
 			// Prevents double jump
 			currentJumpTime = MaxJumpTime;
 		}
+		return isJumping;
 	}
 
 	#endregion
@@ -55,20 +57,18 @@ public class HumanMovementController : MovementController
 	protected override void Awake()
 	{
 		base.Awake();
-
-		Animator = CharacterManager.Instance.animator;
 	}
 
 	void FixedUpdate()
 	{
 		if (isStaggered)
 		{
-			CharacterManager.Instance.rb.velocity = new Vector2(10f*(CharacterManager.Instance.HitRight?1:-1), 10f);
+			CharacterManager.Instance.rb.velocity = new Vector2(10f*CharacterManager.Instance.GetHitLocation(), 10f);
 			isStaggered = false;
 		}
 		else
         {
-			if ((isMoving && IsGrounded) || (isMoving && !IsGrounded && !isCollidingInAir))
+			if ((isMoving && isGrounded) || (isMoving && !isGrounded && !isCollidingInAir))
 			{
 				CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
 			}
@@ -79,9 +79,9 @@ public class HumanMovementController : MovementController
 
 			if (isJumping)
 			{
-				if (IsGrounded)
+				if (isGrounded)
 				{
-					IsGrounded = false;
+					isGrounded = false;
 					currentJumpTime = 0f;
 				}
 
@@ -92,8 +92,6 @@ public class HumanMovementController : MovementController
 					currentJumpTime += Time.deltaTime;
 				}
 			}
-
-			Animator.SetFloat("Speed", Mathf.Abs(CharacterManager.Instance.rb.velocity.x));
 		}
 	}
 
@@ -107,19 +105,16 @@ public class HumanMovementController : MovementController
 		{
 			if (hit.collider.tag == "Platform")
 			{
-				IsGrounded = true;
-				Animator.SetBool("Grounded", true);
+				isGrounded = true;
 			}
 			else
 			{
-				IsGrounded = false;
-				Animator.SetBool("Grounded", false);
+				isGrounded = false;
 			}
 		}
 		else
 		{
-			IsGrounded = false;
-			Animator.SetBool("Grounded", false);
+			isGrounded = false;
 		}
 	}
 
@@ -138,7 +133,7 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !isGrounded)
 		{
 			isCollidingInAir = true;
 		}
@@ -146,7 +141,7 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionStay2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !isGrounded)
 		{
 			isCollidingInAir = true;
 		}
@@ -154,7 +149,7 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !isGrounded)
 		{
 			isCollidingInAir = false;
 		}
