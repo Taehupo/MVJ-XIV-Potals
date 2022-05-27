@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterManager : Damageable
+public class CharacterManager : MonoBehaviour
 {
 	#region Members
 
@@ -15,9 +15,10 @@ public class CharacterManager : Damageable
 
 	public ShapeController ShapeController { get; private set; }
 	public SpriteManager SpriteManager { get; private set; }
+	private HealthManager healthManager;
 
 	public Rigidbody2D rb { get; private set; }
-
+	[SerializeField] private int maxHealth = 1;
 
 	public List<CharacterShapeProperties> ShapesProperties;
 	public List<CharacterShapeVisuals> ShapesVisuals;
@@ -44,14 +45,7 @@ public class CharacterManager : Damageable
 
 	public void Move(InputAction.CallbackContext context)
 	{
-		// error control
-		if (MovementController == null)
-		{
-			Debug.LogError("CharacterManager.Move() Error : MovementController is null");
-			return;
-		}
-
-		if (IsAlive())
+		if (healthManager.IsAlive())
 		{
 			MovementController.Move(context);
 		}
@@ -59,14 +53,7 @@ public class CharacterManager : Damageable
 
 	public void Jump(InputAction.CallbackContext context)
 	{
-		// error control
-		if (MovementController == null)
-		{
-			Debug.LogError("CharacterManager.Jump() Error : MovementController is null");
-			return;
-		}
-
-		if (IsAlive())
+		if (healthManager.IsAlive())
 		{
 			MovementController.Jump(context);
 			SpriteManager.SetTrigger("Jump");
@@ -80,14 +67,7 @@ public class CharacterManager : Damageable
 
 	public void Attack(InputAction.CallbackContext context)
 	{
-		// error control
-		if (AttackController == null)
-		{
-			Debug.LogError("CharacterManager.Attack() Error : AttackController is null");
-			return;
-		}
-
-		if (IsAlive())
+		if (healthManager.IsAlive())
 		{
 			if (AttackController.Attack(context))
 				SpriteManager.SetTrigger("Attack");
@@ -111,20 +91,23 @@ public class CharacterManager : Damageable
 	#region Public Manipulators
 	public void Flip(bool isRight)
 	{
+		// Change le sens de la hitbox si le sprite a changé de sens
 		if (isRight != SpriteManager.Flip(isRight))
 		{
 			ShapeController.AttackController.FlipHitbox(isRight);
 		}
 	}
 
-	public override void Hurt()
+	public int GetHitLocation() { return healthManager.GetHitLocation(); }
+
+	public void Hurt()
 	{
 		SpriteManager.SetTrigger("Hurt");
 		MovementController.Stagger();
 		SpriteManager.Blink();
 	}
 
-	public override void Defeat()
+	public void Defeat()
 	{
 		throw new NotImplementedException();
 	}
@@ -143,16 +126,15 @@ public class CharacterManager : Damageable
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
-
 		rb = GetComponent<Rigidbody2D>();
 
 		CreateSubComponents();
 
-		humanAttackHitbox.SetActive(false);
-		invincibleTimer = gameObject.AddComponent<Timer>();
-		invincibleTimer.OnEnd = () => { StopInvincibility(); SpriteManager.StopBlink(); };
+		healthManager.SetMaxHealth(maxHealth);
+		healthManager.invincibleTimer.OnEnd = () => { healthManager.StopInvincibility(); SpriteManager.StopBlink(); };
+		healthManager.onHurt += Hurt;
+		healthManager.onDefeat += Defeat;
 	}
 
     private void FixedUpdate()
@@ -171,6 +153,7 @@ public class CharacterManager : Damageable
 	{
 		ShapeController = gameObject.AddComponent<ShapeController>();
 		SpriteManager = gameObject.AddComponent<SpriteManager>();
+		healthManager = gameObject.AddComponent<HealthManager>();
 	}
 
 	// Preview cast Area on Player seleted if Gizmo is activated

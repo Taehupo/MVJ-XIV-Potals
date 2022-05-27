@@ -13,10 +13,10 @@ public class DummyEnemy : Enemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.GetComponent<Damageable>() != null)
+        if (collision.collider.GetComponent<HealthManager>() != null)
         {
             Debug.Log("Touched " + collision.collider.name);
-            collision.collider.GetComponent<Damageable>().TakeHit(contactDamage, this.gameObject);
+            collision.collider.GetComponent<HealthManager>().TakeHit(contactDamage, this.gameObject);
         }
         else
         {

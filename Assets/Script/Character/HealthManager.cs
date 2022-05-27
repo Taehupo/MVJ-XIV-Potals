@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Damageable : MonoBehaviour
+public class HealthManager : MonoBehaviour
 {
     #region Members
     private bool hitRight = false;
     private bool isInvincible = false;
     public Timer invincibleTimer;
+    public Action onHurt;
+    public Action onDefeat;
 
     [SerializeField]
     private int maxHealth = 1;
@@ -31,16 +33,16 @@ public abstract class Damageable : MonoBehaviour
         if (IsAlive() && !isInvincible)
         {
             health = Math.Max(health-damage,0);
-            Debug.Log("Took " + damage + " Health : " + health + "/" + maxHealth);
+            // Debug.Log("Took " + damage + " Health : " + health + "/" + maxHealth);
             isInvincible = true;
             invincibleTimer.StartTimer(1);
-            Hurt();
+            onHurt?.Invoke();
         }
 
         if (health == 0)
         {
-            Debug.Log("Dead");
-            Defeat();
+            // Debug.Log("Dead");
+            onDefeat?.Invoke();
         }
     }
     public int GetHitLocation()
@@ -51,8 +53,6 @@ public abstract class Damageable : MonoBehaviour
     {
         hitRight = (striker.transform.position.x > striked.transform.position.x);
     }
-    public abstract void Hurt();
-    public abstract void Defeat();
 
     #endregion
 
@@ -65,6 +65,11 @@ public abstract class Damageable : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+    }
+
+    private void Awake()
+    {
+        invincibleTimer = gameObject.AddComponent<Timer>();
     }
 
     #endregion

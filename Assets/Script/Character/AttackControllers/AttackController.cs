@@ -57,6 +57,7 @@ public abstract class AttackController : MonoBehaviour
         
         // TODO use Properties HitBox 
         attackHitbox = m_CharacterManager.humanAttackHitbox;
+        attackHitbox.SetActive(false);
     }
 
     private void Start()
