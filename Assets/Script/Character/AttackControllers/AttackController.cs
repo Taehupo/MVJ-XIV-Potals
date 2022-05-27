@@ -42,6 +42,7 @@ public abstract class AttackController : MonoBehaviour
         tmp.x *= -1;
         attackHitbox.GetComponent<Collider2D>().offset = tmp;
     }
+    public float getAttackRate() { return AttackRate; }
 
     #endregion
 

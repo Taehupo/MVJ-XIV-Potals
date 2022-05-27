@@ -70,7 +70,10 @@ public class CharacterManager : MonoBehaviour
 		if (healthManager.IsAlive())
 		{
 			if (AttackController.Attack(context))
+			{
+				MovementController.SlowDown(1f/AttackController.getAttackRate(), 0.5f);
 				SpriteManager.SetTrigger("Attack");
+			}
 		}
 	}
 

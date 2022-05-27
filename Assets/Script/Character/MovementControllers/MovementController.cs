@@ -20,13 +20,15 @@ public abstract class MovementController : MonoBehaviour
 	protected CharacterManager m_CharacterManager;
 
 	CharacterShapeProperties m_ShapeProperties;
+	Timer speedModifierTimer;
+	float speedModifier = 1f;
 
 	#endregion
 
 
 	#region Accessors
 
-	protected float Speed { get =>  m_ShapeProperties != null ? m_ShapeProperties.Speed : 10; }
+	protected float Speed { get =>  m_ShapeProperties != null ? m_ShapeProperties.Speed * speedModifier : 10 * speedModifier; }
 	protected float JumpForce { get => m_ShapeProperties != null ? m_ShapeProperties.JumpForce : 10; }
 	protected float MaxJumpTime { get => m_ShapeProperties != null ? m_ShapeProperties.MaxJumpTime : 0.15f; }
 	protected float GroundingOffset { get => m_ShapeProperties != null ? m_ShapeProperties.GroundingOffset : 0; }
@@ -40,6 +42,11 @@ public abstract class MovementController : MonoBehaviour
 	public abstract float Move(InputAction.CallbackContext context);
 
 	public abstract bool Jump(InputAction.CallbackContext context);
+	public void SlowDown(float effectTime, float divider)
+	{
+		speedModifierTimer.StartTimer(effectTime);
+		speedModifier *= divider;
+	}
 
 	public abstract void Draw();
 
@@ -55,6 +62,8 @@ public abstract class MovementController : MonoBehaviour
 	{
 		// get a parent reference
 		m_CharacterManager = CharacterManager.Instance;
+		speedModifierTimer = gameObject.AddComponent<Timer>();
+		speedModifierTimer.OnEnd = () => { speedModifier = 1f; };
 	}
 
     private void Start()
