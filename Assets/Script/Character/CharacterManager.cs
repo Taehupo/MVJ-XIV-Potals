@@ -11,9 +11,6 @@ public class CharacterManager : Damageable
 	public GameObject humanAttackHitbox;
 	public LayerMask attackLayerMask;
 
-	public Animator animator;
-	public SpriteRenderer spriteRenderer;
-
 	public static CharacterManager Instance { get; private set; }
 
 	public ShapeController ShapeController { get; private set; }
@@ -71,8 +68,8 @@ public class CharacterManager : Damageable
 
 		if (IsAlive())
 		{
-			animator.SetTrigger("Jump");
 			MovementController.Jump(context);
+			SpriteManager.SetTrigger("Jump");
 		}
 	}
 
@@ -92,7 +89,8 @@ public class CharacterManager : Damageable
 
 		if (IsAlive())
 		{
-			AttackController.Attack(context);
+			if (AttackController.Attack(context))
+				SpriteManager.SetTrigger("Attack");
 		}
 	}
 
@@ -111,18 +109,25 @@ public class CharacterManager : Damageable
 
 
 	#region Public Manipulators
-
 	public void Flip(bool isRight)
-    {
-		// Flip la hitbox d'attaque
-		if (isRight != spriteRenderer.flipX)
+	{
+		if (isRight != SpriteManager.Flip(isRight))
 		{
-			Vector2 tmp = humanAttackHitbox.GetComponent<Collider2D>().offset;
-			tmp.x *= -1;
-			humanAttackHitbox.GetComponent<Collider2D>().offset = tmp;
+			ShapeController.AttackController.FlipHitbox(isRight);
 		}
-		spriteRenderer.flipX = isRight;
-    }
+	}
+
+	public override void Hurt()
+	{
+		SpriteManager.SetTrigger("Hurt");
+		MovementController.Stagger();
+		SpriteManager.Blink();
+	}
+
+	public override void Defeat()
+	{
+		throw new NotImplementedException();
+	}
 
 	#endregion
 
@@ -150,6 +155,13 @@ public class CharacterManager : Damageable
 		invincibleTimer.OnEnd = () => { StopInvincibility(); SpriteManager.StopBlink(); };
 	}
 
+    private void FixedUpdate()
+    {
+        SpriteManager.SetBool("Grounded", MovementController.IsGrounded());
+		if (MovementController.IsGrounded())
+			SpriteManager.SetFloat("Speed", Mathf.Abs(this.rb.velocity.x));
+	}
+
     #endregion
 
 
@@ -172,18 +184,6 @@ public class CharacterManager : Damageable
 		{
 			MovementController.Draw();
 		}
-    }
-
-    public override void Hurt()
-    {
-		animator.SetTrigger("Hurt");
-		MovementController.Stagger();
-		SpriteManager.Blink();
-    }
-
-    public override void Defeat()
-    {
-        throw new NotImplementedException();
     }
 	#endregion
 }

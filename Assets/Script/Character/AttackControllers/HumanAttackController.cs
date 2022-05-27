@@ -11,14 +11,15 @@ public class HumanAttackController : AttackController
 
     #endregion
 
-    public override void Attack(InputAction.CallbackContext context)
+    public override bool Attack(InputAction.CallbackContext context)
     {
+        bool isAttacking = false;
         if (context.started)
         {
             if (Time.time >= nextAtkTime)
             {
+                isAttacking = true;
                 //Debug.Log("Attack !");
-                animator.SetTrigger("Attack");
                 nextAtkTime = Time.time + 1f / AttackRate;
                 
                 attackHitbox.SetActive(true);
@@ -33,5 +34,6 @@ public class HumanAttackController : AttackController
                 attackHitbox.SetActive(false);
             }
         }
+        return isAttacking;
     }
 }

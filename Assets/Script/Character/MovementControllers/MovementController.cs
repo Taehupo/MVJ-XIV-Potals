@@ -5,20 +5,17 @@ using UnityEngine.InputSystem;
 
 public abstract class MovementController : MonoBehaviour
 {
-    #region Members
+	#region Members
 
-    public virtual ECharacterShape Shape { get => ECharacterShape.count; }
-
+	public virtual ECharacterShape Shape { get => ECharacterShape.count; }
 
 	protected Vector2 moveForce;
 
-	public static bool IsGrounded { get; protected set; }
+	protected static bool isGrounded;
 	protected static bool isMoving;
 	protected static bool isJumping;
 	protected static bool isStaggered;
 	protected static bool isCollidingInAir;
-
-	protected Animator Animator { get; set; }
 
 	protected CharacterManager m_CharacterManager;
 
@@ -40,13 +37,14 @@ public abstract class MovementController : MonoBehaviour
 
 	#region Public Manipulators
 
-	public abstract void Move(InputAction.CallbackContext context);
+	public abstract float Move(InputAction.CallbackContext context);
 
-	public abstract void Jump(InputAction.CallbackContext context);
+	public abstract bool Jump(InputAction.CallbackContext context);
 
 	public abstract void Draw();
 
 	public static void Stagger() { isStaggered = true; }
+	public bool IsGrounded() { return isGrounded; }
 
     #endregion
 

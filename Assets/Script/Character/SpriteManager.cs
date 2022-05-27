@@ -36,6 +36,24 @@ public class SpriteManager : MonoBehaviour
         blinkTimer.StopTimer(false);
         spriteRenderer.enabled = true; 
     }
+    public void SetTrigger(string name)
+    {
+        animator.SetTrigger(name);
+    }
+    public void SetFloat(string name, float value)
+    {
+        animator.SetFloat(name, value);
+    }
+    public void SetBool(string name, bool value)
+    {
+        animator.SetBool(name, value);
+    }
+    public bool Flip(bool isRight)
+    {
+        bool old = spriteRenderer.flipX;
+        spriteRenderer.flipX = isRight;
+        return old;
+    }
 
     #region Inherited Manipulators
 
