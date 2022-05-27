@@ -28,8 +28,7 @@ public class HumanAttackController : AttackController
                 foreach (Collider2D hitTarget in hitTargets)
                 {
                     //Debug.Log("Attacking " + hitTarget.name + " !");
-                    hitTarget.GetComponent<IDamageable>().TakeDamage((int)AttackDamage);
-                    hitTarget.GetComponent<IDamageable>().HitRight = (hitTarget.gameObject.transform.position.x > gameObject.transform.position.x);
+                    hitTarget.GetComponent<HealthManager>().TakeHit((int)AttackDamage, this.gameObject);
                 }
                 attackHitbox.SetActive(false);
             }

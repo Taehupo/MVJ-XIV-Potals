@@ -51,7 +51,7 @@ public class HealthManager : MonoBehaviour
     }
     public void SetHitLocation(GameObject striker, GameObject striked)
     {
-        hitRight = (striker.transform.position.x > striked.transform.position.x);
+        hitRight = (striker.transform.position.x < striked.transform.position.x);
     }
 
     #endregion
@@ -64,11 +64,11 @@ public class HealthManager : MonoBehaviour
 
     private void Start()
     {
-        health = maxHealth;
     }
 
     private void Awake()
     {
+        health = maxHealth;
         invincibleTimer = gameObject.AddComponent<Timer>();
     }
 

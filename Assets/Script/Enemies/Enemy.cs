@@ -2,45 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour, IDamageable
+public abstract class Enemy : MonoBehaviour
 {
     #region Members
 
-    [SerializeField]private int maxHealth;
+    [SerializeField] private int maxHealth;
+    HealthManager healthManager;
 
-    private int currentHealth;
 
     protected bool canBeStaggered;
-    private bool isInvicible = false;
-    private Timer invincibleTimer;
     private bool isStaggered = false;
-
-    private bool hitRight = false;
-
-    public bool HitRight { get => hitRight; set => hitRight = value; }
 
     #endregion
 
     #region Public Manipulators
 
-    public void TakeDamage(int damage)
-    {
-        if (currentHealth > 0 && !isInvicible)
-        {
-            currentHealth -= damage;
-            Debug.Log("AÅE");
-            if (gameObject.GetComponent<Animator>() != null)
-            {
-                gameObject.GetComponent<Animator>().SetTrigger("Hurt");
-            }
-            isStaggered = true;
-            isInvicible = true;
-            invincibleTimer.StartTimer(1);
-        }
-
-        if (currentHealth <= 0)
-            Defeat();
-    }
 
     #endregion
 
@@ -49,21 +25,22 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
-
-        invincibleTimer = gameObject.AddComponent<Timer>();
-        invincibleTimer.OnEnd = () => { isInvicible = false; gameObject.GetComponent<SpriteRenderer>().enabled = true; };
+        healthManager = gameObject.AddComponent<HealthManager>();
+        healthManager.SetMaxHealth(maxHealth);
+        healthManager.onHurt += Hurt;
+        healthManager.onDefeat += Defeat;
+        healthManager.invincibleTimer.OnEnd = () => { healthManager.StopInvincibility(); gameObject.GetComponent<SpriteRenderer>().enabled = true; };
     }
 
     private void FixedUpdate()
     {
         if (isStaggered)
         {
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2((hitRight?1:-1)*10f, 10f);
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(healthManager.GetHitLocation()*10f, 10f);
             isStaggered = false;
         }
 
-        if (isInvicible)
+        if (healthManager.IsInvincible())
         {
             gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
         }
@@ -75,8 +52,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     private void Defeat()
     {
-        Debug.Log("Dead");
-        /*Destroy(this);*/
+    }
+    private void Hurt()
+    {
+        isStaggered = true;
     }
 
     #endregion
