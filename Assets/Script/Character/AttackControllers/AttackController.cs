@@ -28,6 +28,8 @@ public abstract class AttackController : MonoBehaviour
 
     protected float AttackDamage { get => m_ShapeProperties != null ? m_ShapeProperties.AttackDamage : 1; }
     protected float AttackRate { get => m_ShapeProperties != null ? m_ShapeProperties.AttackRate : 3; }
+    protected GameObject SubAttackPrefab { get => m_ShapeProperties.SubAttackPrefab; }
+    protected GameObject SubAttackPosition { get => m_ShapeProperties.SubAttackPosition; }
 
     #endregion
 
@@ -35,6 +37,8 @@ public abstract class AttackController : MonoBehaviour
     #region Public Manipulators
 
     public abstract bool Attack(InputAction.CallbackContext context);
+
+    public abstract bool SubAttack(InputAction.CallbackContext context);
     public void Draw() { }
     public void FlipHitbox(bool isRight)
     {
@@ -43,6 +47,9 @@ public abstract class AttackController : MonoBehaviour
         attackHitbox.GetComponent<Collider2D>().offset = tmp;
     }
     public float getAttackRate() { return AttackRate; }
+
+    public GameObject getSubAttackPrefab() { return SubAttackPrefab; }
+    public GameObject getSubAttackPosition() { return SubAttackPosition; }
 
     #endregion
 

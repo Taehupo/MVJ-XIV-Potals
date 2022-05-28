@@ -296,7 +296,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.7772186, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -795,17 +795,6 @@ Transform:
   m_Father: {fileID: 1561937016}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &952789983 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3423041773590120210, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-  m_PrefabInstance: {fileID: 3423041773916458753}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622d6ebd4b91ebc4fa63c6ef8afcfb9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1092901402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2316,74 +2305,6 @@ PrefabInstance:
       propertyPath: ShapesVisuals.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: eb8b4dffa42b73f43805383744579156, type: 2}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_ActionId
-      value: a6265e0a-7feb-403a-9df6-401b1a1d5e3c
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_ActionName
-      value: Default/Shapeshift[/XInputControllerWindows/leftTrigger]
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 952789983}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 952789983}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Crouch
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeShape
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CharacterManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CharacterManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3423041773590120211, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 3423041773590120213, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
       propertyPath: m_GravityScale
       value: 3
@@ -2674,7 +2595,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.7772186, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

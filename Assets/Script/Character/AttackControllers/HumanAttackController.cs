@@ -35,4 +35,27 @@ public class HumanAttackController : AttackController
         }
         return isAttacking;
     }
+
+    public override bool SubAttack(InputAction.CallbackContext context)
+    {
+        bool isAttacking = false;
+        if (context.started)
+        {
+            if (Time.time >= nextAtkTime)
+            {
+                isAttacking = true;
+                //Debug.Log("Attack !");
+                nextAtkTime = Time.time + 1f / AttackRate;
+
+                // Determine throw position
+                bool isFlipped = CharacterManager.Instance.SpriteManager.IsFlipped();
+                Vector3 flipPos = SubAttackPosition.transform.position;
+                flipPos.x *= isFlipped ? 1 : -1;
+
+                Instantiate(SubAttackPrefab, transform.position + flipPos, new Quaternion());
+
+            }
+        }
+        return isAttacking;
+    }
 }

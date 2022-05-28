@@ -17,6 +17,11 @@ public class SpriteManager : MonoBehaviour
     private Timer blinkTimer;
     private int blinkRate = 10;
 
+    public bool IsFlipped()
+    {
+        return spriteRenderer.flipX;
+    }
+
     #endregion
 
     #region Public Manipulators

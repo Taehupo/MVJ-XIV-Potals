@@ -77,6 +77,18 @@ public class CharacterManager : MonoBehaviour
 		}
 	}
 
+	public void SubAttack(InputAction.CallbackContext context)
+	{
+		if (healthManager.IsAlive())
+		{
+			if (AttackController.SubAttack(context))
+			{
+				MovementController.SlowDown(1f / AttackController.getAttackRate(), 0.5f);
+				SpriteManager.SetTrigger("Attack");
+			}
+		}
+	}
+
 	public void ChangeShape(InputAction.CallbackContext context)
 	{
 		if (context.started)
@@ -94,7 +106,7 @@ public class CharacterManager : MonoBehaviour
 	#region Public Manipulators
 	public void Flip(bool isRight)
 	{
-		// Change le sens de la hitbox si le sprite a changÈ de sens
+		// Change le sens de la hitbox si le sprite a changÅEde sens
 		if (isRight != SpriteManager.Flip(isRight))
 		{
 			ShapeController.AttackController.FlipHitbox(isRight);

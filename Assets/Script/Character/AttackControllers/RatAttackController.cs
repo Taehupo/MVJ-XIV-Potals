@@ -16,4 +16,9 @@ public class RatAttackController : AttackController
         Debug.Log("Rat attacks!! not effective...");
         return false;
     }
+    public override bool SubAttack(InputAction.CallbackContext context)
+    {
+        Debug.Log("Rat sub attacks!! not effective...");
+        return false;
+    }
 }

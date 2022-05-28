@@ -35,6 +35,17 @@ public class CharacterShapeProperties : ScriptableObject
     [SerializeField]
     private float m_AttackRate = 3;
 
+
+    // SubAttackProperties
+    [SerializeField]
+    private GameObject m_SubAttackPrefab;
+    [SerializeField]
+    private GameObject m_SubAttackPosition;
+    [SerializeField]
+    private float m_SubAttackDamage = 1;
+    [SerializeField]
+    private float m_SubAttackRate = 3;
+
     #endregion
 
 
@@ -54,6 +65,12 @@ public class CharacterShapeProperties : ScriptableObject
     public GameObject AttackHitbox { get => m_AttackHitbox; }
     public float AttackDamage { get => m_AttackDamage; }
     public float AttackRate { get => m_AttackRate; }
+
+    // SubAttackProperties
+    public GameObject SubAttackPrefab { get => m_SubAttackPrefab; }
+    public GameObject SubAttackPosition { get => m_SubAttackPosition; }
+    public float SubAttackDamage { get => m_SubAttackDamage; }
+    public float SubAttackRate { get => m_SubAttackRate; }
 
     #endregion
 }

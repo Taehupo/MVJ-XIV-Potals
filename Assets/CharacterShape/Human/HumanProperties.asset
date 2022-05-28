@@ -21,3 +21,7 @@ MonoBehaviour:
   m_AttackHitbox: {fileID: 1548830107684962348, guid: 64048df9465481f43bbca11415866c18, type: 3}
   m_AttackDamage: 1
   m_AttackRate: 3
+  m_SubAttackPrefab: {fileID: 7545718599645540483, guid: ddb6ce27ea313bc499554fbb5a7c1506, type: 3}
+  m_SubAttackPosition: {fileID: 2592287051594741799, guid: 838a0045e52bb20449441d4b2394f53e, type: 3}
+  m_SubAttackDamage: 1
+  m_SubAttackRate: 3
