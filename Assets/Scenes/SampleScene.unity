@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4791172, g: 0.49330062, b: 0.4955185, a: 1}
+  m_IndirectSpecularColor: {r: 0.4791143, g: 0.4933079, b: 0.49552268, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1029,6 +1029,7 @@ GameObject:
   - component: {fileID: 1311836588}
   - component: {fileID: 1311836590}
   - component: {fileID: 1311836587}
+  - component: {fileID: 1311836591}
   m_Layer: 6
   m_Name: Vase
   m_TagString: Untagged
@@ -1141,6 +1142,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1311836591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311836586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a978b883b4b4b64e8719495f597cd2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItems:
+  - {fileID: 11400000, guid: e8d4e5c56f0d75a488f6e38a36b0a1b4, type: 2}
+  dropPosition: {fileID: 1311836589}
 --- !u!1 &1329854177 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3423041773590120207, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
@@ -2067,6 +2083,7 @@ GameObject:
   - component: {fileID: 2137198164}
   - component: {fileID: 2137198163}
   - component: {fileID: 2137198162}
+  - component: {fileID: 2137198166}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Untagged
@@ -2212,6 +2229,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2137198166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137198158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a978b883b4b4b64e8719495f597cd2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItems:
+  - {fileID: 11400000, guid: f128c4b773df0dd458f099783c5e8cef, type: 2}
+  - {fileID: 11400000, guid: e8d4e5c56f0d75a488f6e38a36b0a1b4, type: 2}
+  dropPosition: {fileID: 2137198161}
 --- !u!1001 &3423041773916458753
 PrefabInstance:
   m_ObjectHideFlags: 0

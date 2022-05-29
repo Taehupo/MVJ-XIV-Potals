@@ -20,6 +20,10 @@ public class Vase : MonoBehaviour
     {
         // Destroy animation
         Debug.Log("Destroyed vase");
+        if (GetComponent<DropSystem>() != null)
+        {
+            GetComponent<DropSystem>().CalculateDrops();
+        }
         Destroy(gameObject);
     }
 }

@@ -153,6 +153,15 @@ public class CharacterManager : MonoBehaviour
 		throw new NotImplementedException();
 	}
 
+	public void AddAmmo(int amount)
+    {
+		if (currentJavelinAmmo + amount > maxJavelinAmmo)
+			currentJavelinAmmo = maxJavelinAmmo;
+		else
+			currentJavelinAmmo += amount;
+
+	}
+
 	#endregion
 
 

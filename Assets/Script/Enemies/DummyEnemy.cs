@@ -26,6 +26,11 @@ public class DummyEnemy : Enemy
 
     protected override void Defeat()
     {
+        if (GetComponent<DropSystem>() != null)
+        {
+            GetComponent<DropSystem>().CalculateDrops();
+        }
+
         Destroy(gameObject);
     }
 }
