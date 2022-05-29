@@ -11,7 +11,7 @@ public class Javelin : MonoBehaviour
     private float speed = 20f;
 
     [SerializeField]
-    private float lifeTime = 5f;
+    private float lifeTime = 2f;
 
     protected ContactFilter2D contactFilter = new();
 
@@ -34,7 +34,7 @@ public class Javelin : MonoBehaviour
     {
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0f)
-            Destroy(this);
+            Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
