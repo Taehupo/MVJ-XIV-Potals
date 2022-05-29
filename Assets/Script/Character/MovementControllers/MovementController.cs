@@ -16,19 +16,21 @@ public abstract class MovementController : MonoBehaviour
 	protected static bool isJumping;
 	protected static bool isStaggered;
 	protected static bool isCollidingInAir;
+	protected static bool isCrouching = false;
 
 	protected CharacterManager m_CharacterManager;
 
 	CharacterShapeProperties m_ShapeProperties;
 	Timer speedModifierTimer;
-	float speedModifier = 1f;
+	List<float> speedModifier;
+	private float crouchingSpeedModifier = 0.4f;
 
 	#endregion
 
 
 	#region Accessors
 
-	protected float Speed { get =>  m_ShapeProperties != null ? m_ShapeProperties.Speed * speedModifier : 10 * speedModifier; }
+	protected float Speed { get =>  m_ShapeProperties != null ? m_ShapeProperties.Speed * getSpeedModifier() : 10 * getSpeedModifier(); }
 	protected float JumpForce { get => m_ShapeProperties != null ? m_ShapeProperties.JumpForce : 10; }
 	protected float MaxJumpTime { get => m_ShapeProperties != null ? m_ShapeProperties.MaxJumpTime : 0.15f; }
 	protected float GroundingOffset { get => m_ShapeProperties != null ? m_ShapeProperties.GroundingOffset : 0; }
@@ -40,13 +42,20 @@ public abstract class MovementController : MonoBehaviour
 	#region Public Manipulators
 
 	public abstract float Move(InputAction.CallbackContext context);
-
 	public abstract bool Jump(InputAction.CallbackContext context);
+	public abstract bool Crouch(InputAction.CallbackContext context);
 	public void SlowDown(float effectTime, float divider)
 	{
 		speedModifierTimer.StartTimer(effectTime);
-		speedModifier *= divider;
+		speedModifier.Add(divider);
 	}
+	public float getSpeedModifier()
+    {
+		float speedM = 1f;
+		for (int i = 0; i < speedModifier.Count; i++)
+			speedM *= speedModifier[i];
+		return speedM * (isCrouching?crouchingSpeedModifier:1f);
+    }
 
 	public abstract void Draw();
 
@@ -63,7 +72,9 @@ public abstract class MovementController : MonoBehaviour
 		// get a parent reference
 		m_CharacterManager = CharacterManager.Instance;
 		speedModifierTimer = gameObject.AddComponent<Timer>();
-		speedModifierTimer.OnEnd = () => { speedModifier = 1f; };
+		speedModifierTimer.OnEnd = () => { speedModifier.RemoveAt(speedModifier.Count-1); };
+
+		speedModifier = new List<float>();
 	}
 
     private void Start()

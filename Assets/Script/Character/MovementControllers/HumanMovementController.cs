@@ -32,13 +32,13 @@ public class HumanMovementController : MovementController
 		moveForce = context.ReadValue<Vector2>();
 		return moveForce.x;
 	}
-
 	public override bool Jump(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading jump : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
 		{
 			isJumping = true;
+			isCrouching = false;
 		}
 		if (context.phase == InputActionPhase.Canceled)
 		{
@@ -48,13 +48,30 @@ public class HumanMovementController : MovementController
 		}
 		return isJumping;
 	}
+    public override bool Crouch(InputAction.CallbackContext context)
+    {
+		if (isGrounded)
+		{
+			if (context.phase == InputActionPhase.Started)
+			{
+				isCrouching = true;
+			}
+			if (context.phase == InputActionPhase.Canceled)
+			{
+				isCrouching = false;
+			}
+		}
+		else
+			isCrouching = false;
+		return isCrouching;
+    }
 
-	#endregion
+    #endregion
 
 
-	#region Inherited Manipulators
+    #region Inherited Manipulators
 
-	protected override void Awake()
+    protected override void Awake()
 	{
 		base.Awake();
 	}

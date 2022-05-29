@@ -8,6 +8,9 @@ public class CharacterManager : MonoBehaviour
 {
 	#region Members
 
+	[SerializeField] private Collider2D characterCollider;
+	[SerializeField] private Collider2D crouchingCharacterCollider;
+
 	public GameObject humanAttackHitbox;
 	public LayerMask attackLayerMask;
 
@@ -57,12 +60,32 @@ public class CharacterManager : MonoBehaviour
 		{
 			MovementController.Jump(context);
 			SpriteManager.SetTrigger("Jump");
+			SetCrouch(false);
+		}
+	}
+
+	private void SetCrouch(bool isCrouching)
+	{
+		SpriteManager.SetBool("Crouch", isCrouching);
+		if (isCrouching)
+		{
+			characterCollider.enabled = false;
+			crouchingCharacterCollider.enabled = true;
+		}
+		else
+		{
+			characterCollider.enabled = true;
+			crouchingCharacterCollider.enabled = false;
 		}
 	}
 
 	public void Crouch(InputAction.CallbackContext context)
 	{
-		//TODO : Add a crouch
+		if (healthManager.IsAlive())
+        {
+			bool isCrouching = MovementController.Crouch(context);
+			SetCrouch(isCrouching);
+        }
 	}
 
 	public void Attack(InputAction.CallbackContext context)

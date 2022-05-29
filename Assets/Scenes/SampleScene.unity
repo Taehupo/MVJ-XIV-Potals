@@ -296,7 +296,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7772186, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1141,6 +1141,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1329854177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3423041773590120207, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+  m_PrefabInstance: {fileID: 3423041773916458753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!70 &1329854178 stripped
+CapsuleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 531925015, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+  m_PrefabInstance: {fileID: 3423041773916458753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!70 &1329854184
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329854177}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.35}
+  m_Size: {x: 0.5, y: 0.6}
+  m_Direction: 0
 --- !u!1 &1477666047
 GameObject:
   m_ObjectHideFlags: 0
@@ -2294,9 +2320,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 40b622f3173ac3c49a38317effd9dac6, type: 2}
     - target: {fileID: 3423041773590120210, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: characterCollider
+      value: 
+      objectReference: {fileID: 1329854178}
+    - target: {fileID: 3423041773590120210, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
       propertyPath: ShapesVisuals.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3423041773590120210, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: crouchingCharacterCollider
+      value: 
+      objectReference: {fileID: 1329854184}
     - target: {fileID: 3423041773590120210, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
       propertyPath: ShapesVisuals.Array.data[0]
       value: 
@@ -2595,7 +2629,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7772186, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

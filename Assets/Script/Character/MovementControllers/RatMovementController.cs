@@ -45,11 +45,16 @@ public class RatMovementController : MovementController
 		return isJumping;
 	}
 
-	#endregion
+    public override bool Crouch(InputAction.CallbackContext context)
+    {
+		return false;
+    }
 
-	#region Inherited Manipulators
+    #endregion
 
-	protected override void Awake()
+    #region Inherited Manipulators
+
+    protected override void Awake()
 	{
 		base.Awake();
 	}
