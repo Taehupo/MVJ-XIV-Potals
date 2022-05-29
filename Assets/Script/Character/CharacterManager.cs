@@ -11,6 +11,9 @@ public class CharacterManager : MonoBehaviour
 	public GameObject humanAttackHitbox;
 	public LayerMask attackLayerMask;
 
+	[SerializeField] private int maxJavelinAmmo = 5;
+	public int currentJavelinAmmo = 5;
+
 	public static CharacterManager Instance { get; private set; }
 
 	public ShapeController ShapeController { get; private set; }

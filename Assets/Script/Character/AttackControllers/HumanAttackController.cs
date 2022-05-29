@@ -43,17 +43,20 @@ public class HumanAttackController : AttackController
         {
             if (Time.time >= nextAtkTime)
             {
-                isAttacking = true;
-                //Debug.Log("Attack !");
-                nextAtkTime = Time.time + 1f / AttackRate;
+                if (CharacterManager.Instance.currentJavelinAmmo > 0)
+                {
+                    isAttacking = true;
+                    //Debug.Log("Attack !");
+                    nextAtkTime = Time.time + 1f / AttackRate;
 
-                // Determine throw position
-                bool isFlipped = CharacterManager.Instance.SpriteManager.IsFlipped();
-                Vector3 flipPos = SubAttackPosition.transform.position;
-                flipPos.x *= isFlipped ? 1 : -1;
+                    // Determine throw position
+                    bool isFlipped = CharacterManager.Instance.SpriteManager.IsFlipped();
+                    Vector3 flipPos = SubAttackPosition.transform.position;
+                    flipPos.x *= isFlipped ? 1 : -1;
 
-                Instantiate(SubAttackPrefab, transform.position + flipPos, new Quaternion());
-
+                    Instantiate(SubAttackPrefab, transform.position + flipPos, new Quaternion());
+                    CharacterManager.Instance.currentJavelinAmmo--;
+                }
             }
         }
         return isAttacking;
