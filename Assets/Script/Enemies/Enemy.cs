@@ -50,7 +50,7 @@ public abstract class Enemy : MonoBehaviour
 
     #region Private Manipulators
 
-    private void Defeat()
+    protected virtual void Defeat()
     {
     }
     private void Hurt()

@@ -23,4 +23,9 @@ public class DummyEnemy : Enemy
             Debug.Log(collision.collider.name + " was not player");
         }
     }
+
+    protected override void Defeat()
+    {
+        Destroy(gameObject);
+    }
 }

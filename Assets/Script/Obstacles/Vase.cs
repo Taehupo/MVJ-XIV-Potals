@@ -20,5 +20,6 @@ public class Vase : MonoBehaviour
     {
         // Destroy animation
         Debug.Log("Destroyed vase");
+        Destroy(gameObject);
     }
 }
