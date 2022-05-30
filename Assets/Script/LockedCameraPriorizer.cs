@@ -40,8 +40,6 @@ public class LockedCameraPriorizer : MonoBehaviour
         // if player set vcamera priority
         if (other.name == "Player")
         {
-            Debug.Log(m_Camera.name + " yay player " + m_PriorityOnTriggered);
-
             if (m_Camera != null)
                 m_Camera.m_Priority = m_PriorityOnTriggered;
         }
@@ -52,8 +50,6 @@ public class LockedCameraPriorizer : MonoBehaviour
         // if player reset vcamera priority
         if(other.name == "Player")
         {
-            Debug.Log(m_Camera.name + " yay no player " + m_BasePriority); 
-
             if (m_Camera != null)
                 m_Camera.m_Priority = m_BasePriority;
         }

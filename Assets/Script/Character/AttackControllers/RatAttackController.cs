@@ -5,8 +5,20 @@ using UnityEngine.InputSystem;
 
 public class RatAttackController : AttackController
 {
-    public override void Attack(InputAction.CallbackContext context)
+    #region Members
+
+    public override ECharacterShape Shape { get => ECharacterShape.Rat; }
+
+    #endregion
+
+    public override bool Attack(InputAction.CallbackContext context)
     {
         Debug.Log("Rat attacks!! not effective...");
+        return false;
+    }
+    public override bool SubAttack(InputAction.CallbackContext context)
+    {
+        Debug.Log("Rat sub attacks!! not effective...");
+        return false;
     }
 }

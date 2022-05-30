@@ -7,21 +7,14 @@ public class RatMovementController : MovementController
 {
 	#region Members
 
-	Vector2 moveForce;
-	float speed;
-	float jumpSpeed;
-
-	// Jump difference compared to normal state
-	float jumpModifier = 0.5f;
-
-	bool isCollidingInAir = false;
+	public override ECharacterShape Shape { get => ECharacterShape.Rat; }
 
 	#endregion
 
 
 	#region Public Manipulators
 
-	public override void Move(InputAction.CallbackContext context)
+	public override float Move(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading Move : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
@@ -35,9 +28,10 @@ public class RatMovementController : MovementController
 		}
 		//Debug.Log(context.ReadValue<Vector2>());
 		moveForce = context.ReadValue<Vector2>();
+		return moveForce.x;
 	}
 
-	public override void Jump(InputAction.CallbackContext context)
+	public override bool Jump(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading jump : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
@@ -48,73 +42,68 @@ public class RatMovementController : MovementController
 		{
 			isJumping = false;
 		}
+		return isJumping;
 	}
 
-	#endregion
+    public override bool Crouch(InputAction.CallbackContext context)
+    {
+		return false;
+    }
 
-	#region Inherited Manipulators
+    #endregion
 
-	protected override void Awake()
+    #region Inherited Manipulators
+
+    protected override void Awake()
 	{
 		base.Awake();
-
-		// get speed value from CharacterManager (this will change)
-		speed = CharacterManager.Instance.CharacterSpeed;
-		Animator = CharacterManager.Instance.animator;
 	}
 
 	void FixedUpdate()
 	{
-		if ((isMoving && CharacterManager.Instance.IsGrounded) || (isMoving && !CharacterManager.Instance.IsGrounded && !isCollidingInAir))
+		if ((isMoving && isGrounded) || (isMoving && !isGrounded && !isCollidingInAir))
 		{
-			CharacterManager.Instance.rb.velocity = new Vector2(speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
+			CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
 		}
 		else
 		{
 			CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
 		}
 
-		if (isJumping && CharacterManager.Instance.IsGrounded)
+		if (isJumping && isGrounded)
 		{
-			float jumpForce = CharacterManager.Instance.CharacterJumpForce * jumpModifier;
-			Debug.Log("Rat jumps at force : " + jumpForce);
-			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, jumpForce);
-			CharacterManager.Instance.IsGrounded = false;
+			Debug.Log("Rat jumps at force : " + JumpForce);
+			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, JumpForce);
+			isGrounded = false;
 		}
-		Animator.SetFloat("Speed", Mathf.Abs(CharacterManager.Instance.rb.velocity.x));
 	}
 
 	void Update()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
-		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
-		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
+		boxCastOrigin.y += GroundingOffset;
+		boxCastOrigin.x += BoxCastXOffset;
 		RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
 		if (hit.collider != null)
 		{
 			if (hit.collider.tag == "Platform")
 			{
-				CharacterManager.Instance.IsGrounded = true;
-				Animator.SetBool("Grounded", true);
+				isGrounded = true;
 			}
 			else
-			{
-				CharacterManager.Instance.IsGrounded = false;
-				Animator.SetBool("Grounded", false);
-			}
+				isGrounded = false;
 		}
 		else
 		{
-			CharacterManager.Instance.IsGrounded = false;
-			Animator.SetBool("Grounded", false);
+			isGrounded = false;
 		}
 	}
 
 	override public void Draw()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
-		boxCastOrigin.y += CharacterManager.Instance.GroundingOffset;
-		boxCastOrigin.x += CharacterManager.Instance.BoxCastXOffset;
+		boxCastOrigin.y += GroundingOffset;
+		boxCastOrigin.x += BoxCastXOffset;
 		Gizmos.DrawWireCube(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f));
 	}
 
@@ -125,7 +114,7 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		if (collision.gameObject.tag == "Platform" && !isGrounded)
 		{
 			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
@@ -134,7 +123,7 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionStay2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		if (collision.gameObject.tag == "Platform" && !isGrounded)
 		{
 			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
@@ -143,7 +132,7 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !CharacterManager.Instance.IsGrounded)
+		if (collision.gameObject.tag == "Platform" && !isGrounded)
 		{
 			//Debug.Log("I am touching NOT platform anymore !");
 			isCollidingInAir = false;

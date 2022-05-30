@@ -13,16 +13,24 @@ public class DummyEnemy : Enemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.GetComponent<CharacterManager>() != null)
+        if (collision.collider.GetComponent<HealthManager>() != null)
         {
             Debug.Log("Touched " + collision.collider.name);
-            collision.collider.GetComponent<CharacterManager>().TakeDamage(contactDamage);
-            collision.collider.GetComponent<IDamageable>().HitRight = (collision.collider.gameObject.transform.position.x 
-                                                                        > gameObject.transform.position.x);
+            collision.collider.GetComponent<HealthManager>().TakeHit(contactDamage, this.gameObject);
         }
         else
         {
             Debug.Log(collision.collider.name + " was not player");
         }
+    }
+
+    protected override void Defeat()
+    {
+        if (GetComponent<DropSystem>() != null)
+        {
+            GetComponent<DropSystem>().CalculateDrops();
+        }
+
+        Destroy(gameObject);
     }
 }
