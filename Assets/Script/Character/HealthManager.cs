@@ -23,6 +23,8 @@ public class HealthManager : MonoBehaviour
     public void StopInvincibility() { isInvincible = false; }
     public void Heal(int healValue) { health = Math.Min(maxHealth, health+healValue); }
     public void SetMaxHealth(int _maxHealth) { maxHealth = _maxHealth; health = maxHealth; }
+    public int GetMaxHealth() { return maxHealth; }
+    public int GetHealth() { return health; }
     public void TakeHit(int damage, GameObject striker)
     {
         this.TakeDamage(damage);

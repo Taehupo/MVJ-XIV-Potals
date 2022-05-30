@@ -21,7 +21,7 @@ public class CharacterManager : MonoBehaviour
 
 	public ShapeController ShapeController { get; private set; }
 	public SpriteManager SpriteManager { get; private set; }
-	private HealthManager healthManager;
+	public HealthManager HealthManager { get; private set; }
 
 	public Rigidbody2D rb { get; private set; }
 	[SerializeField] private int maxHealth = 1;
@@ -51,7 +51,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Move(InputAction.CallbackContext context)
 	{
-		if (healthManager.IsAlive())
+		if (HealthManager.IsAlive())
 		{
 			MovementController.Move(context);
 		}
@@ -59,7 +59,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Jump(InputAction.CallbackContext context)
 	{
-		if (healthManager.IsAlive())
+		if (HealthManager.IsAlive())
 		{
 			MovementController.Jump(context);
 			SpriteManager.SetTrigger("Jump");
@@ -84,7 +84,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Crouch(InputAction.CallbackContext context)
 	{
-		if (healthManager.IsAlive())
+		if (HealthManager.IsAlive())
         {
 			bool isCrouching = MovementController.Crouch(context);
 			SetCrouch(isCrouching);
@@ -93,7 +93,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Attack(InputAction.CallbackContext context)
 	{
-		if (healthManager.IsAlive())
+		if (HealthManager.IsAlive())
 		{
 			if (AttackController.Attack(context))
 			{
@@ -105,7 +105,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void SubAttack(InputAction.CallbackContext context)
 	{
-		if (healthManager.IsAlive())
+		if (HealthManager.IsAlive())
 		{
 			if (AttackController.SubAttack(context))
 			{
@@ -139,7 +139,7 @@ public class CharacterManager : MonoBehaviour
 		}
 	}
 
-	public int GetHitLocation() { return healthManager.GetHitLocation(); }
+	public int GetHitLocation() { return HealthManager.GetHitLocation(); }
 
 	public void Hurt()
 	{
@@ -181,10 +181,10 @@ public class CharacterManager : MonoBehaviour
 
 		CreateSubComponents();
 
-		healthManager.SetMaxHealth(maxHealth);
-		healthManager.invincibleTimer.OnEnd = () => { healthManager.StopInvincibility(); SpriteManager.StopBlink(); };
-		healthManager.onHurt += Hurt;
-		healthManager.onDefeat += Defeat;
+		HealthManager.SetMaxHealth(maxHealth);
+		HealthManager.invincibleTimer.OnEnd = () => { HealthManager.StopInvincibility(); SpriteManager.StopBlink(); };
+		HealthManager.onHurt += Hurt;
+		HealthManager.onDefeat += Defeat;
 	}
 
     private void FixedUpdate()
@@ -203,7 +203,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		ShapeController = gameObject.AddComponent<ShapeController>();
 		SpriteManager = gameObject.AddComponent<SpriteManager>();
-		healthManager = gameObject.AddComponent<HealthManager>();
+		HealthManager = gameObject.AddComponent<HealthManager>();
 	}
 
 	// Preview cast Area on Player seleted if Gizmo is activated
