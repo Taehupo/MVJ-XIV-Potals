@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3423041773590120210}
   - component: {fileID: 3423041773590120211}
   - component: {fileID: 531925015}
+  - component: {fileID: 1942176673929485395}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -144,11 +145,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622d6ebd4b91ebc4fa63c6ef8afcfb9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterCollider: {fileID: 531925015}
+  crouchingCharacterCollider: {fileID: 1942176673929485395}
   humanAttackHitbox: {fileID: 3423041772166498728}
   attackLayerMask:
     serializedVersion: 2
     m_Bits: 72
-  maxHealth: 100
+  maxJavelinAmmo: 5
+  currentJavelinAmmo: 5
+  maxHealth: 6
   ShapesProperties:
   - {fileID: 11400000, guid: 40b622f3173ac3c49a38317effd9dac6, type: 2}
   - {fileID: 11400000, guid: 4a8a1bd52f9e90c42b0309a1dc9ec06b, type: 2}
@@ -294,8 +299,24 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.03, y: 0.61}
+  m_Offset: {x: 0, y: 0.6}
   m_Size: {x: 0.5, y: 1.1}
+  m_Direction: 0
+--- !u!70 &1942176673929485395
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3423041773590120207}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.35}
+  m_Size: {x: 0.5, y: 0.6}
   m_Direction: 0
 --- !u!1001 &1796665085206860281
 PrefabInstance:
@@ -376,11 +397,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1548830107684962351, guid: 64048df9465481f43bbca11415866c18, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.364
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1548830107684962351, guid: 64048df9465481f43bbca11415866c18, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.645
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1548830107684962351, guid: 64048df9465481f43bbca11415866c18, type: 3}
       propertyPath: m_LocalPosition.z
@@ -413,6 +434,10 @@ PrefabInstance:
     - target: {fileID: 1548830107684962351, guid: 64048df9465481f43bbca11415866c18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4251286575730937648, guid: 64048df9465481f43bbca11415866c18, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.55
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64048df9465481f43bbca11415866c18, type: 3}

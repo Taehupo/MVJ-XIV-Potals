@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HumanVisuals
   m_EditorClassIdentifier: 
   m_Shape: 0
-  m_ShapeSprite: {fileID: 21300016, guid: f2ed27d6c1c3ccc48959bcca269d88f0, type: 3}
-  m_AnimatorController: {fileID: 9100000, guid: b95265f99b6d90e438df1308a89c8bab, type: 2}
+  m_ShapeSprite: {fileID: 725516666, guid: 23621113b60a83d4299c3c1e4347324e, type: 3}
+  m_AnimatorController: {fileID: 9100000, guid: f53737f1247d7894bbf95ec429bf2577, type: 2}
