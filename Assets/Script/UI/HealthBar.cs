@@ -19,11 +19,9 @@ public class HealthBar : MonoBehaviour
     void Start()
     {
         UpdateMaxHealth();
-    }
-
-    void LateUpdate()
-    {
         UpdateCurrentHealth();
+        CharacterManager.Instance.HealthManager.onHurt += UpdateCurrentHealth;
+        CharacterManager.Instance.HealthManager.onHeal += UpdateCurrentHealth;
     }
 
     private void AddIcon()
@@ -34,11 +32,20 @@ public class HealthBar : MonoBehaviour
         healthIcons.Add(icon.GetComponent<Image>());
     }
 
+    private void RemoveIcon()
+    {
+        Image icon = healthIcons[healthIcons.Count];
+        healthIcons.RemoveAt(healthIcons.Count);
+        Destroy(icon);
+    }
+
     private void UpdateMaxHealth()
     {
         int numberOfIcons = CharacterManager.Instance.HealthManager.GetMaxHealth() / 2;
         while (healthIcons.Count < numberOfIcons)
             AddIcon();
+        while (healthIcons.Count > numberOfIcons)
+            RemoveIcon();
     }
 
     private void UpdateCurrentHealth()

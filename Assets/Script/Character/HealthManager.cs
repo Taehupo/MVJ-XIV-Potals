@@ -9,6 +9,7 @@ public class HealthManager : MonoBehaviour
     private bool hitRight = false;
     private bool isInvincible = false;
     public Timer invincibleTimer;
+    public Action onHeal;
     public Action onHurt;
     public Action onDefeat;
 
@@ -21,10 +22,14 @@ public class HealthManager : MonoBehaviour
     public bool IsAlive() { return health > 0; }
     public bool IsInvincible() { return isInvincible; }
     public void StopInvincibility() { isInvincible = false; }
-    public void Heal(int healValue) { health = Math.Min(maxHealth, health+healValue); }
     public void SetMaxHealth(int _maxHealth) { maxHealth = _maxHealth; health = maxHealth; }
     public int GetMaxHealth() { return maxHealth; }
     public int GetHealth() { return health; }
+    public void Heal(int healValue)
+    {
+        health = Math.Min(maxHealth, health + healValue);
+        onHeal?.Invoke();
+    }
     public void TakeHit(int damage, GameObject striker)
     {
         this.TakeDamage(damage);
