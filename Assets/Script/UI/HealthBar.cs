@@ -12,9 +12,6 @@ public class HealthBar : MonoBehaviour
 
     private List<Image> healthIcons = new List<Image>();
 
-    public static Action<int> OnMaxHealthChanged;
-    public static Action<int> OnHealthChanged;
-
     // Start is called before the first frame update
     void Start()
     {

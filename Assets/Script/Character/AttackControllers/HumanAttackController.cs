@@ -55,7 +55,7 @@ public class HumanAttackController : AttackController
                     flipPos.x *= isFlipped ? 1 : -1;
 
                     Instantiate(SubAttackPrefab, transform.position + flipPos, new Quaternion());
-                    CharacterManager.Instance.currentJavelinAmmo--;
+                    CharacterManager.Instance.RemoveAmmo(1);
                 }
             }
         }
