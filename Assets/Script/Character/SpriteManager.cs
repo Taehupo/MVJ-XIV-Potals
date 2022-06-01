@@ -19,7 +19,7 @@ public class SpriteManager : MonoBehaviour
 
     public bool IsFlipped()
     {
-        return spriteRenderer.flipX;
+        return !spriteRenderer.flipX;
     }
 
     #endregion

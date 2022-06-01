@@ -20,7 +20,7 @@ public class RatMovementController : MovementController
 		if (context.phase == InputActionPhase.Started)
 		{
 			isMoving = true;
-			CharacterManager.Instance.Flip(context.ReadValue<Vector2>().x > 0);
+			CharacterManager.Instance.Flip(context.ReadValue<Vector2>().x < 0);
 		}
 		if (context.phase == InputActionPhase.Canceled)
 		{
