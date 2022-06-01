@@ -17,6 +17,8 @@ public class CharacterManager : MonoBehaviour
 	[SerializeField] private int maxJavelinAmmo = 5;
 	public int currentJavelinAmmo = 5;
 
+	public Action onJavelinAmmoChange;
+
 	public static CharacterManager Instance { get; private set; }
 
 	public ShapeController ShapeController { get; private set; }
@@ -159,7 +161,14 @@ public class CharacterManager : MonoBehaviour
 			currentJavelinAmmo = maxJavelinAmmo;
 		else
 			currentJavelinAmmo += amount;
-
+		onJavelinAmmoChange?.Invoke();
+	}
+	public void RemoveAmmo(int amount)
+	{
+		currentJavelinAmmo -= amount;
+		if (currentJavelinAmmo + amount < 0)
+			currentJavelinAmmo = 0;
+		onJavelinAmmoChange?.Invoke();
 	}
 
 	#endregion
