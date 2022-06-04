@@ -80,7 +80,6 @@ public class ScenePartLoader : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Collder");
         if (other.CompareTag("Player"))
         {
             shouldLoad = true;

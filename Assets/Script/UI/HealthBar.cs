@@ -24,7 +24,8 @@ public class HealthBar : MonoBehaviour
     private void AddIcon()
     {
         GameObject icon = new GameObject("HealthIcon", typeof(Image));
-        icon.transform.parent = transform;
+        icon.transform.SetParent(transform, false);
+        //icon.transform.parent = transform;
         icon.transform.localPosition = Vector3.zero;
         healthIcons.Add(icon.GetComponent<Image>());
     }
