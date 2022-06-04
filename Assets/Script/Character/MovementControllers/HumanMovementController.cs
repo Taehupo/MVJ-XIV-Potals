@@ -117,22 +117,19 @@ public class HumanMovementController : MovementController
 		Vector2 boxCastOrigin = gameObject.transform.position;
 		boxCastOrigin.y += GroundingOffset;
 		boxCastOrigin.x += BoxCastXOffset;
-		RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
-		if (hit.collider != null)
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
+		bool tmpIsGrounded = false;
+		foreach (RaycastHit2D hit in hits)
 		{
-			if (hit.collider.tag == "Platform")
+			if (hit.collider != null)
 			{
-				isGrounded = true;
-			}
-			else
-			{
-				isGrounded = false;
+				if (hit.collider.CompareTag("Platform"))
+				{
+					tmpIsGrounded = true;
+				}
 			}
 		}
-		else
-		{
-			isGrounded = false;
-		}
+		isGrounded = tmpIsGrounded;
 	}
 
 	override public void Draw()
