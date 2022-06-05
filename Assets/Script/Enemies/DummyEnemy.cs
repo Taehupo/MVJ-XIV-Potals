@@ -8,7 +8,7 @@ public class DummyEnemy : Enemy
 
     private void Awake()
     {
-        canBeStaggered = true;
+        CanBeStaggered = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

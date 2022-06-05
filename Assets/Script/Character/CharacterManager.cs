@@ -134,7 +134,7 @@ public class CharacterManager : MonoBehaviour
 	#region Public Manipulators
 	public void Flip(bool isRight)
 	{
-		// Change le sens de la hitbox si le sprite a changÅEde sens
+		// Change le sens de la hitbox si le sprite a changÔøΩEde sens
 		if (isRight != SpriteManager.Flip(isRight))
 		{
 			ShapeController.AttackController.FlipHitbox(isRight);
@@ -208,7 +208,7 @@ public class CharacterManager : MonoBehaviour
 
     #region Private Manipulators
 
-    void CreateSubComponents()
+    private void CreateSubComponents()
 	{
 		ShapeController = gameObject.AddComponent<ShapeController>();
 		SpriteManager = gameObject.AddComponent<SpriteManager>();

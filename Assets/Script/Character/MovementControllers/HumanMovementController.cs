@@ -112,7 +112,7 @@ public class HumanMovementController : MovementController
 		}
 	}
 
-	void Update()
+	private void Update()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
 		boxCastOrigin.y += GroundingOffset;
@@ -121,18 +121,17 @@ public class HumanMovementController : MovementController
 		bool tmpIsGrounded = false;
 		foreach (RaycastHit2D hit in hits)
 		{
-			if (hit.collider != null)
+			if (hit.collider is null) 
+				continue;
+			if (hit.collider.CompareTag("Platform"))
 			{
-				if (hit.collider.CompareTag("Platform"))
-				{
-					tmpIsGrounded = true;
-				}
+				tmpIsGrounded = true;
 			}
 		}
 		isGrounded = tmpIsGrounded;
 	}
 
-	override public void Draw()
+	public override void Draw()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
 		boxCastOrigin.y += GroundingOffset;
