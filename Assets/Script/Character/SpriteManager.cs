@@ -55,7 +55,7 @@ public class SpriteManager : MonoBehaviour
     }
     public bool Flip(bool isRight)
     {
-        bool old = spriteRenderer.flipX;
+        var old = spriteRenderer.flipX;
         spriteRenderer.flipX = isRight;
         return old;
     }
@@ -67,10 +67,10 @@ public class SpriteManager : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
 
-        CreateShapeToVisual();
+        // CreateShapeToVisual();
 
         // set default shape as Human
-        SetVisuals(ECharacterShape.Human);
+        // SetVisuals(ECharacterShape.Human);
         
         blinkTimer = gameObject.AddComponent<Timer>();
         blinkTimer.OnEnd = () => 
@@ -83,7 +83,7 @@ public class SpriteManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // clear dictionnary
+        // clear dictionary
         m_ShapeToVisualController.Clear();
     }
 
@@ -91,7 +91,7 @@ public class SpriteManager : MonoBehaviour
 
     #region Private Manipulators
 
-    void CreateShapeToVisual()
+    private void CreateShapeToVisual()
     {
         foreach (CharacterShapeVisuals shapeVisuals in CharacterManager.Instance.ShapesVisuals)
         {
@@ -117,7 +117,7 @@ public class SpriteManager : MonoBehaviour
 
     }
 
-    void SwapVisuals(ECharacterShape shape)
+    private void SwapVisuals(ECharacterShape shape)
     {
         if (m_ShapeToVisualController[shape] == null)
             Debug.LogError("SpriteManager.SwapVisuals() Error : No Visuals found for " + shape);

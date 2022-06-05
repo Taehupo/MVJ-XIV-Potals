@@ -90,3 +90,17 @@ Assets\AmplifyShaderEditor\Plugins\EditorResources\Templates\SRP (Legacy)\USRPTe
 Assets\AmplifyShaderEditor\Plugins\EditorResources\Templates\SRP (Legacy)\USRPTemplates 7xx - 9xx (Legacy).unitypackage.meta
 Assets/AmplifyShaderEditor/Examples
 Assets/AmplifyShaderEditor/Plugins/EditorResources/Templates
+
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/.idea.MVJ-XIV-Potals.iml
+/projectSettingsUpdater.xml
+/modules.xml
+/contentModel.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml

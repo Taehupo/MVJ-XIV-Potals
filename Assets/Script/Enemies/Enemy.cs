@@ -7,11 +7,12 @@ public abstract class Enemy : MonoBehaviour
     #region Members
 
     [SerializeField] private int maxHealth;
-    HealthManager healthManager;
+    private HealthManager _healthManager;
+    private SpriteManager _spriteManager;
 
-
-    protected bool canBeStaggered;
-    private bool isStaggered = false;
+    protected bool CanBeStaggered;
+    private bool _isStaggered = false;
+    private Rigidbody2D _rigidbody2D;
 
     #endregion
 
@@ -23,26 +24,24 @@ public abstract class Enemy : MonoBehaviour
     #region Inherited Manipulators
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        healthManager = gameObject.AddComponent<HealthManager>();
-        healthManager.SetMaxHealth(maxHealth);
-        healthManager.onHurt += Hurt;
-        healthManager.onDefeat += Defeat;
-        healthManager.invincibleTimer.OnEnd = () => { healthManager.StopInvincibility(); gameObject.GetComponent<SpriteRenderer>().enabled = true; };
+        _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        _healthManager = gameObject.AddComponent<HealthManager>();
+        _healthManager.SetMaxHealth(maxHealth);
+        _healthManager.onHurt += Hurt;
+        _healthManager.onDefeat += Defeat;
+        _healthManager.invincibleTimer.OnEnd = () => { _healthManager.StopInvincibility(); _spriteManager.StopBlink(); };
+        
+        _spriteManager = gameObject.AddComponent<SpriteManager>();
     }
 
     private void FixedUpdate()
     {
-        if (isStaggered)
+        if (_isStaggered)
         {
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(healthManager.GetHitLocation()*10f, 10f);
-            isStaggered = false;
-        }
-
-        if (healthManager.IsInvincible())
-        {
-            gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
+            _rigidbody2D.velocity = new Vector2(_healthManager.GetHitLocation()*10f, 10f);
+            _isStaggered = false;
         }
     }
 
@@ -55,7 +54,8 @@ public abstract class Enemy : MonoBehaviour
     }
     private void Hurt()
     {
-        isStaggered = true;
+        _isStaggered = true;
+        _spriteManager.Blink();
     }
 
     #endregion
