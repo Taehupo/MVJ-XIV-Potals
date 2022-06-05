@@ -76,8 +76,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9372696b7d636f34ea60310ca60e5387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullHealth: {fileID: -1521559597, guid: 288e74567389a43458bdc47a83e90798, type: 3}
-  halfHealth: {fileID: 1536667849, guid: 288e74567389a43458bdc47a83e90798, type: 3}
+  fullHealth: {fileID: 21300000, guid: e01f0f0a805917549ab35759e43d9358, type: 3}
+  halfHealth: {fileID: 21300000, guid: b32e46b376fe98642ba1f9c4d3c295b0, type: 3}
   emptyHealth: {fileID: 247198330, guid: 288e74567389a43458bdc47a83e90798, type: 3}
 --- !u!1 &6863586057615187093
 GameObject:
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0.4745098}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -351,7 +351,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 92b3224c7f7e24e4c8161aa5f0feac16, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
