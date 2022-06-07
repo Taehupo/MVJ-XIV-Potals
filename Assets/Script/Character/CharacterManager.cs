@@ -152,22 +152,25 @@ public class CharacterManager : MonoBehaviour
 
 	public void Defeat()
 	{
-		throw new NotImplementedException();
+		//throw new NotImplementedException();
+		if (GameManager.instance.GetComponent<SaveSystem>() != null)
+		{
+			GameManager.instance.GetComponent<SaveSystem>().ReadFile();
+			Debug.Log("Read file");
+		}
 	}
 
 	public void AddAmmo(int amount)
-    {
-		if (currentJavelinAmmo + amount > maxJavelinAmmo)
-			currentJavelinAmmo = maxJavelinAmmo;
-		else
-			currentJavelinAmmo += amount;
-		onJavelinAmmoChange?.Invoke();
+	{
+		SetAmmo(Math.Min(maxJavelinAmmo, currentJavelinAmmo + amount));
 	}
 	public void RemoveAmmo(int amount)
 	{
-		currentJavelinAmmo -= amount;
-		if (currentJavelinAmmo + amount < 0)
-			currentJavelinAmmo = 0;
+		SetAmmo(Math.Max(currentJavelinAmmo - amount, 0));
+	}
+	public void SetAmmo(int amount)
+	{
+		currentJavelinAmmo = amount;
 		onJavelinAmmoChange?.Invoke();
 	}
 

@@ -56,7 +56,8 @@ public class SaveSystem : MonoBehaviour
     public void ApplyData()
     {
         Debug.Log("GetData");
-        CharacterManager.Instance.currentJavelinAmmo = gameData.ammo;
+        CharacterManager.Instance.HealthManager.SetHealth(gameData.health);
+        CharacterManager.Instance.SetAmmo(gameData.ammo);
         CharacterManager.Instance.transform.position = gameData.playerPosition;
     }
 }

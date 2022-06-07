@@ -20,12 +20,12 @@ public class SavePoint : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    /*private void OnTriggerExit2D(Collider2D other)
     {
         // if player reset vcamera priority
         if (other.name == "Player")
         {
             GameManager.instance.GetComponent<SaveSystem>().ReadFile();
         }
-    }
+    }*/
 }

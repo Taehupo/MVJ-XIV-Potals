@@ -11,6 +11,7 @@ public class HealthManager : MonoBehaviour
     public Timer invincibleTimer;
     public Action onHeal;
     public Action onHurt;
+    public Action onHealthChanged;
     public Action onDefeat;
 
     [SerializeField]
@@ -23,11 +24,12 @@ public class HealthManager : MonoBehaviour
     public bool IsInvincible() { return isInvincible; }
     public void StopInvincibility() { isInvincible = false; }
     public void SetMaxHealth(int _maxHealth) { maxHealth = _maxHealth; health = maxHealth; }
+    public void SetHealth(int _health) { health = _health; onHealthChanged?.Invoke(); }
     public int GetMaxHealth() { return maxHealth; }
     public int GetHealth() { return health; }
     public void Heal(int healValue)
     {
-        health = Math.Min(maxHealth, health + healValue);
+        SetHealth(Math.Min(maxHealth, health + healValue));
         onHeal?.Invoke();
     }
     public void TakeHit(int damage, GameObject striker)
@@ -39,7 +41,7 @@ public class HealthManager : MonoBehaviour
     {
         if (IsAlive() && !isInvincible)
         {
-            health = Math.Max(health-damage,0);
+            SetHealth(Math.Max(health - damage, 0));
             // Debug.Log("Took " + damage + " Health : " + health + "/" + maxHealth);
             isInvincible = true;
             invincibleTimer.StartTimer(1);

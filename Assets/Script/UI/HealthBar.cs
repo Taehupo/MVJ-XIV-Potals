@@ -17,8 +17,8 @@ public class HealthBar : MonoBehaviour
     {
         UpdateMaxHealth();
         UpdateCurrentHealth();
-        CharacterManager.Instance.HealthManager.onHurt += UpdateCurrentHealth;
-        CharacterManager.Instance.HealthManager.onHeal += UpdateCurrentHealth;
+        CharacterManager.Instance.HealthManager.onHealthChanged += UpdateCurrentHealth;
+        //CharacterManager.Instance.HealthManager.onHeal += UpdateCurrentHealth;
     }
 
     private void AddIcon()
