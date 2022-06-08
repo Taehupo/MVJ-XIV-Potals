@@ -18,6 +18,7 @@ public class HealthBar : MonoBehaviour
         UpdateMaxHealth();
         UpdateCurrentHealth();
         CharacterManager.Instance.HealthManager.onHealthChanged += UpdateCurrentHealth;
+        CharacterManager.Instance.HealthManager.onMaxHealthChanged += UpdateMaxHealth;
         //CharacterManager.Instance.HealthManager.onHeal += UpdateCurrentHealth;
     }
 
@@ -44,6 +45,7 @@ public class HealthBar : MonoBehaviour
             AddIcon();
         while (healthIcons.Count > numberOfIcons)
             RemoveIcon();
+        UpdateCurrentHealth();
     }
 
     private void UpdateCurrentHealth()

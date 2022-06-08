@@ -1,10 +1,10 @@
 
 /// <summary>
-/// Flags for upgrades, used for saving system
+/// Flags for events, used for saving system
 /// </summary>
 public enum EEventFlag
 {
-    HealthTest,
+    GotRatShape,
 
     DianeBossDefeated,
 

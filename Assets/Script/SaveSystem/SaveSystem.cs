@@ -15,7 +15,11 @@ public class GameData
 
     public Vector3 playerPosition;
 
-    public List<EEventFlag> activeFlags;
+    public List<EEventFlag> activeEventFlags;
+
+    public List<EHealthUpgradeFlag> activeHealthFlags;
+
+    public List<EAmmoUpgradeFlag> activeAmmoFlags;
 }
 public class SaveSystem : MonoBehaviour
 {
@@ -50,7 +54,7 @@ public class SaveSystem : MonoBehaviour
         gameData.ammo = CharacterManager.Instance.currentJavelinAmmo;
         gameData.sceneName = "Gameplay";
         gameData.playerPosition = CharacterManager.Instance.transform.position;
-        gameData.activeFlags = new List<EEventFlag>();
+        gameData.activeEventFlags = new List<EEventFlag>();
     }
 
     public void ApplyData()
