@@ -11,16 +11,16 @@ public class HealthUpgradeItem : PickupItem
     private void Awake()
     {
         // Check flag on GM
-
+        if (GameManager.instance.aquiredHealthUpgrades.Contains(associatedFlag))
+            Destroy(gameObject);
     }
 
     public override void Effect(Collider2D collision)
     {
-        // Check if flag already in GM
         HealthManager healthManager = collision.GetComponent<HealthManager>();
         if (healthManager != null)
             healthManager.SetMaxHealth(healthManager.GetMaxHealth() + upgradeAmount);
-        // Send flag to GM
+        GameManager.instance.AddFLag(associatedFlag);
     }
 
 }

@@ -173,6 +173,12 @@ public class CharacterManager : MonoBehaviour
 		currentJavelinAmmo = amount;
 		onJavelinAmmoChange?.Invoke();
 	}
+	public void SetMaxAmmo(int amount)
+	{
+		maxJavelinAmmo = amount;
+		currentJavelinAmmo = maxJavelinAmmo;
+		onJavelinAmmoChange?.Invoke();
+	}
 
 	#endregion
 

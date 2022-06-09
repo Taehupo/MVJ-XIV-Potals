@@ -7,7 +7,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-	void Awake()
+    public List<EHealthUpgradeFlag> aquiredHealthUpgrades;
+
+    public List<EAmmoUpgradeFlag> aquiredAmmoUpgrades;
+
+    public List<EEventFlag> activeEventFlags;
+
+    public List<ECharacterShape> usableShapes;
+
+    // Used to initialize maxhealth when loading
+    public static int startingHealth = 6;
+
+    void Awake()
 	{
 		if (instance != null)
 		{
@@ -32,5 +43,21 @@ public class GameManager : MonoBehaviour
     public void LoadScene(string name)
 	{
         SceneManager.LoadSceneAsync(name);
-	}
+    }
+
+    public void AddFLag(EEventFlag name)
+    {
+        if (!activeEventFlags.Contains(name))
+            activeEventFlags.Add(name);
+    }
+    public void AddFLag(EHealthUpgradeFlag name)
+    {
+        if (!aquiredHealthUpgrades.Contains(name))
+            aquiredHealthUpgrades.Add(name);
+    }
+    public void AddFLag(EAmmoUpgradeFlag name)
+    {
+        if (!aquiredAmmoUpgrades.Contains(name))
+            aquiredAmmoUpgrades.Add(name);
+    }
 }
