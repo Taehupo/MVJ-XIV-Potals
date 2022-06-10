@@ -33,23 +33,27 @@ public class SaveSystem : MonoBehaviour
         saveFile = Application.persistentDataPath + "/gamedata.json";
     }
 
-     public void ReadFile()
+     public GameData ReadFile()
     {
         if (File.Exists(saveFile))
         {
             string fileContents = File.ReadAllText(saveFile);
             gameData = JsonUtility.FromJson<GameData>(fileContents);
-            ApplyData();
-            Debug.Log("Read");
+            return gameData;
         }
+        return null;
     }
 
+    public void WriteFile(GameData data)
+    {
+        string jsonString = JsonUtility.ToJson(data);
+        File.WriteAllText(saveFile, jsonString);
+        Debug.Log("Wrote");
+    }
     public void WriteFile()
     {
         GetData();
-        string jsonString = JsonUtility.ToJson(gameData);
-        File.WriteAllText(saveFile, jsonString);
-        Debug.Log("Wrote");
+        WriteFile(gameData);
     }
 
     public void GetData()
@@ -65,7 +69,7 @@ public class SaveSystem : MonoBehaviour
         gameData.usableShapeFlags = GameManager.instance.usableShapes;
     }
 
-    public void ApplyData()
+    public GameData ApplyData()
     {
         Debug.Log("GetData");
         GameManager.instance.activeEventFlags = gameData.activeEventFlags;
@@ -82,5 +86,7 @@ public class SaveSystem : MonoBehaviour
 
         //Load Scene
         CharacterManager.Instance.transform.position = gameData.playerPosition;
+
+        return gameData;
     }
 }

@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public static SaveSystem saveSystem;
+
     public List<EHealthUpgradeFlag> aquiredHealthUpgrades;
 
     public List<EAmmoUpgradeFlag> aquiredAmmoUpgrades;
@@ -26,13 +28,14 @@ public class GameManager : MonoBehaviour
 		}
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        saveSystem = GetComponent<SaveSystem>();
 	}
 
 	// Start is called before the first frame update
 	void Start()
     {
-        if (GetComponent<SaveSystem>() != null)
-            GetComponent<SaveSystem>().ReadFile();
+        LoadGame();
     }
 
     // Update is called once per frame
@@ -44,6 +47,47 @@ public class GameManager : MonoBehaviour
     public void LoadScene(string name)
 	{
         SceneManager.LoadSceneAsync(name);
+    }
+
+    public void SaveGame()
+    {
+        GameData gameData = new GameData();
+        gameData.health = CharacterManager.Instance.HealthManager.GetHealth();
+        gameData.ammo = CharacterManager.Instance.currentJavelinAmmo;
+        gameData.sceneName = SceneManager.GetActiveScene().name;
+        gameData.playerPosition = CharacterManager.Instance.transform.position;
+        gameData.activeEventFlags = activeEventFlags;
+        gameData.activeHealthFlags = aquiredHealthUpgrades;
+        gameData.activeAmmoFlags = aquiredAmmoUpgrades;
+        gameData.usableShapeFlags = usableShapes;
+
+        saveSystem.WriteFile(gameData);
+    }
+
+    public void LoadGame()
+    {
+        Debug.Log("GetData");
+        GameData gameData = saveSystem.ReadFile();
+        if (gameData != null)
+        {
+            Debug.Log("ApplyData");
+
+            if (!SceneManager.GetActiveScene().name.Equals(gameData.sceneName))
+                LoadScene(gameData.sceneName);
+            CharacterManager.Instance.transform.position = gameData.playerPosition;
+
+            GameManager.instance.activeEventFlags = gameData.activeEventFlags;
+            GameManager.instance.aquiredHealthUpgrades = gameData.activeHealthFlags;
+            GameManager.instance.aquiredAmmoUpgrades = gameData.activeAmmoFlags;
+            GameManager.instance.usableShapes = gameData.usableShapeFlags;
+
+            CharacterManager.Instance.HealthManager.SetMaxHealth
+                (GameManager.startingHealth + (gameData.activeHealthFlags.Count * 2));
+            CharacterManager.Instance.HealthManager.SetHealth(gameData.health);
+
+            CharacterManager.Instance.SetMaxAmmo(gameData.activeAmmoFlags.Count * 2);
+            CharacterManager.Instance.SetAmmo(gameData.ammo);
+        }
     }
 
     public void AddFlag(EEventFlag name)

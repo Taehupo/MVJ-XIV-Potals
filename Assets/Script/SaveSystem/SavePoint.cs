@@ -16,7 +16,7 @@ public class SavePoint : MonoBehaviour
         // if player set vcamera priority
         if (other.name == "Player")
         {
-            GameManager.instance.GetComponent<SaveSystem>().WriteFile();
+            GameManager.instance.SaveGame();
         }
     }
 
