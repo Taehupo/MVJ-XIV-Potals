@@ -35,10 +35,13 @@ public class SaveSystem : MonoBehaviour
 
      public void ReadFile()
     {
-        string fileContents = File.ReadAllText(saveFile);
-        gameData = JsonUtility.FromJson<GameData>(fileContents);
-        ApplyData();
-        Debug.Log("Read");
+        if (File.Exists(saveFile))
+        {
+            string fileContents = File.ReadAllText(saveFile);
+            gameData = JsonUtility.FromJson<GameData>(fileContents);
+            ApplyData();
+            Debug.Log("Read");
+        }
     }
 
     public void WriteFile()

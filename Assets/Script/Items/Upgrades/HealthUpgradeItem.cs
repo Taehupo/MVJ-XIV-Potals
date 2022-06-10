@@ -8,7 +8,7 @@ public class HealthUpgradeItem : PickupItem
 
     private int upgradeAmount = 2;
 
-    private void Awake()
+    private void Start()
     {
         // Check flag on GM
         if (GameManager.instance.aquiredHealthUpgrades.Contains(associatedFlag))
