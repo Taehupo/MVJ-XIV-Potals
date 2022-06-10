@@ -44,7 +44,10 @@ public class Javelin : MonoBehaviour
         foreach (Collider2D hitTarget in hitTargets)
         {
             //Debug.Log("Attacking " + hitTarget.name + " !");
-            hitTarget.GetComponent<HealthManager>().TakeHit(2, this.gameObject);
+            if (hitTarget.GetComponent<HealthManager>() != null)
+                hitTarget.GetComponent<HealthManager>().TakeHit(2, this.gameObject);
+            if (hitTarget.GetComponent<PilumDoor>() != null)
+                hitTarget.GetComponent<PilumDoor>().Hit();
         }
     }
 }
