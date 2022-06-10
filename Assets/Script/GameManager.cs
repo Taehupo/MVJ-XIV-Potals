@@ -45,17 +45,17 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadSceneAsync(name);
     }
 
-    public void AddFLag(EEventFlag name)
+    public void AddFlag(EEventFlag name)
     {
         if (!activeEventFlags.Contains(name))
             activeEventFlags.Add(name);
     }
-    public void AddFLag(EHealthUpgradeFlag name)
+    public void AddFlag(EHealthUpgradeFlag name)
     {
         if (!aquiredHealthUpgrades.Contains(name))
             aquiredHealthUpgrades.Add(name);
     }
-    public void AddFLag(EAmmoUpgradeFlag name)
+    public void AddFlag(EAmmoUpgradeFlag name)
     {
         if (!aquiredAmmoUpgrades.Contains(name))
             aquiredAmmoUpgrades.Add(name);

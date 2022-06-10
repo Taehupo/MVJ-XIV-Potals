@@ -6,7 +6,7 @@ public class HealthUpgradeItem : PickupItem
 {
     [SerializeField] EHealthUpgradeFlag associatedFlag = EHealthUpgradeFlag.count;
 
-    [SerializeField] int upgradeAmount = 2;
+    private int upgradeAmount = 2;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class HealthUpgradeItem : PickupItem
         HealthManager healthManager = collision.GetComponent<HealthManager>();
         if (healthManager != null)
             healthManager.SetMaxHealth(healthManager.GetMaxHealth() + upgradeAmount);
-        GameManager.instance.AddFLag(associatedFlag);
+        GameManager.instance.AddFlag(associatedFlag);
     }
 
 }

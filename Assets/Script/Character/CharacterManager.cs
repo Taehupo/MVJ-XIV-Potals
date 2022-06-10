@@ -45,7 +45,7 @@ public class CharacterManager : MonoBehaviour
 
 	public MovementController MovementController { get => ShapeController.MovementController; }
 	public AttackController AttackController { get => ShapeController.AttackController; }
-
+	public int MaxAmmo { get => maxJavelinAmmo; }
 	#endregion
 
 
