@@ -7,12 +7,17 @@ public abstract class Enemy : MonoBehaviour
     #region Members
 
     [SerializeField] private int maxHealth;
-    private HealthManager _healthManager;
-    private SpriteManager _spriteManager;
+    protected HealthManager _healthManager { get; private set; }
+    protected SpriteManager _spriteManager { get; private set; }
 
     protected bool CanBeStaggered;
     private bool _isStaggered = false;
     private Rigidbody2D _rigidbody2D;
+    [SerializeField] protected GameObject attackHitbox;
+    
+    [SerializeField] private LayerMask playerLayer;
+    protected ContactFilter2D ContactFilter = new();
+    [SerializeField] protected int hitDamage;
 
     #endregion
 
@@ -26,6 +31,8 @@ public abstract class Enemy : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        ContactFilter.SetLayerMask(playerLayer);
+        
         _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         _healthManager = gameObject.AddComponent<HealthManager>();
         _healthManager.SetMaxHealth(maxHealth);
@@ -43,11 +50,16 @@ public abstract class Enemy : MonoBehaviour
             _rigidbody2D.velocity = new Vector2(_healthManager.GetHitLocation()*10f, 10f);
             _isStaggered = false;
         }
+
+        // int test = Random.Range(0, 100);
+        // if (test > 95)
+        //     this.Attack();
     }
 
     #endregion
 
     #region Private Manipulators
+    protected abstract void Attack();
 
     protected virtual void Defeat()
     {

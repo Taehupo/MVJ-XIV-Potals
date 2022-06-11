@@ -24,8 +24,8 @@ public class HealthManager : MonoBehaviour
     public bool IsAlive() { return health > 0; }
     public bool IsInvincible() { return isInvincible; }
     public void StopInvincibility() { isInvincible = false; }
-    public void SetMaxHealth(int _maxHealth) { maxHealth = _maxHealth; health = maxHealth; onMaxHealthChanged?.Invoke(); }
-    public void SetHealth(int _health) { health = _health; onHealthChanged?.Invoke(); }
+    public void SetMaxHealth(int value) { maxHealth = value; health = maxHealth; onMaxHealthChanged?.Invoke(); }
+    public void SetHealth(int value) { health = value; onHealthChanged?.Invoke(); }
     public int GetMaxHealth() { return maxHealth; }
     public int GetHealth() { return health; }
     public void Heal(int healValue)

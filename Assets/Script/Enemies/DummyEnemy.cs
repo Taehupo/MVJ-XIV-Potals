@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DummyEnemy : Enemy
@@ -26,11 +27,26 @@ public class DummyEnemy : Enemy
 
     protected override void Defeat()
     {
-        if (GetComponent<DropSystem>() != null)
+        if (GetComponent<DropSystem>() is not null)
         {
             GetComponent<DropSystem>().CalculateDrops();
         }
 
         Destroy(gameObject);
+    }
+
+    protected override void Attack()
+    {
+        _spriteManager.SetTrigger("Attack");
+        attackHitbox.SetActive(true);
+        var hitTargets = new List<Collider2D>();
+        Physics2D.OverlapCollider(attackHitbox.GetComponent<BoxCollider2D>(), ContactFilter, hitTargets); 
+        foreach (Collider2D hitTarget in hitTargets)
+        {
+            //Debug.Log("Attacking " + hitTarget.name + " !");
+            hitTarget.GetComponent<HealthManager>().TakeHit(hitDamage, this.gameObject);
+        }
+        
+        attackHitbox.SetActive(false);
     }
 }
