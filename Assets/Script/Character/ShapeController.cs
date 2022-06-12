@@ -15,7 +15,8 @@ public class ShapeController : MonoBehaviour
     /// <summary>
     /// Previous CharacterShape , Next CharacterShape
     /// </summary>
-    public static Action<ECharacterShape, ECharacterShape> OnShapeChanged;
+    public static Action<ECharacterShape, ECharacterShape> OnShapeChanged; // is this used?
+    public Action OnShapeChange;
 
     private Dictionary<ECharacterShape, MovementController> m_ShapeToMovementController = new();
     private Dictionary<ECharacterShape, AttackController> m_ShapeToAttackController = new();
@@ -138,6 +139,7 @@ public class ShapeController : MonoBehaviour
         OnShapeChanged?.Invoke(CharacterShape, shape);
 
         CharacterShape = shape;
+        OnShapeChange?.Invoke();
     }
 
     void SwapControllers(ECharacterShape shape)

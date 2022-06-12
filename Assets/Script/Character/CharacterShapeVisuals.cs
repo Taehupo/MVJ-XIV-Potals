@@ -21,6 +21,9 @@ public class CharacterShapeVisuals : ScriptableObject
     [SerializeField]
     private RuntimeAnimatorController m_AnimatorController;
 
+    [SerializeField]
+    private Sprite m_UI_Icon;
+
     #endregion
 
     #region Accessors
@@ -30,6 +33,8 @@ public class CharacterShapeVisuals : ScriptableObject
     public Sprite ShapeSprite { get => m_ShapeSprite; }
 
     public RuntimeAnimatorController AnimatorController { get => m_AnimatorController; }
+    
+    public Sprite UIIcon { get => m_UI_Icon; }
 
     #endregion
 }

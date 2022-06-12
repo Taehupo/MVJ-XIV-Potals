@@ -22,6 +22,16 @@ public class RessourcesCounter : MonoBehaviour
 
     private void UpdateJavelinAmmo()
     {
-        javelinAmmoText.text = CharacterManager.Instance.currentJavelinAmmo.ToString();
+        if (CharacterManager.Instance.MaxAmmo > 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+                transform.GetChild(i).gameObject.SetActive(true);
+            javelinAmmoText.text = CharacterManager.Instance.currentJavelinAmmo.ToString();
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+                transform.GetChild(i).gameObject.SetActive(false);
+        }
     }
 }

@@ -60,6 +60,11 @@ public class SpriteManager : MonoBehaviour
         return old;
     }
 
+    public CharacterShapeVisuals GetShapeVisuals(ECharacterShape shape)
+    {
+        return m_ShapeToVisualController.GetValueOrDefault(shape);
+    }
+
     #region Inherited Manipulators
 
     private void Awake()
