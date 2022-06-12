@@ -9,6 +9,8 @@ public class RatMovementController : MovementController
 
 	public override ECharacterShape Shape { get => ECharacterShape.Rat; }
 
+	float currentJumpTime = 0f;
+
 	#endregion
 
 
@@ -30,76 +32,93 @@ public class RatMovementController : MovementController
 		moveForce = context.ReadValue<Vector2>();
 		return moveForce.x;
 	}
-
 	public override bool Jump(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading jump : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
 		{
 			isJumping = true;
+			isCrouching = false;
 		}
 		if (context.phase == InputActionPhase.Canceled)
 		{
 			isJumping = false;
+			// Prevents double jump
+			currentJumpTime = MaxJumpTime;
 		}
 		return isJumping;
 	}
-
-    public override bool Crouch(InputAction.CallbackContext context)
-    {
+	public override bool Crouch(InputAction.CallbackContext context)
+	{
 		return false;
-    }
+	}
 
-    #endregion
+	#endregion
 
-    #region Inherited Manipulators
 
-    protected override void Awake()
+	#region Inherited Manipulators
+
+	protected override void Awake()
 	{
 		base.Awake();
 	}
 
 	void FixedUpdate()
 	{
-		if ((isMoving && isGrounded) || (isMoving && !isGrounded && !isCollidingInAir))
+		if (isStaggered)
 		{
-			CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
+			CharacterManager.Instance.rb.velocity = new Vector2(10f * CharacterManager.Instance.GetHitLocation(), 10f);
+			isStaggered = false;
 		}
 		else
 		{
-			CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
-		}
+			if ((isMoving && isGrounded) || (isMoving && !isGrounded && !isCollidingInAir))
+			{
+				CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
+			}
+			else
+			{
+				CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
+			}
 
-		if (isJumping && isGrounded)
-		{
-			Debug.Log("Rat jumps at force : " + JumpForce);
-			CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, JumpForce);
-			isGrounded = false;
+			if (isJumping)
+			{
+				if (isGrounded)
+				{
+					isGrounded = false;
+					currentJumpTime = 0f;
+				}
+
+				// Let player jumps higher if held
+				if (currentJumpTime < MaxJumpTime)
+				{
+					CharacterManager.Instance.rb.velocity = new Vector2(CharacterManager.Instance.rb.velocity.x, JumpForce);
+					currentJumpTime += Time.deltaTime;
+				}
+			}
 		}
 	}
 
-	void Update()
+	private void Update()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
 		boxCastOrigin.y += GroundingOffset;
 		boxCastOrigin.x += BoxCastXOffset;
-		RaycastHit2D hit = Physics2D.BoxCast(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
-		if (hit.collider != null)
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCastOrigin, new Vector3(0.35f, 0.1f, 1.0f), 0.0f, Vector2.down, 0.1f);
+		bool tmpIsGrounded = false;
+		foreach (RaycastHit2D hit in hits)
 		{
-			if (hit.collider.tag == "Platform")
+			if (hit.collider is null)
+				continue;
+			if (hit.collider.CompareTag("Platform"))
 			{
-				isGrounded = true;
+				tmpIsGrounded = true;
 			}
-			else
-				isGrounded = false;
 		}
-		else
-		{
-			isGrounded = false;
-		}
+		isGrounded = tmpIsGrounded;
 	}
 
-	override public void Draw()
+	public override void Draw()
 	{
 		Vector2 boxCastOrigin = gameObject.transform.position;
 		boxCastOrigin.y += GroundingOffset;
@@ -114,27 +133,24 @@ public class RatMovementController : MovementController
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !isGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !isGrounded)
 		{
-			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
 		}
 	}
 
 	private void OnCollisionStay2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !isGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !isGrounded)
 		{
-			//Debug.Log("I am touching platform !");
 			isCollidingInAir = true;
 		}
 	}
 
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "Platform" && !isGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !isGrounded)
 		{
-			//Debug.Log("I am touching NOT platform anymore !");
 			isCollidingInAir = false;
 		}
 	}

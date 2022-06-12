@@ -121,10 +121,11 @@ public class CharacterManager : MonoBehaviour
 	{
 		if (context.started)
 		{
-			int nextShape = (int)(ShapeController.CharacterShape + 1) % (int)(ECharacterShape.count);
+			List<ECharacterShape> shapes = GameManager.instance.usableShapes;
+			int currentShape = shapes.IndexOf(ShapeController.CharacterShape);
+			int nextShape = (int)(currentShape + 1) % (int)(shapes.Count);
 			Debug.Log(nextShape);
-			ShapeController.ChangeShape((ECharacterShape)nextShape);
-			SpriteManager.ChangeShape((ECharacterShape)nextShape);
+			SetShape((ECharacterShape)nextShape);
 		}
 	}
 
@@ -178,6 +179,11 @@ public class CharacterManager : MonoBehaviour
 		maxJavelinAmmo = amount;
 		currentJavelinAmmo = maxJavelinAmmo;
 		onJavelinAmmoChange?.Invoke();
+	}
+	public void SetShape(ECharacterShape shape)
+	{
+		ShapeController.ChangeShape(shape);
+		SpriteManager.ChangeShape(shape);
 	}
 
 	#endregion

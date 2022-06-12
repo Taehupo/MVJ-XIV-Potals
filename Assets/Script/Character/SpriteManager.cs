@@ -67,7 +67,7 @@ public class SpriteManager : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
 
-        // CreateShapeToVisual();
+        CreateShapeToVisual();
 
         // set default shape as Human
         // SetVisuals(ECharacterShape.Human);

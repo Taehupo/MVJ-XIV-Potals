@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         gameData.activeHealthFlags = aquiredHealthUpgrades;
         gameData.activeAmmoFlags = aquiredAmmoUpgrades;
         gameData.usableShapeFlags = usableShapes;
+        gameData.currentShape = CharacterManager.Instance.ShapeController.CharacterShape;
 
         saveSystem.WriteFile(gameData);
     }
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviour
             GameManager.instance.aquiredHealthUpgrades = gameData.activeHealthFlags;
             GameManager.instance.aquiredAmmoUpgrades = gameData.activeAmmoFlags;
             GameManager.instance.usableShapes = gameData.usableShapeFlags;
+            CharacterManager.Instance.SetShape(gameData.currentShape);
 
             CharacterManager.Instance.HealthManager.SetMaxHealth
                 (GameManager.startingHealth + (gameData.activeHealthFlags.Count * 2));
@@ -104,5 +106,10 @@ public class GameManager : MonoBehaviour
     {
         if (!aquiredAmmoUpgrades.Contains(name))
             aquiredAmmoUpgrades.Add(name);
+    }
+    public void AddShape(ECharacterShape name)
+    {
+        if (!usableShapes.Contains(name))
+            usableShapes.Add(name);
     }
 }

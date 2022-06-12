@@ -22,6 +22,8 @@ public class GameData
     public List<EAmmoUpgradeFlag> activeAmmoFlags;
 
     public List<ECharacterShape> usableShapeFlags;
+
+    public ECharacterShape currentShape;
 }
 public class SaveSystem : MonoBehaviour
 {
