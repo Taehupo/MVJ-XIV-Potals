@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     public static SaveSystem saveSystem;
 
+    public GameObject player;
+
     public List<EHealthUpgradeFlag> aquiredHealthUpgrades;
 
     public List<EAmmoUpgradeFlag> aquiredAmmoUpgrades;
@@ -112,4 +114,9 @@ public class GameManager : MonoBehaviour
         if (!usableShapes.Contains(name))
             usableShapes.Add(name);
     }
+
+    public void SetPlayer(GameObject _player)
+	{
+        this.player = _player;
+	}
 }
