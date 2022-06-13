@@ -8,4 +8,46 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Gameplay.unity
+    guid: f4863fb52825ec64b81f5b54d2c2959e
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Hub/HubRoom1.unity
+    guid: 57c9eddd164f3ec4bae99a6b31b6145a
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Hub/HubRoom2.unity
+    guid: d30b46aeb78cee5458207670a46390b1
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane01.unity
+    guid: 98be84e1a979c0d4db4f5b7790b68857
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane02.unity
+    guid: c12f4b15c6bbc9840a8632d4b3635d48
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane03.unity
+    guid: 46123e52cf1a0024ab5903917d231427
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane04.unity
+    guid: 03d9048fc4a3d1b4a919b08f3a73a56a
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane05.unity
+    guid: 2b5f39eac4e2133429e6fc5835f9fe62
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane06.unity
+    guid: f2a33054fd0584447aeff1c0f1fbd6c9
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane07.unity
+    guid: 5869242658d2f3e46bb56da2f664fa44
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane08.unity
+    guid: 1c716265bbc3f66469c9631eb9115693
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane09.unity
+    guid: 10889d2708db4864bafb778f77704e47
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/Diane10.unity
+    guid: 618e5b3d981951a42887d1fcaf0a8f6e
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/Diane/DianeFIN.unity
+    guid: 1b316b40c4e205d48a12d66904cc22ce
   m_configObjects: {}
