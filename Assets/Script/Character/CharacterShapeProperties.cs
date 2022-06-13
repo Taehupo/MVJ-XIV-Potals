@@ -27,6 +27,11 @@ public class CharacterShapeProperties : ScriptableObject
     [SerializeField]
     private float m_BoxCastXOffset = -0.03f;
 
+    [SerializeField]
+    private Collider2D m_hitBox;
+    [SerializeField]
+    private Collider2D m_crouchHitBox;
+
     // AttackProperties
     [SerializeField]
     private GameObject m_AttackHitbox;
@@ -59,6 +64,8 @@ public class CharacterShapeProperties : ScriptableObject
     public float MaxJumpTime { get => m_MaxJumpTime; }
     public float GroundingOffset { get => m_GroundingOffset; }
     public float BoxCastXOffset { get => m_BoxCastXOffset; }
+    public Collider2D Hitbox { get => m_hitBox; }
+    public Collider2D CrouchHitbox { get => m_crouchHitBox; }
 
 
     // AttackProperties
