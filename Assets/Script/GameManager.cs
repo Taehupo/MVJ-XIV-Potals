@@ -11,13 +11,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
 
-    public List<EHealthUpgradeFlag> aquiredHealthUpgrades;
+    public List<EHealthUpgradeFlag> aquiredHealthUpgrades = new();
 
-    public List<EAmmoUpgradeFlag> aquiredAmmoUpgrades;
+    public List<EAmmoUpgradeFlag> aquiredAmmoUpgrades = new();
 
-    public List<EEventFlag> activeEventFlags;
+    public List<EEventFlag> activeEventFlags = new();
 
-    public List<ECharacterShape> usableShapes;
+    public List<ECharacterShape> usableShapes = new();
 
     // Used to initialize maxhealth when loading
     public static int startingHealth = 6;
