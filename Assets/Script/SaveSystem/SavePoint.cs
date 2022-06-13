@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
+    [SerializeField] private Animator animator;
+    [SerializeField] private string saveAnimationName = "Saving";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +20,11 @@ public class SavePoint : MonoBehaviour
         if (other.name == "Player")
         {
             GameManager.instance.SaveGame();
+            // Check animation to avoid playing twice
+            if (!this.animator.GetCurrentAnimatorStateInfo(0).IsName(saveAnimationName))
+            {
+                animator.Play(saveAnimationName);
+            }
         }
     }
 
