@@ -18,6 +18,8 @@ MonoBehaviour:
   m_MaxJumpTime: 0.15
   m_GroundingOffset: -0.1
   m_BoxCastXOffset: -0.03
+  m_hitBox: {fileID: 3993095211207198240, guid: caefb5627646b464388c177411d3c7e3, type: 3}
+  m_crouchHitBox: {fileID: 4467344773158713811, guid: 6b50ee62860cf2b4dafb220921d4f5aa, type: 3}
   m_AttackHitbox: {fileID: 1548830107684962348, guid: 64048df9465481f43bbca11415866c18, type: 3}
   m_AttackDamage: 1
   m_AttackRate: 3

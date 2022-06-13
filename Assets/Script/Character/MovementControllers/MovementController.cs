@@ -31,8 +31,8 @@ public abstract class MovementController : MonoBehaviour
 	#region Accessors
 
 	protected float Speed { get =>  m_ShapeProperties != null ? m_ShapeProperties.Speed * getSpeedModifier() : 10 * getSpeedModifier(); }
-	protected float JumpForce { get => m_ShapeProperties != null ? m_ShapeProperties.JumpForce : 10; }
-	protected float MaxJumpTime { get => m_ShapeProperties != null ? m_ShapeProperties.MaxJumpTime : 0.15f; }
+	protected float JumpForce { get => m_ShapeProperties != null ? m_ShapeProperties.JumpForce * getJumpModifier() : 10; }
+	protected float MaxJumpTime { get => m_ShapeProperties != null ? m_ShapeProperties.MaxJumpTime * getMaxJumpModifier() : 0.15f; }
 	protected float GroundingOffset { get => m_ShapeProperties != null ? m_ShapeProperties.GroundingOffset : 0; }
 	protected float BoxCastXOffset { get => m_ShapeProperties != null ? m_ShapeProperties.BoxCastXOffset : 0; }
 
@@ -56,6 +56,18 @@ public abstract class MovementController : MonoBehaviour
 			speedM *= speedModifier[i];
 		return speedM * (isCrouching?crouchingSpeedModifier:1f);
     }
+	public float getJumpModifier()
+	{
+		if (GameManager.instance.activeEventFlags.Contains(EEventFlag.HighJumpUnlocked))
+			return 1.2f;
+		return 1f;
+	}
+	public float getMaxJumpModifier()
+	{
+		if (GameManager.instance.activeEventFlags.Contains(EEventFlag.HighJumpUnlocked))
+			return 2f;
+		return 1f;
+	}
 
 	public abstract void Draw();
 

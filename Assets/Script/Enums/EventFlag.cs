@@ -4,6 +4,7 @@
 /// </summary>
 public enum EEventFlag
 {
+    HighJumpUnlocked,
 
     DianeBossDefeated,
 
