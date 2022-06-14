@@ -63,8 +63,9 @@ public class CharacterManager : MonoBehaviour
 	{
 		if (HealthManager.IsAlive())
 		{
+			if (context.started)
+				SpriteManager.SetTrigger("Jump");
 			MovementController.Jump(context);
-			SpriteManager.SetTrigger("Jump");
 		}
 	}
 
@@ -241,7 +242,7 @@ public class CharacterManager : MonoBehaviour
 		//throw new NotImplementedException();
 		if (GameManager.instance.GetComponent<SaveSystem>() != null)
 		{
-			GameManager.instance.GetComponent<SaveSystem>().ReadFile();
+			GameManager.instance.LoadGame();
 			Debug.Log("Read file");
 		}
 	}
