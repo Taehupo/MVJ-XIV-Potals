@@ -169,10 +169,10 @@ public class CharacterManager : MonoBehaviour
         Instance = this;
 		rb = GetComponent<Rigidbody2D>();
 
+		CreateSubComponents();
+
 		// initialise colliders to unCrouch
 		OnCrouch(false);
-
-		CreateSubComponents();
 
 		HealthManager.SetMaxHealth(maxHealth);
 		HealthManager.invincibleTimer.OnEnd = () => { HealthManager.StopInvincibility(); SpriteManager.StopBlink(); };
