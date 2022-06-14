@@ -209,12 +209,19 @@ public class CharacterManager : MonoBehaviour
 		HealthManager.invincibleTimer.OnEnd = () => { HealthManager.StopInvincibility(); SpriteManager.StopBlink(); };
 		HealthManager.onHurt += Hurt;
 		HealthManager.onDefeat += Defeat;
+		// register call back
+		MovementController.OnGrounded += OnGrounded;
+	}
+
+    private void OnDestroy()
+	{
+		// unregister call back
+		MovementController.OnGrounded -= OnGrounded;
 	}
 
     private void FixedUpdate()
-    {
-        SpriteManager.SetBool("Grounded", MovementController.IsGrounded());
-		if (MovementController.IsGrounded())
+	{
+		if (MovementController.IsGrounded)
 			SpriteManager.SetFloat("Speed", Mathf.Abs(this.rb.velocity.x));
 	}
 
@@ -228,6 +235,11 @@ public class CharacterManager : MonoBehaviour
 		ShapeController = gameObject.AddComponent<ShapeController>();
 		SpriteManager = gameObject.AddComponent<SpriteManager>();
 		HealthManager = gameObject.AddComponent<HealthManager>();
+	}
+
+	private void OnGrounded(bool isGrounded)
+	{
+		SpriteManager.SetBool("Grounded", isGrounded);
 	}
 
 	// Preview cast Area on Player seleted if Gizmo is activated

@@ -50,7 +50,7 @@ public class HumanMovementController : MovementController
 	}
     public override bool Crouch(InputAction.CallbackContext context)
     {
-		if (isGrounded)
+		if (IsGrounded)
 		{
 			if (context.phase == InputActionPhase.Started)
 			{
@@ -85,7 +85,7 @@ public class HumanMovementController : MovementController
 		}
 		else
         {
-			if ((isMoving && isGrounded) || (isMoving && !isGrounded && !isCollidingInAir))
+			if ((isMoving && IsGrounded) || (isMoving && !IsGrounded && !isCollidingInAir))
 			{
 				CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
 			}
@@ -96,9 +96,9 @@ public class HumanMovementController : MovementController
 
 			if (isJumping)
 			{
-				if (isGrounded)
+				if (IsGrounded)
 				{
-					isGrounded = false;
+					IsGrounded = false;
 					currentJumpTime = 0f;
 				}
 
@@ -128,7 +128,8 @@ public class HumanMovementController : MovementController
 				tmpIsGrounded = true;
 			}
 		}
-		isGrounded = tmpIsGrounded;
+		IsGrounded = tmpIsGrounded;
+		OnGrounded?.Invoke(IsGrounded);
 	}
 
 	public override void Draw()
@@ -146,7 +147,7 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !isGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
 		{
 			isCollidingInAir = true;
 		}
@@ -154,7 +155,7 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionStay2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !isGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
 		{
 			isCollidingInAir = true;
 		}
@@ -162,7 +163,7 @@ public class HumanMovementController : MovementController
 
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !isGrounded)
+		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
 		{
 			isCollidingInAir = false;
 		}

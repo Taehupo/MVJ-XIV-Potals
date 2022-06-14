@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,12 @@ public abstract class MovementController : MonoBehaviour
 
 	public virtual ECharacterShape Shape { get => ECharacterShape.count; }
 
+	/// <summary>IsGrounded</summary>
+	public static Action<bool> OnGrounded;
+
 	protected Vector2 moveForce;
 
-	protected static bool isGrounded;
+	public static bool IsGrounded { get; protected set; }
 	protected static bool isMoving;
 	protected static bool isJumping;
 	protected static bool isStaggered;
@@ -72,7 +76,6 @@ public abstract class MovementController : MonoBehaviour
 	public abstract void Draw();
 
 	public static void Stagger() { isStaggered = true; }
-	public bool IsGrounded() { return isGrounded; }
 
     #endregion
 
