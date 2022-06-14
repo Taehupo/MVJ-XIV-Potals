@@ -18,6 +18,8 @@ public class PilumDoor : MonoBehaviour
     private Color pilumDoorColor = Color.blue;
     [SerializeField]
     private Color superPilumDoorColor = Color.green;
+    [SerializeField]
+    private Color lockedDoorColor = Color.red;
 
     [SerializeField]
     private float openingSpeed = 2f;
@@ -43,6 +45,9 @@ public class PilumDoor : MonoBehaviour
                 break;
             case DoorType.SuperPilum:
                 GetComponent<SpriteRenderer>().color = superPilumDoorColor;
+                break;
+            case DoorType.Locked:
+                GetComponent<SpriteRenderer>().color = lockedDoorColor;
                 break;
         }
     }
@@ -78,5 +83,7 @@ public enum DoorType
 
     Pilum,
 
-    SuperPilum
+    SuperPilum,
+
+    Locked
 }

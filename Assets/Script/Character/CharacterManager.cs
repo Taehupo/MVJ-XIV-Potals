@@ -110,6 +110,13 @@ public class CharacterManager : MonoBehaviour
 			int nextShape = (int)(currentShape + 1) % (int)(shapes.Count);
 			Debug.Log(nextShape);
 			SetShape((ECharacterShape)nextShape);
+			characterCollider.offset = ShapeController.GetShapeProperties((ECharacterShape)nextShape).Hitbox.offset;
+			characterCollider.GetComponent<CapsuleCollider2D>().size = 
+				ShapeController.GetShapeProperties((ECharacterShape)nextShape).Hitbox.GetComponent<CapsuleCollider2D>().size;
+
+			/*crouchingCharacterCollider.offset = ShapeController.GetShapeProperties((ECharacterShape)nextShape).CrouchHitbox.offset;
+			crouchingCharacterCollider.GetComponent<CapsuleCollider2D>().size = 
+				ShapeController.GetShapeProperties((ECharacterShape)nextShape).CrouchHitbox.GetComponent<CapsuleCollider2D>().size;*/
 		}
 	}
 
