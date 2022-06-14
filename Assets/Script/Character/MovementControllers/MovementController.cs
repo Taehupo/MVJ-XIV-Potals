@@ -58,6 +58,8 @@ public abstract class MovementController : MonoBehaviour
 	public abstract bool Crouch(InputAction.CallbackContext context);
 	public void SlowDown(float effectTime, float divider)
 	{
+		if (m_SpeedModifierTimer.enabled)
+			m_SpeedModifierTimer.StopTimer();
 		m_SpeedModifierTimer.StartTimer(effectTime);
 		m_SpeedModifier.Add(divider);
 	}
