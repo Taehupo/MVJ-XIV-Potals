@@ -65,22 +65,6 @@ public class CharacterManager : MonoBehaviour
 		{
 			MovementController.Jump(context);
 			SpriteManager.SetTrigger("Jump");
-			SetCrouch(false);
-		}
-	}
-
-	private void SetCrouch(bool isCrouching)
-	{
-		SpriteManager.SetBool("Crouch", isCrouching);
-		if (isCrouching)
-		{
-			characterCollider.enabled = false;
-			crouchingCharacterCollider.enabled = true;
-		}
-		else
-		{
-			characterCollider.enabled = true;
-			crouchingCharacterCollider.enabled = false;
 		}
 	}
 
@@ -88,8 +72,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		if (HealthManager.IsAlive())
         {
-			bool isCrouching = MovementController.Crouch(context);
-			SetCrouch(isCrouching);
+			MovementController.Crouch(context);
         }
 	}
 
@@ -190,15 +173,18 @@ public class CharacterManager : MonoBehaviour
 
 		HealthManager.SetMaxHealth(maxHealth);
 		HealthManager.invincibleTimer.OnEnd = () => { HealthManager.StopInvincibility(); SpriteManager.StopBlink(); };
-		HealthManager.onHurt += Hurt;
-		HealthManager.onDefeat += Defeat;
+
 		// register call back
+		HealthManager.onHurt += OnHurt;
+		HealthManager.onDefeat += OnDefeat;
+		MovementController.OnCrouch += OnCrouch;
 		MovementController.OnGrounded += OnGrounded;
 	}
 
     private void OnDestroy()
 	{
 		// unregister call back
+		MovementController.OnCrouch -= OnCrouch;
 		MovementController.OnGrounded -= OnGrounded;
 	}
 
@@ -218,6 +204,21 @@ public class CharacterManager : MonoBehaviour
 		ShapeController = gameObject.AddComponent<ShapeController>();
 		SpriteManager = gameObject.AddComponent<SpriteManager>();
 		HealthManager = gameObject.AddComponent<HealthManager>();
+	}
+
+	private void OnCrouch(bool isCrouching)
+	{
+		SpriteManager.SetBool("Crouch", isCrouching);
+		if (isCrouching)
+		{
+			characterCollider.enabled = false;
+			crouchingCharacterCollider.enabled = true;
+		}
+		else
+		{
+			characterCollider.enabled = true;
+			crouchingCharacterCollider.enabled = false;
+		}
 	}
 
 	private void OnGrounded(bool isGrounded)

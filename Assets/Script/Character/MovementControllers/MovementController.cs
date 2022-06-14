@@ -10,17 +10,20 @@ public abstract class MovementController : MonoBehaviour
 
 	public virtual ECharacterShape Shape { get => ECharacterShape.count; }
 
+	/// <summary>IsCrouching</summary>
+	public static Action<bool> OnCrouch;
+
 	/// <summary>IsGrounded</summary>
 	public static Action<bool> OnGrounded;
 
 	protected Vector2 moveForce;
 
 	public static bool IsGrounded { get; protected set; }
+	public static bool IsCrouching { get; private set; }
 	protected static bool isMoving;
 	protected static bool isJumping;
 	protected static bool isStaggered;
 	protected static bool isCollidingInAir;
-	protected static bool isCrouching = false;
 
 	protected CharacterManager m_CharacterManager;
 
@@ -104,6 +107,12 @@ public abstract class MovementController : MonoBehaviour
 		if (GameManager.instance != null && GameManager.instance.activeEventFlags.Contains(EEventFlag.HighJumpUnlocked))
 			return 2f;
 		return 1f;
+	}
+
+	protected void SetCrouching(bool isCrouching)
+    {
+		IsCrouching = isCrouching;
+		OnCrouch?.Invoke(IsCrouching);
 	}
 
 	#endregion

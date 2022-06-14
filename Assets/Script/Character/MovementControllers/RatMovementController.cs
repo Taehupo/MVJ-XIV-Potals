@@ -38,7 +38,7 @@ public class RatMovementController : MovementController
 		if (context.phase == InputActionPhase.Started)
 		{
 			isJumping = true;
-			isCrouching = false;
+			SetCrouching(false);
 		}
 		if (context.phase == InputActionPhase.Canceled)
 		{

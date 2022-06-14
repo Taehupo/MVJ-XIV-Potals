@@ -32,13 +32,14 @@ public class HumanMovementController : MovementController
 		moveForce = context.ReadValue<Vector2>();
 		return moveForce.x;
 	}
+
 	public override bool Jump(InputAction.CallbackContext context)
 	{
 		Debug.Log("Reading jump : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
 		{
 			isJumping = true;
-			isCrouching = false;
+			SetCrouching(false);
 		}
 		if (context.phase == InputActionPhase.Canceled)
 		{
@@ -54,16 +55,17 @@ public class HumanMovementController : MovementController
 		{
 			if (context.phase == InputActionPhase.Started)
 			{
-				isCrouching = true;
+				SetCrouching(true);
 			}
 			if (context.phase == InputActionPhase.Canceled)
 			{
-				isCrouching = false;
+				SetCrouching(false);
 			}
 		}
 		else
-			isCrouching = false;
-		return isCrouching;
+			SetCrouching(false);
+
+		return IsCrouching;
     }
 
     #endregion
