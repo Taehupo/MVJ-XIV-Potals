@@ -53,25 +53,6 @@ public abstract class MovementController : MonoBehaviour
 		speedModifierTimer.StartTimer(effectTime);
 		speedModifier.Add(divider);
 	}
-	public float getSpeedModifier()
-    {
-		float speedM = 1f;
-		for (int i = 0; i < speedModifier.Count; i++)
-			speedM *= speedModifier[i];
-		return speedM * (isCrouching?crouchingSpeedModifier:1f);
-    }
-	public float getJumpModifier()
-	{
-		if (GameManager.instance.activeEventFlags.Contains(EEventFlag.HighJumpUnlocked))
-			return 1.2f;
-		return 1f;
-	}
-	public float getMaxJumpModifier()
-	{
-		if (GameManager.instance.activeEventFlags.Contains(EEventFlag.HighJumpUnlocked))
-			return 2f;
-		return 1f;
-	}
 
 	public abstract void Draw();
 
@@ -98,10 +79,32 @@ public abstract class MovementController : MonoBehaviour
 		m_ShapeProperties = m_CharacterManager.ShapeController.GetShapeProperties(Shape);
 	}
 
-    #endregion
+	#endregion
 
 
-    #region Protected Manipulators
+	#region Protected Manipulators
 
-    #endregion
+	protected float getSpeedModifier()
+	{
+		float speedM = 1f;
+		for (int i = 0; i < speedModifier.Count; i++)
+			speedM *= speedModifier[i];
+		return speedM * (isCrouching ? crouchingSpeedModifier : 1f);
+	}
+
+	protected float getJumpModifier()
+	{
+		if (GameManager.instance != null && GameManager.instance.activeEventFlags.Contains(EEventFlag.HighJumpUnlocked))
+			return 1.2f;
+		return 1f;
+	}
+
+	protected float getMaxJumpModifier()
+	{
+		if (GameManager.instance != null && GameManager.instance.activeEventFlags.Contains(EEventFlag.HighJumpUnlocked))
+			return 2f;
+		return 1f;
+	}
+
+	#endregion
 }
