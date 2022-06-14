@@ -26,7 +26,7 @@ public class HumanMovementController : MovementController
 			if (!IsMovementLock)
             {
 				CharacterManager.Instance.Flip(s_IsFlipRight);
-				isMoving = true;
+				s_IsMoving = true;
 			}
 		}
 
@@ -35,15 +35,15 @@ public class HumanMovementController : MovementController
 			s_LockedIsMoving = false;
 			if (!IsMovementLock)
 			{
-				isMoving = false;
+				s_IsMoving = false;
 			}
 		}
 
 		s_LockedMoveForce = context.ReadValue<Vector2>();
 		if (!IsMovementLock)
-			moveForce = s_LockedMoveForce;
+			s_MoveForce = s_LockedMoveForce;
 
-		return moveForce.x;
+		return s_MoveForce.x;
 	}
 
 	public override bool Jump(InputAction.CallbackContext context)
@@ -51,16 +51,16 @@ public class HumanMovementController : MovementController
 		Debug.Log("Reading jump : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
 		{
-			isJumping = true;
+			s_IsJumping = true;
 			SetCrouching(false);
 		}
 		if (context.phase == InputActionPhase.Canceled)
 		{
-			isJumping = false;
+			s_IsJumping = false;
 			// Prevents double jump
 			currentJumpTime = MaxJumpTime;
 		}
-		return isJumping;
+		return s_IsJumping;
 	}
     public override bool Crouch(InputAction.CallbackContext context)
 	{
@@ -100,23 +100,23 @@ public class HumanMovementController : MovementController
 
 	void FixedUpdate()
 	{
-		if (isStaggered)
+		if (s_IsStaggered)
 		{
 			CharacterManager.Instance.rb.velocity = new Vector2(10f*CharacterManager.Instance.GetHitLocation(), 10f);
-			isStaggered = false;
+			s_IsStaggered = false;
 		}
 		else
         {
-			if ((isMoving && IsGrounded) || (isMoving && !IsGrounded && !isCollidingInAir))
+			if ((s_IsMoving && IsGrounded) || (s_IsMoving && !IsGrounded && !s_IsCollidingInAir))
 			{
-				CharacterManager.Instance.rb.velocity = new Vector2(Speed * moveForce.x, CharacterManager.Instance.rb.velocity.y);
+				CharacterManager.Instance.rb.velocity = new Vector2(Speed * s_MoveForce.x, CharacterManager.Instance.rb.velocity.y);
 			}
 			else
 			{
 				CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
 			}
 
-			if (isJumping && !IsMovementLock)
+			if (s_IsJumping && !IsMovementLock)
 			{
 				if (IsGrounded)
 				{
@@ -171,7 +171,7 @@ public class HumanMovementController : MovementController
 	{
 		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
 		{
-			isCollidingInAir = true;
+			s_IsCollidingInAir = true;
 		}
 	}
 
@@ -179,7 +179,7 @@ public class HumanMovementController : MovementController
 	{
 		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
 		{
-			isCollidingInAir = true;
+			s_IsCollidingInAir = true;
 		}
 	}
 
@@ -187,7 +187,7 @@ public class HumanMovementController : MovementController
 	{
 		if ((collision.gameObject.tag == "Platform" || collision.collider.tag == "Wall") && !IsGrounded)
 		{
-			isCollidingInAir = false;
+			s_IsCollidingInAir = false;
 		}
 	}
 

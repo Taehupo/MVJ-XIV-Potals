@@ -16,16 +16,16 @@ public abstract class MovementController : MonoBehaviour
 	/// <summary>IsGrounded</summary>
 	public static Action<bool> OnGrounded;
 
-	protected static Vector2 moveForce;
+	protected static Vector2 s_MoveForce;
 	protected static Vector2 s_LockedMoveForce;
 
 	public static bool IsMovementLock { get; private set; }
 	public static bool IsGrounded { get; protected set; }
 	public static bool IsCrouching { get; private set; }
-	protected static bool isMoving;
-	protected static bool isJumping;
-	protected static bool isStaggered;
-	protected static bool isCollidingInAir;
+	protected static bool s_IsMoving;
+	protected static bool s_IsJumping;
+	protected static bool s_IsStaggered;
+	protected static bool s_IsCollidingInAir;
 
 	protected static bool s_LockedIsMoving;
 	protected static bool s_IsFlipRight;
@@ -64,7 +64,7 @@ public abstract class MovementController : MonoBehaviour
 
 	public abstract void Draw();
 
-	public static void Stagger() { isStaggered = true; }
+	public static void Stagger() { s_IsStaggered = true; }
 
 	public void LockMovement()
     {
@@ -76,17 +76,17 @@ public abstract class MovementController : MonoBehaviour
 
 	public void BeforeUnlockMovement()
     {
-		moveForce = new();
+		s_MoveForce = new();
 		CharacterManager.Instance.Flip(s_IsFlipRight);
-		isMoving = false;
+		s_IsMoving = false;
 	}
 
 	public void UnlockMovement()
     {
 		IsMovementLock = false;
-		moveForce = s_LockedMoveForce;
+		s_MoveForce = s_LockedMoveForce;
 		CharacterManager.Instance.Flip(s_IsFlipRight);
-		isMoving = s_LockedIsMoving;
+		s_IsMoving = s_LockedIsMoving;
 	}
 
     #endregion
