@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: securityLevel
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1533283226670026904, guid: c7b309d07c7f0604289e9ab147918c57, type: 3}
+      propertyPath: associatedFlag
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 1533283226670026905, guid: c7b309d07c7f0604289e9ab147918c57, type: 3}
       propertyPath: m_Name
       value: PilumDoor (7)
@@ -248,6 +252,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1533283226670026904, guid: c7b309d07c7f0604289e9ab147918c57, type: 3}
+      propertyPath: associatedFlag
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1533283226670026905, guid: c7b309d07c7f0604289e9ab147918c57, type: 3}
       propertyPath: m_Name
       value: PilumDoor (6)
@@ -407,6 +415,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1533283226670026904, guid: c7b309d07c7f0604289e9ab147918c57, type: 3}
+      propertyPath: associatedFlag
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1533283226670026905, guid: c7b309d07c7f0604289e9ab147918c57, type: 3}
       propertyPath: m_Name
       value: PilumDoor (5)

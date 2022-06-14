@@ -10,7 +10,7 @@ public class PilumDoor : MonoBehaviour
     private DoorType securityLevel = DoorType.Normal;
 
     [SerializeField]
-    private EEventFlag associatedFlag = EEventFlag.DoorDiane1Unlocked;
+    private EEventFlag associatedFlag = EEventFlag.DoorDiane01Unlocked;
 
     [SerializeField]
     private Color normalDoorColor = Color.gray;
