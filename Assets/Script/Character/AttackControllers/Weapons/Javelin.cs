@@ -55,6 +55,8 @@ public class Javelin : MonoBehaviour
                 hitTarget.GetComponent<HealthManager>().TakeHit(damage, this.gameObject);
             if (hitTarget.GetComponent<PilumDoor>() != null)
                 hitTarget.GetComponent<PilumDoor>().Hit(pilumType);
+            if (hitTarget.GetComponent<PilumSwitch>() != null)
+                hitTarget.GetComponent<PilumSwitch>().ActivateSwitch();
         }
     }
 }
