@@ -33,8 +33,6 @@ public class Timer : MonoBehaviour
     /// <summary></summary>
     public Action OnEnd;
 
-    bool m_IsActive = false;
-
     float m_T = -1.0f;
     bool m_GrowValue = true;
     EDeltaTime m_DeltaTime = EDeltaTime.Scaled;
@@ -76,7 +74,6 @@ public class Timer : MonoBehaviour
     /// </summary>
     void Update()
     {
-
         // update timer
         if (m_T >= 0.0f)
         {
@@ -101,7 +98,7 @@ public class Timer : MonoBehaviour
     /// </summary>
     public void Reset()
     {
-        if (m_IsActive)
+        if (enabled)
             StopTimer(CallOnEndAtReset);
     }
 
@@ -110,12 +107,17 @@ public class Timer : MonoBehaviour
     /// </summary>
     private void OnDestroy()
     {
-        if (m_IsActive)
+        if (enabled)
             StopTimer(CallOnEndAtShutdown);
 
         // force callback unregistration
         OnEnd = null;
         SetValue = null;
+    }
+
+    private void Awake()
+    {
+        enabled = false;
     }
 
     #endregion
@@ -154,13 +156,13 @@ public class Timer : MonoBehaviour
     public void StartTimer(float time = 1.0f, bool growValue = true, EDeltaTime deltaTime = EDeltaTime.Scaled)
     {
         // error control
-        if (m_IsActive)
+        if (enabled)
         {
             Debug.LogError("XKTimer.StartTimer() failed - Timer is already running");
             return;
         }
 
-        m_IsActive = true;
+        enabled = true;
         m_GrowValue = growValue;
         m_DeltaTime = deltaTime;
 
@@ -183,7 +185,7 @@ public class Timer : MonoBehaviour
     public void StopTimer(bool callOnEnd = true)
     {
         // error control
-        if (!m_IsActive)
+        if (!enabled)
         {
             Debug.LogError("XKTimer.StopTimer() failed - Timer is not running");
             return;
@@ -191,7 +193,7 @@ public class Timer : MonoBehaviour
 
         // end process
         m_T = -1.0f;
-        m_IsActive = false;
+        enabled = false;
         if (callOnEnd && OnEnd != null)
             OnEnd();
     }
