@@ -144,23 +144,6 @@ public class CharacterManager : MonoBehaviour
 
 	public int GetHitLocation() { return HealthManager.GetHitLocation(); }
 
-	public void Hurt()
-	{
-		SpriteManager.SetTrigger("Hurt");
-		MovementController.Stagger();
-		SpriteManager.Blink();
-	}
-
-	public void Defeat()
-	{
-		//throw new NotImplementedException();
-		if (GameManager.instance.GetComponent<SaveSystem>() != null)
-		{
-			GameManager.instance.GetComponent<SaveSystem>().ReadFile();
-			Debug.Log("Read file");
-		}
-	}
-
 	public void AddAmmo(int amount)
 	{
 		SetAmmo(Math.Min(maxJavelinAmmo, currentJavelinAmmo + amount));
@@ -240,6 +223,23 @@ public class CharacterManager : MonoBehaviour
 	private void OnGrounded(bool isGrounded)
 	{
 		SpriteManager.SetBool("Grounded", isGrounded);
+	}
+
+	private void OnHurt()
+	{
+		SpriteManager.SetTrigger("Hurt");
+		MovementController.Stagger();
+		SpriteManager.Blink();
+	}
+
+	private void OnDefeat()
+	{
+		//throw new NotImplementedException();
+		if (GameManager.instance.GetComponent<SaveSystem>() != null)
+		{
+			GameManager.instance.GetComponent<SaveSystem>().ReadFile();
+			Debug.Log("Read file");
+		}
 	}
 
 	// Preview cast Area on Player seleted if Gizmo is activated
