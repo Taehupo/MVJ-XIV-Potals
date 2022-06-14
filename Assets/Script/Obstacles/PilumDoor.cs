@@ -27,40 +27,51 @@ public class PilumDoor : MonoBehaviour
 
     private void Start()
     {
+        UpdateSecurity();
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        switch (securityLevel)
+        {
+            case DoorType.Normal:
+                renderer.color = normalDoorColor;
+                break;
+            case DoorType.Pilum:
+                renderer.color = pilumDoorColor;
+                break;
+            case DoorType.SuperPilum:
+                renderer.color = superPilumDoorColor;
+                break;
+            case DoorType.Locked:
+                renderer.color = lockedDoorColor;
+                break;
+        }
+    }
+
+    private void Update()
+    {
+        if (isOpening)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale,
+                new Vector3(transform.localScale.x, 0f, transform.localScale.z), Time.deltaTime * openingSpeed);
+            if (transform.localScale.y < 0.1f)
+                Destroy(gameObject);
+        }
+        else
+            UpdateSecurity();
+    }
+    private void UpdateSecurity()
+    {
         if (GameManager.instance != null && securityLevel != DoorType.Normal)
         {
             // Check flag on GM
             if (GameManager.instance.activeEventFlags.Contains(associatedFlag))
             {
                 securityLevel = DoorType.Normal;
+                GetComponent<SpriteRenderer>().color = normalDoorColor;
             }
         }
-        switch (securityLevel)
-        {
-            case DoorType.Normal:
-                GetComponent<SpriteRenderer>().color = normalDoorColor;
-                break;
-            case DoorType.Pilum:
-                GetComponent<SpriteRenderer>().color = pilumDoorColor;
-                break;
-            case DoorType.SuperPilum:
-                GetComponent<SpriteRenderer>().color = superPilumDoorColor;
-                break;
-            case DoorType.Locked:
-                GetComponent<SpriteRenderer>().color = lockedDoorColor;
-                break;
-        }
+        
     }
-    private void Update()
-    {
-        if (isOpening)
-        {
-            transform.localScale = Vector3.Lerp(transform.localScale, 
-                new Vector3(transform.localScale.x, 0f, transform.localScale.z), Time.deltaTime * openingSpeed);
-            if (transform.localScale.y < 0.1f)
-                Destroy(gameObject);
-        }
-    }
+
     /*private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("coll");
