@@ -102,7 +102,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void ChangeShape(InputAction.CallbackContext context)
 	{
-		if (context.started)
+		if (context.started && !MovementController.IsMovementLock)
 		{
 			List<ECharacterShape> shapes = GameManager.instance.usableShapes;
 			int currentShape = shapes.IndexOf(ShapeController.CharacterShape);
@@ -168,6 +168,9 @@ public class CharacterManager : MonoBehaviour
         }
         Instance = this;
 		rb = GetComponent<Rigidbody2D>();
+
+		// initialise colliders to unCrouch
+		OnCrouch(false);
 
 		CreateSubComponents();
 

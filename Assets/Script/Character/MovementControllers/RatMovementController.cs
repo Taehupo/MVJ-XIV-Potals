@@ -21,15 +21,28 @@ public class RatMovementController : MovementController
 		Debug.Log("Reading Move : " + context.phase + "\n");
 		if (context.phase == InputActionPhase.Started)
 		{
-			isMoving = true;
-			CharacterManager.Instance.Flip(context.ReadValue<Vector2>().x < 0);
+			s_LockedIsMoving = true;
+			s_IsFlipRight = context.ReadValue<Vector2>().x < 0;
+			if (!IsMovementLock)
+			{
+				CharacterManager.Instance.Flip(s_IsFlipRight);
+				isMoving = true;
+			}
 		}
+
 		if (context.phase == InputActionPhase.Canceled)
 		{
-			isMoving = false;
+			s_LockedIsMoving = false;
+			if (!IsMovementLock)
+			{
+				isMoving = false;
+			}
 		}
-		//Debug.Log(context.ReadValue<Vector2>());
-		moveForce = context.ReadValue<Vector2>();
+
+		s_LockedMoveForce = context.ReadValue<Vector2>();
+		if (!IsMovementLock)
+			moveForce = s_LockedMoveForce;
+
 		return moveForce.x;
 	}
 	public override bool Jump(InputAction.CallbackContext context)
@@ -81,7 +94,7 @@ public class RatMovementController : MovementController
 				CharacterManager.Instance.rb.velocity = new Vector2(0, CharacterManager.Instance.rb.velocity.y);
 			}
 
-			if (isJumping)
+			if (isJumping && !IsMovementLock)
 			{
 				if (IsGrounded)
 				{

@@ -16,8 +16,10 @@ public abstract class MovementController : MonoBehaviour
 	/// <summary>IsGrounded</summary>
 	public static Action<bool> OnGrounded;
 
-	protected Vector2 moveForce;
+	protected static Vector2 moveForce;
+	protected static Vector2 s_LockedMoveForce;
 
+	public static bool IsMovementLock { get; private set; }
 	public static bool IsGrounded { get; protected set; }
 	public static bool IsCrouching { get; private set; }
 	protected static bool isMoving;
@@ -25,21 +27,24 @@ public abstract class MovementController : MonoBehaviour
 	protected static bool isStaggered;
 	protected static bool isCollidingInAir;
 
+	protected static bool s_LockedIsMoving;
+	protected static bool s_IsFlipRight;
+
 	protected CharacterManager m_CharacterManager;
 
 	CharacterShapeProperties m_ShapeProperties;
-	Timer speedModifierTimer;
-	List<float> speedModifier;
-	private float crouchingSpeedModifier = 0.4f;
+	Timer m_SpeedModifierTimer;
+	List<float> m_SpeedModifier;
+	private float m_CrouchingSpeedModifier = 0.4f;
 
 	#endregion
 
 
 	#region Accessors
 
-	protected float Speed { get =>  m_ShapeProperties != null ? m_ShapeProperties.Speed * getSpeedModifier() : 10 * getSpeedModifier(); }
-	protected float JumpForce { get => m_ShapeProperties != null ? m_ShapeProperties.JumpForce * getJumpModifier() : 10; }
-	protected float MaxJumpTime { get => m_ShapeProperties != null ? m_ShapeProperties.MaxJumpTime * getMaxJumpModifier() : 0.15f; }
+	protected float Speed { get =>  m_ShapeProperties != null ? m_ShapeProperties.Speed * GetSpeedModifier() : 10 * GetSpeedModifier(); }
+	protected float JumpForce { get => m_ShapeProperties != null ? m_ShapeProperties.JumpForce * GetJumpModifier() : 10; }
+	protected float MaxJumpTime { get => m_ShapeProperties != null ? m_ShapeProperties.MaxJumpTime * GetMaxJumpModifier() : 0.15f; }
 	protected float GroundingOffset { get => m_ShapeProperties != null ? m_ShapeProperties.GroundingOffset : 0; }
 	protected float BoxCastXOffset { get => m_ShapeProperties != null ? m_ShapeProperties.BoxCastXOffset : 0; }
 
@@ -53,13 +58,36 @@ public abstract class MovementController : MonoBehaviour
 	public abstract bool Crouch(InputAction.CallbackContext context);
 	public void SlowDown(float effectTime, float divider)
 	{
-		speedModifierTimer.StartTimer(effectTime);
-		speedModifier.Add(divider);
+		m_SpeedModifierTimer.StartTimer(effectTime);
+		m_SpeedModifier.Add(divider);
 	}
 
 	public abstract void Draw();
 
 	public static void Stagger() { isStaggered = true; }
+
+	public void LockMovement()
+    {
+		IsMovementLock = true;
+
+		// disable crouch
+		SetCrouching(false);
+	}
+
+	public void BeforeUnlockMovement()
+    {
+		moveForce = new();
+		CharacterManager.Instance.Flip(s_IsFlipRight);
+		isMoving = false;
+	}
+
+	public void UnlockMovement()
+    {
+		IsMovementLock = false;
+		moveForce = s_LockedMoveForce;
+		CharacterManager.Instance.Flip(s_IsFlipRight);
+		isMoving = s_LockedIsMoving;
+	}
 
     #endregion
 
@@ -70,10 +98,10 @@ public abstract class MovementController : MonoBehaviour
 	{
 		// get a parent reference
 		m_CharacterManager = CharacterManager.Instance;
-		speedModifierTimer = gameObject.AddComponent<Timer>();
-		speedModifierTimer.OnEnd = () => { speedModifier.RemoveAt(speedModifier.Count-1); };
+		m_SpeedModifierTimer = gameObject.AddComponent<Timer>();
+		m_SpeedModifierTimer.OnEnd = () => { m_SpeedModifier.RemoveAt(m_SpeedModifier.Count-1); };
 
-		speedModifier = new List<float>();
+		m_SpeedModifier = new List<float>();
 	}
 
     private void Start()
@@ -87,22 +115,22 @@ public abstract class MovementController : MonoBehaviour
 
 	#region Protected Manipulators
 
-	protected float getSpeedModifier()
+	protected float GetSpeedModifier()
 	{
 		float speedM = 1f;
-		for (int i = 0; i < speedModifier.Count; i++)
-			speedM *= speedModifier[i];
-		return speedM * (isCrouching ? crouchingSpeedModifier : 1f);
+		for (int i = 0; i < m_SpeedModifier.Count; i++)
+			speedM *= m_SpeedModifier[i];
+		return speedM * (IsCrouching ? m_CrouchingSpeedModifier : 1f);
 	}
 
-	protected float getJumpModifier()
+	protected float GetJumpModifier()
 	{
 		if (GameManager.instance != null && GameManager.instance.activeEventFlags.Contains(EEventFlag.HighJumpUnlocked))
 			return 1.2f;
 		return 1f;
 	}
 
-	protected float getMaxJumpModifier()
+	protected float GetMaxJumpModifier()
 	{
 		if (GameManager.instance != null && GameManager.instance.activeEventFlags.Contains(EEventFlag.HighJumpUnlocked))
 			return 2f;

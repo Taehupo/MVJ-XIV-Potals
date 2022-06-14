@@ -22,6 +22,9 @@ public class ShapeController : MonoBehaviour
     private Dictionary<ECharacterShape, AttackController> m_ShapeToAttackController = new();
     private Dictionary<ECharacterShape, CharacterShapeProperties> m_ShapeToProperties = new();
 
+    private Timer m_BeforeOnMovementUnlocked;
+    private Timer m_OnMovementUnlocked;
+
     #endregion
 
 
@@ -47,6 +50,27 @@ public class ShapeController : MonoBehaviour
     public void ChangeShape(ECharacterShape shape)
     {
         SetShape(shape);
+    }
+
+    public void LockMovement()
+    {
+        MovementController.LockMovement();
+    }
+
+    /// <summary>
+    /// Unlock Movement in 2 time 
+    /// first stop the character after stopDelay then resume movement based on player input after resumeDelay
+    /// </summary>
+    /// <param name="stopDelay"></param>
+    /// <param name="resumeDelay"></param>
+    public void UnlockMovement(float stopDelay = 0.2f, float resumeDelay = 0.5f)
+    {
+        m_BeforeOnMovementUnlocked.OnEnd = () =>
+        {
+            MovementController.BeforeUnlockMovement();
+            m_OnMovementUnlocked.StartTimer(resumeDelay);
+        };
+        m_BeforeOnMovementUnlocked.StartTimer(stopDelay);
     }
 
     #endregion
@@ -95,6 +119,12 @@ public class ShapeController : MonoBehaviour
     {
         CreateMovementControllers();
         CreateAttackControllers();
+
+
+        m_BeforeOnMovementUnlocked = gameObject.AddComponent<Timer>();
+
+        m_OnMovementUnlocked = gameObject.AddComponent<Timer>();
+        m_OnMovementUnlocked.OnEnd = () => { MovementController.UnlockMovement(); };
     }
 
     void CreateMovementControllers()
