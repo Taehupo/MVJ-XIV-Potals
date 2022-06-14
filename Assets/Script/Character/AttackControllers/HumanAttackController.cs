@@ -43,8 +43,14 @@ public class HumanAttackController : AttackController
                     bool isFlipped = CharacterManager.Instance.SpriteManager.IsFlipped();
                     var flipPos = SubAttackPosition.transform.position;
                     flipPos.x *= isFlipped ? 1 : -1;
-
-                    Instantiate(SubAttackPrefab, transform.position + flipPos, new Quaternion());
+                    
+                    if (GameManager.instance != null)
+                    {
+                        if (GameManager.instance.activeEventFlags.Contains(EEventFlag.SuperPilumUnlocked))
+                            Instantiate(SubAttackPrefab2, transform.position + flipPos, new Quaternion());
+                        else
+                            Instantiate(SubAttackPrefab, transform.position + flipPos, new Quaternion());
+                    }
                     CharacterManager.Instance.RemoveAmmo(1);
                 }
             }

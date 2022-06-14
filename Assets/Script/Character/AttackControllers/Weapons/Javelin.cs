@@ -6,6 +6,13 @@ public class Javelin : MonoBehaviour
 {
 
     #region Members
+    
+    // 1 for pilum, 2 for super pilum
+    [SerializeField]
+    private int pilumType = 1;
+
+    [SerializeField]
+    private int damage = 2;
 
     [SerializeField]
     private float speed = 20f;
@@ -45,9 +52,9 @@ public class Javelin : MonoBehaviour
         {
             //Debug.Log("Attacking " + hitTarget.name + " !");
             if (hitTarget.GetComponent<HealthManager>() != null)
-                hitTarget.GetComponent<HealthManager>().TakeHit(2, this.gameObject);
+                hitTarget.GetComponent<HealthManager>().TakeHit(damage, this.gameObject);
             if (hitTarget.GetComponent<PilumDoor>() != null)
-                hitTarget.GetComponent<PilumDoor>().Hit();
+                hitTarget.GetComponent<PilumDoor>().Hit(pilumType);
         }
     }
 }
