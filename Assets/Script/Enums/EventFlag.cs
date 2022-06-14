@@ -23,6 +23,9 @@ public enum EEventFlag
     DoorDiane13Unlocked,
     DoorDiane14Unlocked,
     DoorDiane15Unlocked,
+    
+    SpecialDoorDiane01Unlocked,
+    SpecialDoorDiane02Unlocked,
 
     DianeBossDefeated,
 
