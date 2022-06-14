@@ -6,6 +6,10 @@ public enum EEventFlag
 {
     HighJumpUnlocked,
 
+    SuperPilumUnlocked,
+
+    DoorDiane1Unlocked,
+
     DianeBossDefeated,
 
     count

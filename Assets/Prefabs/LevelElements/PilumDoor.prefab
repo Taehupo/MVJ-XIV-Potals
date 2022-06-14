@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1533283226670026904}
   m_Layer: 3
   m_Name: PilumDoor
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.10653251, g: 0.80783135, b: 0.990566, a: 1}
+  m_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -124,3 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34317c075a14bc14dae5df47141f0cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  securityLevel: 0
+  associatedFlag: 2
+  normalDoorColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  pilumDoorColor: {r: 0.10588236, g: 0.8078432, b: 0.9921569, a: 1}
+  superPilumDoorColor: {r: 0, g: 1, b: 0, a: 1}

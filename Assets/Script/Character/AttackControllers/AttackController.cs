@@ -30,6 +30,7 @@ public abstract class AttackController : MonoBehaviour
     protected float AttackDamage { get => m_ShapeProperties != null ? m_ShapeProperties.AttackDamage : 1; }
     protected float AttackRate { get => m_ShapeProperties != null ? m_ShapeProperties.AttackRate : 3; }
     protected GameObject SubAttackPrefab { get => m_ShapeProperties.SubAttackPrefab; }
+    protected GameObject SubAttackPrefab2 { get => m_ShapeProperties.SubAttackPrefab2; }
     protected GameObject SubAttackPosition { get => m_ShapeProperties.SubAttackPosition; }
 
     #endregion
@@ -50,6 +51,7 @@ public abstract class AttackController : MonoBehaviour
     public float GetAttackRate() { return AttackRate; }
 
     public GameObject GetSubAttackPrefab() { return SubAttackPrefab; }
+    public GameObject GetSubAttackPrefab2() { return SubAttackPrefab2; }
     public GameObject GetSubAttackPosition() { return SubAttackPosition; }
 
     #endregion
@@ -85,7 +87,12 @@ public abstract class AttackController : MonoBehaviour
             foreach (Collider2D hitTarget in hitTargets)
             {
                 //Debug.Log("Attacking " + hitTarget.name + " !");
-                hitTarget.GetComponent<HealthManager>().TakeHit((int)AttackDamage, this.gameObject);
+                HealthManager healthManager = hitTarget.GetComponent<HealthManager>();
+                if (healthManager != null)
+                    healthManager.TakeHit((int)AttackDamage, this.gameObject);
+                PilumDoor door = hitTarget.GetComponent<PilumDoor>();
+                if (door != null)
+                    door.Hit(0);
             }
             attackHitbox.SetActive(false);
         }
