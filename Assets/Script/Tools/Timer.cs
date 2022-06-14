@@ -158,7 +158,7 @@ public class Timer : MonoBehaviour
         // error control
         if (enabled)
         {
-            Debug.LogError("XKTimer.StartTimer() failed - Timer is already running");
+            Debug.LogError("Timer.StartTimer() failed - Timer is already running");
             return;
         }
 
@@ -187,7 +187,7 @@ public class Timer : MonoBehaviour
         // error control
         if (!enabled)
         {
-            Debug.LogError("XKTimer.StopTimer() failed - Timer is not running");
+            Debug.LogError("Timer.StopTimer() failed - Timer is not running");
             return;
         }
 
