@@ -20,10 +20,10 @@ public class BackAndForthEnemy : Enemy
     bool passedPoint2 = true;
     public bool isAttacking = false;
 	private new Rigidbody2D rigidbody;
+    protected static bool s_IsFlipRight;
 
     [SerializeField]
     float attackDistance;
-
 
     private void Awake()
     {
@@ -70,7 +70,9 @@ public class BackAndForthEnemy : Enemy
         else
 		{
             rigidbody.velocity = Vector2.zero;
-		}
+        }
+        _spriteManager.SetFloat("Speed", Mathf.Abs(rigidbody.velocity.x));
+        Flip(rigidbody.velocity.x < 0);
     }
 
 	private void OnCollisionEnter2D(Collision2D collision)
@@ -111,5 +113,20 @@ public class BackAndForthEnemy : Enemy
 
         isAttacking = false;
         attackHitbox.SetActive(false);
+    }
+    public void Flip(bool isRight)
+    {
+        // Change le sens de la hitbox si le sprite a chang?Ede sens
+        if (isRight != _spriteManager.Flip(isRight))
+        {
+            FlipHitbox(isRight);
+        }
+    }
+
+    public void FlipHitbox(bool isRight)
+    {
+        Vector2 tmp = attackHitbox.GetComponent<Collider2D>().offset;
+        tmp.x *= -1;
+        attackHitbox.GetComponent<Collider2D>().offset = tmp;
     }
 }
