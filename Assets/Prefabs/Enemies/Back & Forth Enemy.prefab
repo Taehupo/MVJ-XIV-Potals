@@ -170,7 +170,7 @@ MonoBehaviour:
   contactDamage: 1
   patrolPointOne: {fileID: 3774219142385780212}
   patrolPointTwo: {fileID: 8043185588542664313}
-  speed: 0
+  speed: 10
   isAttacking: 0
   attackDistance: 0
 --- !u!114 &11151067981774373

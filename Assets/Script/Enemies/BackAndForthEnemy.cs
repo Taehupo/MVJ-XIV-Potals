@@ -79,12 +79,12 @@ public class BackAndForthEnemy : Enemy
     {
         if (collision.collider.GetComponent<HealthManager>() != null)
         {
-            Debug.Log("Touched " + collision.collider.name);
+            // Debug.Log("Touched " + collision.collider.name);
             collision.collider.GetComponent<HealthManager>().TakeHit(contactDamage, this.gameObject);
         }
         else
         {
-            Debug.Log(collision.collider.name + " was not player");
+            // Debug.Log(collision.collider.name + " was not player");
         }
     }
 
