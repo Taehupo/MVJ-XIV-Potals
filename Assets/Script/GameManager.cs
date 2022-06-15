@@ -80,7 +80,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator LoadGameCoroutine()
     {
-        float gravityScale = CharacterManager.Instance.rb.gravityScale;
         LoadData();
         CharacterManager.Instance.rb.bodyType = RigidbodyType2D.Static;
         // Wait until the level finish loading
