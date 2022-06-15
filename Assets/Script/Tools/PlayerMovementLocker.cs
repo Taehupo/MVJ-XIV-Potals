@@ -24,8 +24,6 @@ public class PlayerMovementLocker : MonoBehaviour
         if (other.name == "Player")
         {
             CharacterManager.Instance.ShapeController.LockMovement();
-
-            Debug.Log("yoyo enter");
         }
     }
 
@@ -35,9 +33,6 @@ public class PlayerMovementLocker : MonoBehaviour
         if (other.name == "Player")
         {
             CharacterManager.Instance.ShapeController.UnlockMovement(StopDelay, ResumeDelay);
-
-
-            Debug.Log("yoyo leave");
         }
     }
 }
