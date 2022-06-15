@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     // Used to initialize maxhealth when loading
     public static int startingHealth = 6;
 
+    private IEnumerator loadCoroutine;
+
     void Awake()
 	{
 		if (instance != null)
@@ -37,6 +39,8 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
+        //LoadGame();
+        loadCoroutine = LoadGameCoroutine();
         LoadGame();
     }
 
@@ -68,6 +72,26 @@ public class GameManager : MonoBehaviour
     }
 
     public void LoadGame()
+    {
+        StopCoroutine(loadCoroutine);
+        loadCoroutine = LoadGameCoroutine();
+        StartCoroutine(loadCoroutine);
+    }
+
+    private IEnumerator LoadGameCoroutine()
+    {
+        float gravityScale = CharacterManager.Instance.rb.gravityScale;
+        LoadData();
+        CharacterManager.Instance.rb.bodyType = RigidbodyType2D.Static;
+        // Wait until the level finish loading
+        yield return new WaitForSeconds(1f);
+        // Wait a frame so every Awake and Start method is called
+        yield return new WaitForEndOfFrame();
+        CharacterManager.Instance.rb.bodyType = RigidbodyType2D.Dynamic;
+        yield return 0;
+    }
+
+    public void LoadData()
     {
         Debug.Log("GetData");
         GameData gameData = saveSystem.ReadFile();
