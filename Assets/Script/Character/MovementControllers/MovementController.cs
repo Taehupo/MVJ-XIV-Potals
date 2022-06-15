@@ -35,7 +35,7 @@ public abstract class MovementController : MonoBehaviour
 	CharacterShapeProperties m_ShapeProperties;
 	Timer m_SpeedModifierTimer;
 	List<float> m_SpeedModifier;
-	private float m_CrouchingSpeedModifier = 0.4f;
+	private float m_CrouchingSpeedModifier = 0.0f;
 
 	#endregion
 
