@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Waypoints:
   - position: {x: 0, y: 0, z: 0}
     roll: 0
-  - position: {x: 5, y: 0, z: 0}
+  - position: {x: 10, y: 0, z: 0}
     roll: 0
 --- !u!4 &77220127
 Transform:
@@ -2719,4 +2719,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d2916c12229e841b822a7b9f53b1ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerRef: {fileID: 0}
