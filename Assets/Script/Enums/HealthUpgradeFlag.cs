@@ -4,7 +4,9 @@
 /// </summary>
 public enum EHealthUpgradeFlag
 {
-    HubCorner,
+    Diane7,
+
+    DianeOther,
 
     count
 }

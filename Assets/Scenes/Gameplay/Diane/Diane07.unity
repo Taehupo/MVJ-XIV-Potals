@@ -4416,6 +4416,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3479542925295129928, guid: a087c6b8c96f36840a3c612694031c54, type: 3}
+      propertyPath: associatedFlag
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3479542925295129931, guid: a087c6b8c96f36840a3c612694031c54, type: 3}
       propertyPath: m_Name
       value: HealthUpgrade

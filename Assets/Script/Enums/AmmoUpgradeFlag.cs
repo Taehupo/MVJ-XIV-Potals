@@ -4,7 +4,11 @@
 /// </summary>
 public enum EAmmoUpgradeFlag
 {
-    HubCorner,
+    FirstAmmoDiane2,
+
+    Diane5,
+
+    DianeOther,
 
     count
 }
