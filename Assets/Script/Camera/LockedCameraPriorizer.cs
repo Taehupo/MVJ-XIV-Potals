@@ -17,22 +17,14 @@ public class LockedCameraPriorizer : MonoBehaviour
     private void Awake()
     {
         // get vcamera and its base Priority
-        if(gameObject.transform.parent == null)
-        {
-            Debug.LogError("LockedCameraPriorizer.Awake() Error : gameObject has no Parent " + gameObject.name);
-            return;
-        }
-
-        m_Camera = gameObject.transform.parent.GetComponent<CinemachineVirtualCameraBase>();
+        m_Camera = GetComponentInChildren<CinemachineVirtualCameraBase>();
         if(m_Camera == null)
         {
-            Debug.LogError("LockedCameraPriorizer.Awake() Error : no VirtualCamera found in Parent " + gameObject.transform.parent.name);
+            Debug.LogError("LockedCameraPriorizer.Awake() Error : gameObject has no child with CinemachineVirtualCamera " + gameObject.name);
             return;
         }
 
         m_BasePriority = m_Camera.m_Priority;
-
-        Debug.Log(m_Camera.name + " yay " + m_BasePriority);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
