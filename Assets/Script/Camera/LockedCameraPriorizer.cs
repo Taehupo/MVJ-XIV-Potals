@@ -17,10 +17,10 @@ public class LockedCameraPriorizer : MonoBehaviour
     private void Awake()
     {
         // get vcamera and its base Priority
-        m_Camera = GetComponentInChildren<CinemachineVirtualCameraBase>();
+        m_Camera = gameObject.transform.parent.GetComponentInChildren<CinemachineVirtualCameraBase>();
         if(m_Camera == null)
         {
-            Debug.LogError("LockedCameraPriorizer.Awake() Error : gameObject has no child with CinemachineVirtualCamera " + gameObject.name);
+            Debug.LogError("LockedCameraPriorizer.Awake() Error : gameObject has no child /  with CinemachineVirtualCamera " + gameObject.name);
             return;
         }
 
