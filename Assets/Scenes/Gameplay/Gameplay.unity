@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4791172, g: 0.49330062, b: 0.4955185, a: 1}
+  m_IndirectSpecularColor: {r: 0.4791143, g: 0.4933079, b: 0.49552268, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &100852884
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &572975584
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &621253986
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -615,7 +615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &790089604
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -689,7 +689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &836985290
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -763,7 +763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &970694329
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -899,7 +899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &1223823422
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -973,7 +973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &1418822140
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1102,11 +1102,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3346229741943147620, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.55
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3346229741943147620, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.9999998
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3346229741943147620, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1140,9 +1140,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3346229741943147621, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
+      propertyPath: m_CustomBlends
+      value: 
+      objectReference: {fileID: 11400000, guid: 15f7d98b17b644049a451a4f37095094, type: 2}
+    - target: {fileID: 3346229741943147621, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
+      propertyPath: m_DefaultBlend.m_Time
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3346229741943147672, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346229741943147675, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
+      propertyPath: orthographic size
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
@@ -1178,7 +1190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &1592938534
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1252,7 +1264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 45
 --- !u!61 &1794119512
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1326,7 +1338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &1972747594
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1400,7 +1412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 30
+  loadRange: 40
 --- !u!61 &2014125799
 BoxCollider2D:
   m_ObjectHideFlags: 0
