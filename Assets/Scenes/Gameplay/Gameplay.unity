@@ -1412,7 +1412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1452950716}
   checkMethod: 0
-  loadRange: 40
+  loadRange: 45
 --- !u!61 &2014125799
 BoxCollider2D:
   m_ObjectHideFlags: 0
