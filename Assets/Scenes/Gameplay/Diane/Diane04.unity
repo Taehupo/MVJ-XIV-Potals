@@ -668,12 +668,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -18, y: 14}
-      - {x: -18, y: -14}
-      - {x: 18, y: -14}
-      - {x: 18, y: -17.5}
-      - {x: 21.5, y: -17.5}
-      - {x: 22.5, y: -13}
-      - {x: 31.5, y: -13}
+      - {x: -18, y: -12.5}
+      - {x: 31.5, y: -12.5}
       - {x: 31.5, y: 0}
       - {x: 18.4, y: 0}
       - {x: 18.4, y: 14}
@@ -774,7 +770,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678539776}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -794,9 +790,7 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -18, y: 14}
       - {x: -18, y: -14.5}
-      - {x: 6.5, y: -14.5}
-      - {x: 6.5, y: -20}
-      - {x: 31.5, y: -20}
+      - {x: 31.5, y: -14.5}
       - {x: 31.5, y: 14}
 --- !u!1001 &1922357636
 PrefabInstance:
