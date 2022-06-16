@@ -227,9 +227,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.71
       objectReference: {fileID: 0}
+    - target: {fileID: 5101496172145018388, guid: ab2cbd84e5493fe49bfadc79a0da8b03, type: 3}
+      propertyPath: speed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7455509301774679336, guid: ab2cbd84e5493fe49bfadc79a0da8b03, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.09
+      value: -3.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab2cbd84e5493fe49bfadc79a0da8b03, type: 3}
@@ -835,7 +839,7 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1073741825
+      m_AllTileFlags: 2147483649
   - first: {x: 12, y: -50, z: 0}
     second:
       serializedVersion: 2
@@ -865,7 +869,7 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1073741825
+      m_AllTileFlags: 2147483649
   - first: {x: 18, y: -50, z: 0}
     second:
       serializedVersion: 2
@@ -875,7 +879,7 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1073741825
+      m_AllTileFlags: 2147483649
   - first: {x: 19, y: -50, z: 0}
     second:
       serializedVersion: 2
@@ -905,7 +909,7 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1073741825
+      m_AllTileFlags: 2147483649
   - first: {x: 25, y: -50, z: 0}
     second:
       serializedVersion: 2
@@ -995,7 +999,7 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1073741825
+      m_AllTileFlags: 2147483649
   - first: {x: 16, y: -48, z: 0}
     second:
       serializedVersion: 2
@@ -1015,7 +1019,7 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1073741825
+      m_AllTileFlags: 2147483649
   - first: {x: 25, y: -48, z: 0}
     second:
       serializedVersion: 2
@@ -1790,7 +1794,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3420357868368316794, guid: ab2cbd84e5493fe49bfadc79a0da8b03, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.61
+      value: 1.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101496172145018388, guid: ab2cbd84e5493fe49bfadc79a0da8b03, type: 3}
+      propertyPath: speed
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7455509301774679336, guid: ab2cbd84e5493fe49bfadc79a0da8b03, type: 3}
       propertyPath: m_LocalPosition.x
