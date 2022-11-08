@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5375196422871896856}
   - component: {fileID: 5375196422871896857}
   - component: {fileID: 5375196422871896870}
+  - component: {fileID: 1063499716137285341}
   m_Layer: 0
   m_Name: RatUpgrade
   m_TagString: Untagged
@@ -127,6 +128,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTag: Player
   associatedFlag: 1
+--- !u!114 &1063499716137285341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5375196422871896871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f57ca0d7733c81c83b0c1a0bdce277f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amplitude: 0.15
+  frequency: 0.7
+  degreesPerSecond: 0
 --- !u!1001 &6714682060370820048
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4791143, g: 0.4933079, b: 0.49552268, a: 1}
+  m_IndirectSpecularColor: {r: 0.4791172, g: 0.49330062, b: 0.4955185, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -551,7 +551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 147861757611629797, guid: a5ec7765f07b7ca46bffc8dcd566eba1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.8
+      value: -6.7999997
       objectReference: {fileID: 0}
     - target: {fileID: 147861757611629797, guid: a5ec7765f07b7ca46bffc8dcd566eba1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1030,6 +1030,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 946112180, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: m_Size.x
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 946112180, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: m_Size.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 946112180, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423041772166498728, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3423041773590120207, guid: 621d863cc1dad144bae585263ea906ac, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1110,7 +1126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3346229741943147620, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.8
+      value: -6.7999997
       objectReference: {fileID: 0}
     - target: {fileID: 3346229741943147620, guid: 06e9fde80282fae4e8845b9e2e6d99f0, type: 3}
       propertyPath: m_LocalPosition.y

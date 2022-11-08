@@ -11,8 +11,12 @@ public class DropSystem : MonoBehaviour
     {
         foreach (DropItem dropItem in dropItems)
         {
-            if (Random.Range(0, 1) < dropItem.DropRate)
-                Instantiate(dropItem.ItemPrefab, dropPosition.position, new Quaternion());
+            if (Random.Range(0, 1) < dropItem.DropRate) 
+            {
+                Vector3 dropPos = dropPosition.position;
+                dropPos.y += 0.5f;
+                Instantiate(dropItem.ItemPrefab, dropPos, new Quaternion());
+            }
         }
     }
 }
