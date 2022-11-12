@@ -53,6 +53,10 @@ public class SpriteManager : MonoBehaviour
     {
         animator.SetBool(name, value);
     }
+    public bool GetBool(string name)
+    {
+        return animator.GetBool(name);
+    }
     public bool Flip(bool isRight)
     {
         var old = spriteRenderer.flipX;

@@ -10,9 +10,11 @@ public class CharacterManager : MonoBehaviour
 
 	[SerializeField] private Collider2D characterCollider;
 	[SerializeField] private Collider2D crouchingCharacterCollider;
+	private AudioSource audioSource;
 
 	public GameObject humanAttackHitbox;
 	public LayerMask attackLayerMask;
+	public AudioClip sfx_footsteps, sfx_attack, sfx_shoot, sfx_landing, sfx_hurt, sfx_transform, sfx_transformRat;
 
 	[SerializeField] private int maxJavelinAmmo = 5;
 	public int currentJavelinAmmo = 5;
@@ -85,6 +87,7 @@ public class CharacterManager : MonoBehaviour
 			{
 				MovementController.SlowDown(1f/AttackController.GetAttackRate(), 0.5f);
 				SpriteManager.SetTrigger("Attack");
+				PlayAttack();
 			}
 		}
 	}
@@ -97,6 +100,7 @@ public class CharacterManager : MonoBehaviour
 			{
 				MovementController.SlowDown(1f / AttackController.GetAttackRate(), 0.5f);
 				SpriteManager.SetTrigger("Attack");
+				PlayShoot();
 			}
 		}
 	}
@@ -110,6 +114,7 @@ public class CharacterManager : MonoBehaviour
 			int nextShape = (int)(currentShape + 1) % (int)(shapes.Count);
 			Debug.Log(nextShape);
 			SetShape((ECharacterShape)nextShape);
+			PlayTransform((ECharacterShape)nextShape);
 		}
 	}
 
@@ -176,6 +181,7 @@ public class CharacterManager : MonoBehaviour
         }
         Instance = this;
 		rb = GetComponent<Rigidbody2D>();
+		audioSource = GetComponent<AudioSource>();
 
 		CreateSubComponents();
 
@@ -234,6 +240,10 @@ public class CharacterManager : MonoBehaviour
 
 	private void OnGrounded(bool isGrounded)
 	{
+		if (isGrounded && !SpriteManager.GetBool("Grounded")) 
+		{
+			PlayLanding();
+		}
 		SpriteManager.SetBool("Grounded", isGrounded);
 	}
 
@@ -242,6 +252,7 @@ public class CharacterManager : MonoBehaviour
 		SpriteManager.SetTrigger("Hurt");
 		MovementController.Stagger();
 		SpriteManager.Blink();
+		PlayHurt();
 	}
 
 	private void OnDefeat()
@@ -251,6 +262,42 @@ public class CharacterManager : MonoBehaviour
 		{
 			GameManager.instance.LoadGame();
 			Debug.Log("Read file");
+		}
+	}
+
+	public void PlayFootstep()
+	{
+		if (!audioSource.isPlaying)
+		{
+			audioSource.PlayOneShot(sfx_footsteps, 0.7f);
+		}		
+	}
+	public void PlayLanding()
+	{
+		audioSource.PlayOneShot(sfx_landing, 0.5f);
+	}
+	public void PlayAttack()
+	{
+		audioSource.PlayOneShot(sfx_attack, 0.7f);
+	}
+	public void PlayHurt()
+	{
+		audioSource.PlayOneShot(sfx_hurt, 0.7f);
+	}
+	public void PlayShoot()
+	{
+		audioSource.PlayOneShot(sfx_shoot, 0.6f);
+	}
+	public void PlayTransform(ECharacterShape transform)
+	{
+		switch(transform)
+		{
+			case ECharacterShape.Rat:
+				audioSource.PlayOneShot(sfx_transformRat, 0.6f);
+				break;
+			default:
+				audioSource.PlayOneShot(sfx_transform, 0.6f);
+				break;
 		}
 	}
 

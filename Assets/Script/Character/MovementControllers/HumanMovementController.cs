@@ -152,6 +152,8 @@ public class HumanMovementController : MovementController
 		}
 		IsGrounded = tmpIsGrounded;
 		OnGrounded?.Invoke(IsGrounded);
+		if (IsGrounded && CharacterManager.Instance.rb.velocity.x != 0 && !s_IsStaggered)
+		CharacterManager.Instance.PlayFootstep();
 	}
 
 	public override void Draw()
