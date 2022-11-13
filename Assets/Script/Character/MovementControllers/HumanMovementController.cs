@@ -96,6 +96,7 @@ public class HumanMovementController : MovementController
     protected override void Awake()
 	{
 		base.Awake();
+		fallMultiplier = 1.5f;
 	}
 
 	void FixedUpdate()
@@ -132,6 +133,10 @@ public class HumanMovementController : MovementController
 				}
 			}
 		}
+		if (CharacterManager.Instance.rb.velocity.y < 0)
+		{
+			CharacterManager.Instance.rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+		}
 	}
 
 	private void Update()
@@ -153,7 +158,9 @@ public class HumanMovementController : MovementController
 		IsGrounded = tmpIsGrounded;
 		OnGrounded?.Invoke(IsGrounded);
 		if (IsGrounded && CharacterManager.Instance.rb.velocity.x != 0 && !s_IsStaggered)
-		CharacterManager.Instance.PlayFootstep();
+		{
+			CharacterManager.Instance.PlayFootstep();
+		}
 	}
 
 	public override void Draw()

@@ -36,6 +36,7 @@ public abstract class MovementController : MonoBehaviour
 	Timer m_SpeedModifierTimer;
 	List<float> m_SpeedModifier;
 	private float m_CrouchingSpeedModifier = 0.0f;
+	protected float fallMultiplier = 1f;
 
 	#endregion
 

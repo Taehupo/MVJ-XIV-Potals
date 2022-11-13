@@ -74,6 +74,7 @@ public class RatMovementController : MovementController
 	protected override void Awake()
 	{
 		base.Awake();
+		fallMultiplier = 2.5f;
 	}
 
 	void FixedUpdate()
@@ -109,6 +110,10 @@ public class RatMovementController : MovementController
 					currentJumpTime += Time.deltaTime;
 				}
 			}
+		}
+		if (CharacterManager.Instance.rb.velocity.y < 0)
+		{
+			CharacterManager.Instance.rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
 		}
 	}
 
