@@ -112,9 +112,30 @@ public class CharacterManager : MonoBehaviour
 			List<ECharacterShape> shapes = GameManager.instance.usableShapes;
 			int currentShape = shapes.IndexOf(ShapeController.CharacterShape);
 			int nextShape = (int)(currentShape + 1) % (int)(shapes.Count);
-			Debug.Log(nextShape);
-			SetShape((ECharacterShape)nextShape);
-			PlayTransform((ECharacterShape)nextShape);
+			// Debug.Log(nextShape);
+			
+			// Teste la hauteur pour permettre la transformation 
+			// (si plafond trop bas en rat, empêche de retransformer)
+			CapsuleCollider2D newHitbox = ShapeController.GetShapeProperties((ECharacterShape)nextShape).Hitbox.GetComponent<CapsuleCollider2D>();
+			Vector3 origin = new Vector3(0f, 1f, 0f) + GetComponent<Transform>().position;
+			
+			RaycastHit2D[] hits = Physics2D.BoxCastAll(origin, newHitbox.size, 0.0f, Vector2.up, 0.1f);
+			bool canTransform = true;
+			foreach (RaycastHit2D hit in hits)
+			{
+				if (hit.collider is null)
+					continue;
+				if (hit.collider.CompareTag("Platform"))
+				{
+					canTransform = false;
+				}
+			}
+
+			if (canTransform)
+			{
+				SetShape((ECharacterShape)nextShape);
+				PlayTransform((ECharacterShape)nextShape);
+			}
 		}
 	}
 
@@ -154,12 +175,13 @@ public class CharacterManager : MonoBehaviour
 	}
 	public void SetShape(ECharacterShape shape)
 	{
+		Collider2D newHitbox = ShapeController.GetShapeProperties(shape).Hitbox;
+
 		ShapeController.ChangeShape(shape);
 		SpriteManager.ChangeShape(shape);
-		characterCollider.offset = ShapeController.GetShapeProperties(shape).Hitbox.offset;
-		characterCollider.GetComponent<CapsuleCollider2D>().size =
-			ShapeController.GetShapeProperties(shape).Hitbox.GetComponent<CapsuleCollider2D>().size;
-
+		characterCollider.offset = newHitbox.offset;
+		characterCollider.GetComponent<CapsuleCollider2D>().size = newHitbox.GetComponent<CapsuleCollider2D>().size;
+	
 		/*crouchingCharacterCollider.offset = ShapeController.GetShapeProperties(shape).CrouchHitbox.offset;
 		crouchingCharacterCollider.GetComponent<CapsuleCollider2D>().size = 
 			ShapeController.GetShapeProperties(shape).CrouchHitbox.GetComponent<CapsuleCollider2D>().size;*/
@@ -278,7 +300,7 @@ public class CharacterManager : MonoBehaviour
 	}
 	public void PlayAttack()
 	{
-		audioSource.PlayOneShot(sfx_attack, 0.7f);
+		audioSource.PlayOneShot(sfx_attack, 0.6f);
 	}
 	public void PlayHurt()
 	{
@@ -286,17 +308,17 @@ public class CharacterManager : MonoBehaviour
 	}
 	public void PlayShoot()
 	{
-		audioSource.PlayOneShot(sfx_shoot, 0.6f);
+		audioSource.PlayOneShot(sfx_shoot, 0.4f);
 	}
 	public void PlayTransform(ECharacterShape transform)
 	{
 		switch(transform)
 		{
 			case ECharacterShape.Rat:
-				audioSource.PlayOneShot(sfx_transformRat, 0.6f);
+				audioSource.PlayOneShot(sfx_transformRat, 0.5f);
 				break;
 			default:
-				audioSource.PlayOneShot(sfx_transform, 0.6f);
+				audioSource.PlayOneShot(sfx_transform, 0.5f);
 				break;
 		}
 	}
