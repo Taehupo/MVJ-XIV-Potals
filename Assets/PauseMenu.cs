@@ -13,6 +13,14 @@ public class PauseMenu : MonoBehaviour
         
     }
 
+    public void InputPause()
+    {
+        if (GameIsPaused)
+            Resume();
+        else
+            Pause();
+    }
+
     public void Pause()
     {
         pauseMenuUI.SetActive(true);

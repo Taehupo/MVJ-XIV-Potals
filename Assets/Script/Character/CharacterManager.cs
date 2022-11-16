@@ -55,7 +55,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Move(InputAction.CallbackContext context)
 	{
-		if (HealthManager.IsAlive())
+		if (CanAct())
 		{
 			MovementController.Move(context);
 		}
@@ -63,7 +63,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Jump(InputAction.CallbackContext context)
 	{
-		if (HealthManager.IsAlive())
+		if (CanAct())
 		{
 			if (context.started)
 				SpriteManager.SetTrigger("Jump");
@@ -73,7 +73,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Crouch(InputAction.CallbackContext context)
 	{
-		if (HealthManager.IsAlive())
+		if (CanAct())
         {
 			MovementController.Crouch(context);
         }
@@ -81,7 +81,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void Attack(InputAction.CallbackContext context)
 	{
-		if (HealthManager.IsAlive())
+		if (CanAct())
 		{
 			if (AttackController.Attack(context))
 			{
@@ -94,7 +94,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void SubAttack(InputAction.CallbackContext context)
 	{
-		if (HealthManager.IsAlive())
+		if (CanAct())
 		{
 			if (AttackController.SubAttack(context))
 			{
@@ -107,34 +107,37 @@ public class CharacterManager : MonoBehaviour
 
 	public void ChangeShape(InputAction.CallbackContext context)
 	{
-		if (context.started && !MovementController.IsMovementLock)
+		if (CanAct())
 		{
-			List<ECharacterShape> shapes = GameManager.instance.usableShapes;
-			int currentShape = shapes.IndexOf(ShapeController.CharacterShape);
-			int nextShape = (int)(currentShape + 1) % (int)(shapes.Count);
-			// Debug.Log(nextShape);
-			
-			// Teste la hauteur pour permettre la transformation 
-			// (si plafond trop bas en rat, empêche de retransformer)
-			CapsuleCollider2D newHitbox = ShapeController.GetShapeProperties((ECharacterShape)nextShape).Hitbox.GetComponent<CapsuleCollider2D>();
-			Vector3 origin = new Vector3(0f, 1f, 0f) + GetComponent<Transform>().position;
-			
-			RaycastHit2D[] hits = Physics2D.BoxCastAll(origin, newHitbox.size, 0.0f, Vector2.up, 0.1f);
-			bool canTransform = true;
-			foreach (RaycastHit2D hit in hits)
+			if (context.started && !MovementController.IsMovementLock)
 			{
-				if (hit.collider is null)
-					continue;
-				if (hit.collider.CompareTag("Platform"))
+				List<ECharacterShape> shapes = GameManager.instance.usableShapes;
+				int currentShape = shapes.IndexOf(ShapeController.CharacterShape);
+				int nextShape = (int)(currentShape + 1) % (int)(shapes.Count);
+				// Debug.Log(nextShape);
+				
+				// Teste la hauteur pour permettre la transformation 
+				// (si plafond trop bas en rat, empêche de retransformer)
+				CapsuleCollider2D newHitbox = ShapeController.GetShapeProperties((ECharacterShape)nextShape).Hitbox.GetComponent<CapsuleCollider2D>();
+				Vector3 origin = new Vector3(0f, 1f, 0f) + GetComponent<Transform>().position;
+				
+				RaycastHit2D[] hits = Physics2D.BoxCastAll(origin, newHitbox.size, 0.0f, Vector2.up, 0.1f);
+				bool canTransform = true;
+				foreach (RaycastHit2D hit in hits)
 				{
-					canTransform = false;
+					if (hit.collider is null)
+						continue;
+					if (hit.collider.CompareTag("Platform"))
+					{
+						canTransform = false;
+					}
 				}
-			}
 
-			if (canTransform)
-			{
-				SetShape((ECharacterShape)nextShape);
-				PlayTransform((ECharacterShape)nextShape);
+				if (canTransform)
+				{
+					SetShape((ECharacterShape)nextShape);
+					PlayTransform((ECharacterShape)nextShape);
+				}
 			}
 		}
 	}
@@ -143,6 +146,11 @@ public class CharacterManager : MonoBehaviour
 
 
 	#region Public Manipulators
+
+	public bool CanAct()
+	{
+		return HealthManager.IsAlive() && !PauseMenu.GameIsPaused;
+	}
 	public void Flip(bool isRight)
 	{
 		// Change le sens de la hitbox si le sprite a chang�Ede sens
