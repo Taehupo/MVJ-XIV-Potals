@@ -5,10 +5,11 @@ using UnityEngine;
 public class GameOverMenu : MonoBehaviour
 {
     public GameObject gameOverMenuUI;
+    public static GameOverMenu Instance;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        Instance = this;
     }
     public bool GameIsPaused()
     {

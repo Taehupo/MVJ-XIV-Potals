@@ -288,11 +288,12 @@ public class CharacterManager : MonoBehaviour
 	private void OnDefeat()
 	{
 		//throw new NotImplementedException();
-		if (GameManager.instance.GetComponent<SaveSystem>() != null)
-		{
-			GameManager.instance.LoadGame();
-			Debug.Log("Read file");
-		}
+		// if (GameManager.instance.GetComponent<SaveSystem>() != null)
+		// {
+		// 	GameManager.instance.LoadGame();
+		// 	Debug.Log("Read file");
+		// }
+		GameOverMenu.Instance.DisplayMenu();
 	}
 
 	public void PlayFootstep()
