@@ -14,11 +14,13 @@ public abstract class PickupItem : MonoBehaviour
             if (collision.GetComponent<HealthManager>() != null)
             {
                 Debug.Log("Touched " + collision.name);
+                SoundEffect();
                 Effect(collision);
                 RemoveItem();
             }
         }
     }
+    public virtual void SoundEffect() {}
     public abstract void Effect(Collider2D collision);
 
     private void RemoveItem()

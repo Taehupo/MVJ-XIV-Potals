@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthUpgradeItem : PickupItem
+public class HealthUpgradeItem : UpgradeItem
 {
     [SerializeField] EHealthUpgradeFlag associatedFlag = EHealthUpgradeFlag.count;
 

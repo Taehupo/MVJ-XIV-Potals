@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmoUpgradeItem : PickupItem
+public class AmmoUpgradeItem : UpgradeItem
 {
     [SerializeField] EAmmoUpgradeFlag associatedFlag = EAmmoUpgradeFlag.count;
 

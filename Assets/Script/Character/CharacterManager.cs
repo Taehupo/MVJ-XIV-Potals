@@ -14,7 +14,7 @@ public class CharacterManager : MonoBehaviour
 
 	public GameObject humanAttackHitbox;
 	public LayerMask attackLayerMask;
-	public AudioClip sfx_footsteps, sfx_attack, sfx_shoot, sfx_landing, sfx_hurt, sfx_transform, sfx_transformRat;
+	public AudioClip sfx_footsteps, sfx_attack, sfx_shoot, sfx_landing, sfx_hurt, sfx_transform, sfx_transformRat, sfx_upgrade;
 
 	[SerializeField] private int maxJavelinAmmo = 5;
 	public int currentJavelinAmmo = 5;
@@ -330,6 +330,10 @@ public class CharacterManager : MonoBehaviour
 				audioSource.PlayOneShot(sfx_transform, 0.5f);
 				break;
 		}
+	}
+	public void PlayUpgrade()
+	{
+		audioSource.PlayOneShot(sfx_upgrade, 0.7f);
 	}
 
 	// Preview cast Area on Player seleted if Gizmo is activated

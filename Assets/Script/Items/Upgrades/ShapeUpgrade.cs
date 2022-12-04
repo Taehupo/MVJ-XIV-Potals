@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShapeUpgrade : PickupItem
+public class ShapeUpgrade : UpgradeItem
 {
     [SerializeField] ECharacterShape associatedFlag = ECharacterShape.count;
 
