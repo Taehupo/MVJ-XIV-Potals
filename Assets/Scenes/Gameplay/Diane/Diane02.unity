@@ -582,6 +582,7 @@ MonoBehaviour:
   amplitude: 0.05
   frequency: 0.25
   degreesPerSecond: 0
+  posOffset: {x: 0, y: 0, z: 0}
 --- !u!1001 &821936955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -936,11 +937,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5743863154966009428, guid: e943e2fecc5d9174d810c8b49e9352f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.306114
+      value: 26.16
       objectReference: {fileID: 0}
     - target: {fileID: 5743863154966009428, guid: e943e2fecc5d9174d810c8b49e9352f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.759189
+      value: 10.99
       objectReference: {fileID: 0}
     - target: {fileID: 5743863154966009428, guid: e943e2fecc5d9174d810c8b49e9352f0, type: 3}
       propertyPath: m_LocalPosition.z
