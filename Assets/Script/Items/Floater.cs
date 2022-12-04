@@ -9,7 +9,7 @@ public class Floater : MonoBehaviour
     public float degreesPerSecond = 0f;
 
     float randStart = 0f;
-    Vector3 posOffset = new Vector3();
+    public Vector3 posOffset = new Vector3();
     Vector3 tempPos = new Vector3();
 
     // Start is called before the first frame update
