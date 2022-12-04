@@ -8,6 +8,7 @@ public class HealthManager : MonoBehaviour
     #region Members
     private bool hitRight = false;
     private bool isInvincible = false;
+    public float invincibleTime = 1f;
     public Timer invincibleTimer;
     public Action onHeal;
     public Action onHurt;
@@ -45,7 +46,7 @@ public class HealthManager : MonoBehaviour
             SetHealth(Math.Max(health - damage, 0));
             // Debug.Log("Took " + damage + " Health : " + health + "/" + maxHealth);
             isInvincible = true;
-            invincibleTimer.StartTimer(1);
+            invincibleTimer.StartTimer(invincibleTime);
             onHurt?.Invoke();
         }
 

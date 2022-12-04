@@ -11,8 +11,8 @@ public abstract class Enemy : MonoBehaviour
     protected SpriteManager _spriteManager { get; private set; }
 
     protected bool CanBeStaggered;
-    private bool _isStaggered = false;
-    private Rigidbody2D _rigidbody2D;
+    protected bool IsStaggered = false;
+    protected Rigidbody2D Rigidbody2D;
     [SerializeField] protected GameObject attackHitbox;
     
     [SerializeField] private LayerMask playerLayer;
@@ -33,24 +33,19 @@ public abstract class Enemy : MonoBehaviour
     {
         ContactFilter.SetLayerMask(playerLayer);
         
-        _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         _healthManager = gameObject.AddComponent<HealthManager>();
+        _healthManager.invincibleTime = 0.75f;
         _healthManager.SetMaxHealth(maxHealth);
         _healthManager.onHurt += Hurt;
         _healthManager.onDefeat += Defeat;
-        _healthManager.invincibleTimer.OnEnd = () => { _healthManager.StopInvincibility(); _spriteManager.StopBlink(); };
+        _healthManager.invincibleTimer.OnEnd = () => { _healthManager.StopInvincibility(); _spriteManager.StopBlink(); IsStaggered = false; };
         
         _spriteManager = gameObject.AddComponent<SpriteManager>();
     }
 
     private void FixedUpdate()
     {
-        if (_isStaggered)
-        {
-            _rigidbody2D.velocity = new Vector2(_healthManager.GetHitLocation()*10f, 10f);
-            _isStaggered = false;
-        }
-
         // int test = Random.Range(0, 100);
         // if (test > 95)
         //     this.Attack();
@@ -66,7 +61,7 @@ public abstract class Enemy : MonoBehaviour
     }
     private void Hurt()
     {
-        _isStaggered = true;
+        IsStaggered = true;
         _spriteManager.Blink();
     }
 

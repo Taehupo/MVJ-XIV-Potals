@@ -19,7 +19,6 @@ public class BackAndForthEnemy : Enemy
     bool passedPoint1 = false;
     bool passedPoint2 = true;
     public bool isAttacking = false;
-	private new Rigidbody2D rigidbody;
     protected static bool s_IsFlipRight;
 
     [SerializeField]
@@ -28,51 +27,58 @@ public class BackAndForthEnemy : Enemy
     private void Awake()
     {
         CanBeStaggered = true;
-        rigidbody = GetComponent<Rigidbody2D>();
         patrolPointOne.transform.SetParent(null, true);
         patrolPointTwo.transform.SetParent(null,true);
     }
 
 	private void FixedUpdate()
 	{
-        if (Vector2.Distance(transform.position, CharacterManager.Instance.gameObject.transform.position) <= attackDistance && !isAttacking)
-		{
-            Attack();
-            isAttacking = true;
-        }
-        else
-		{
-            isAttacking = false;
-		}
-
-        if (Vector2.Distance(gameObject.transform.position, patrolPointOne.transform.position) <= 0.3f && !passedPoint1)
+        if (CanBeStaggered && IsStaggered)
         {
-            passedPoint1 = true;
-            passedPoint2 = false;
+            Rigidbody2D.velocity = new Vector2(_healthManager.GetHitLocation()*35f, 20f);
+            IsStaggered = false;
         }
-        if (Vector2.Distance(gameObject.transform.position, patrolPointTwo.transform.position) <= 0.3f && !passedPoint2)
+        else 
         {
-            passedPoint1 = false;
-            passedPoint2 = true;
-        }
+            if (Vector2.Distance(transform.position, CharacterManager.Instance.gameObject.transform.position) <= attackDistance && !isAttacking)
+            {
+                Attack();
+                isAttacking = true;
+            }
+            else
+            {
+                isAttacking = false;
+            }
 
-        if (!isAttacking)
-		{
-            if (!passedPoint1 && passedPoint2)
+            if (Vector2.Distance(gameObject.transform.position, patrolPointOne.transform.position) <= 0.3f && !passedPoint1)
             {
-                rigidbody.velocity = new Vector2(patrolPointOne.transform.position.x - gameObject.transform.position.x, 0).normalized * speed;
+                passedPoint1 = true;
+                passedPoint2 = false;
             }
-            if (passedPoint1 && !passedPoint2)
+            if (Vector2.Distance(gameObject.transform.position, patrolPointTwo.transform.position) <= 0.3f && !passedPoint2)
             {
-                rigidbody.velocity = new Vector2(patrolPointTwo.transform.position.x - gameObject.transform.position.x, 0).normalized * speed;
+                passedPoint1 = false;
+                passedPoint2 = true;
             }
+
+            if (!isAttacking)
+            {
+                if (!passedPoint1 && passedPoint2)
+                {
+                    Rigidbody2D.velocity = new Vector2(patrolPointOne.transform.position.x - gameObject.transform.position.x, 0).normalized * speed;
+                }
+                if (passedPoint1 && !passedPoint2)
+                {
+                    Rigidbody2D.velocity = new Vector2(patrolPointTwo.transform.position.x - gameObject.transform.position.x, 0).normalized * speed;
+                }
+            }
+            else
+            {
+                Rigidbody2D.velocity = Vector2.zero;
+            }
+            _spriteManager.SetFloat("Speed", Mathf.Abs(Rigidbody2D.velocity.x));
+            Flip(Rigidbody2D.velocity.x < 0);
         }
-        else
-		{
-            rigidbody.velocity = Vector2.zero;
-        }
-        _spriteManager.SetFloat("Speed", Mathf.Abs(rigidbody.velocity.x));
-        Flip(rigidbody.velocity.x < 0);
     }
 
 	private void OnCollisionEnter2D(Collision2D collision)
